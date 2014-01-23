@@ -1,21 +1,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>it.bioko</groupId>
+	<groupId>org.biokoframework</groupId>
 	<artifactId>system-a-test</artifactId>
-	<version>0.4-SNAPSHOT</version>
+	<version>0.1-SNAPSHOT</version>
 
 	<dependencies>
 		<dependency>
-			<groupId>it.bioko</groupId>
+			<groupId>org.biokoframework</groupId>
 			<artifactId>system-a</artifactId>
-			<version>0.4-SNAPSHOT</version>
+			<version>0.1-SNAPSHOT</version>
 			<classifier>classes</classifier>
 		</dependency>
 		<dependency>
-			<groupId>it.bioko</groupId>
+			<groupId>org.biokoframework</groupId>
 			<artifactId>http-test</artifactId>
-			<version>0.4-SNAPSHOT</version>
+			<version>0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
@@ -35,4 +35,6 @@
 			</plugin>
 		</plugins>
 	</build>
+	<name>Bioko Framework</name>
+	<url>http://biokoframework.org</url>
 </project>
