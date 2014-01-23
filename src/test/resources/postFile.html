@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Test post multipart multiple command</title>
+
+    <link rel="stylesheet" href="http://twitter.github.io/bootstrap/assets/css/bootstrap.css"></link>
+    <link rel="stylesheet" href="http://twitter.github.io/bootstrap/assets/css/bootstrap-responsive.css"></link>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="http://gregpike.net/demos/bootstrap-file-input/bootstrap.file-input.js"></script>
+  </head>
+  <body>
+    <div class="container well">
+      <form class="form" method="post" action="http://localhost:8080/engagedServer/api/systemA/1.0/multipart-multiple" enctype="multipart/form-data">
+        <fieldset>
+          <p>File: <input type="file" name="files"></p>
+          <p>Value: <input type="text" name="value"></p>
+          
+          <p>
+   	    	<input class="btn" type="submit" value="Send">
+            <input class="btn" type="reset">
+          </p>
+        </fieldset>
+      </form>
+    </div>
+  </body>
+</html>
