@@ -105,7 +105,7 @@ public class EncodingTest extends SystemATestAbstract {
 		given().
 		param(DummyEntity1.VALUE, dummyEntity1.get(DummyEntity1.VALUE)).
 		param("command", "POST_dummy-entity1").
-		get(getSystemAUrl() + "/only-get");
+		get(getLocalHostUrl() + "/only-get");
 		
 		expect().
 		statusCode(200).

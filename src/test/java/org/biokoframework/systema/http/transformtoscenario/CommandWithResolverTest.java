@@ -51,7 +51,7 @@ public class CommandWithResolverTest extends SystemATestAbstract {
 
 	@Before
 	public void populateRepositories() {
-		_resolvedCommandUrl = getSystemAUrl() + "dummy-entity3-resolved/";
+		_resolvedCommandUrl = getLocalHostUrl() + "dummy-entity3-resolved/";
 		
 		EntityBuilder<DummyEntity1> builder1 = new DummyEntity1Builder().loadDefaultExample();
 		doPost(getEntity1Url(), builder1.build(false).toJSONString());

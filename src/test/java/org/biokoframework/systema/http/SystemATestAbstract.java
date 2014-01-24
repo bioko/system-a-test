@@ -27,15 +27,6 @@
 
 package org.biokoframework.systema.http;
 
-import org.biokoframework.http.AbstractSystemServletInterfaceTest;
-import org.biokoframework.systema.entity.dummy1.DummyEntity1;
-import org.biokoframework.systema.entity.dummy2.DummyEntity2;
-import org.biokoframework.systema.entity.dummy3.DummyEntity3;
-import org.biokoframework.systema.entity.dummy6.DummyEntity6;
-import org.biokoframework.systema.entity.dummyComplex.DummyComplexDomainEntity;
-import org.biokoframework.systema.entity.dummyMultipart.DummyMultipart;
-import org.biokoframework.systema.injection.SystemAServletConfig;
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -45,12 +36,20 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
+import org.biokoframework.http.AbstractSystemServletInterfaceTest;
 import org.biokoframework.system.KILL_ME.SystemNames;
 import org.biokoframework.system.entity.authentication.Authentication;
 import org.biokoframework.system.entity.binary.BinaryEntity;
 import org.biokoframework.system.entity.login.Login;
 import org.biokoframework.system.repository.sql.MySQLConnector;
 import org.biokoframework.system.repository.sql.SqlConstants;
+import org.biokoframework.systema.entity.dummy1.DummyEntity1;
+import org.biokoframework.systema.entity.dummy2.DummyEntity2;
+import org.biokoframework.systema.entity.dummy3.DummyEntity3;
+import org.biokoframework.systema.entity.dummy6.DummyEntity6;
+import org.biokoframework.systema.entity.dummyComplex.DummyComplexDomainEntity;
+import org.biokoframework.systema.entity.dummyMultipart.DummyMultipart;
+import org.biokoframework.systema.injection.SystemAServletConfig;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -60,11 +59,7 @@ import com.google.inject.servlet.GuiceServletContextListener;
 
 public class SystemATestAbstract extends AbstractSystemServletInterfaceTest {
 	
-	private static final String VERSION = "1.0" + "/";
-	private static final String SYSTEM_A = "systemA" + "/" + VERSION;
-	
 	private String _localHostUrl;
-	private String _systemAUrl;
 	private String _loginUrl;
 	private static final List<String> TABLE_NAMES = Arrays.asList(
 				Authentication.class.getSimpleName(),
@@ -91,14 +86,12 @@ public class SystemATestAbstract extends AbstractSystemServletInterfaceTest {
 		init();
 		start();
 		
-		 //_localHostUrl = "http://localhost:" + "8080" + "/engagedServer/api/";
-		_localHostUrl = "http://localhost:" + getPort();
-		_systemAUrl = _localHostUrl + "/system-a/1.0/";
-		_loginUrl = _systemAUrl + LOGIN;
+		_localHostUrl = "http://localhost:" + getPort() + "/1.0/";
+		_loginUrl = _localHostUrl + LOGIN;
 		
-		_entity1url = getSystemAUrl() + "dummy-entity1/";
-		_entity2url = getSystemAUrl() + "dummy-entity2/";
-		_entity3url = getSystemAUrl() + "dummy-entity3/";
+		_entity1url = getLocalHostUrl() + "dummy-entity1/";
+		_entity2url = getLocalHostUrl() + "dummy-entity2/";
+		_entity3url = getLocalHostUrl() + "dummy-entity3/";
 		
 	}
 
@@ -109,10 +102,6 @@ public class SystemATestAbstract extends AbstractSystemServletInterfaceTest {
 	
 	public String getLocalHostUrl() {
 		return _localHostUrl;
-	}
-	
-	public String getSystemAUrl() {
-		return _systemAUrl;
 	}
 	
 	public String getLoginUrl() {

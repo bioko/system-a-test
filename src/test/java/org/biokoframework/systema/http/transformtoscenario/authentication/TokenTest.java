@@ -69,9 +69,9 @@ public class TokenTest extends SystemATestAbstract {
 	
 	@Before
 	public void createUrls() {
-		_authenticationCommandUrl = getSystemAUrl() + Login.class.getSimpleName().toLowerCase() + '-' + "authenticated";
+		_authenticationCommandUrl = getLocalHostUrl() + Login.class.getSimpleName().toLowerCase() + '-' + "authenticated";
 		_authenticationOptionalCommandUrl = _authenticationCommandUrl + "-optional";
-		_authenticationUrl = getSystemAUrl() + "authentication";
+		_authenticationUrl = getLocalHostUrl() + "authentication";
 		_authUtils = new AuthenticationUtils(_authenticationUrl);
 	
 	}
@@ -81,7 +81,7 @@ public class TokenTest extends SystemATestAbstract {
 		EntityBuilder<Login> loginBuilder = new LoginBuilder().loadDefaultExample();
 		given().
 		body(loginBuilder.build(false).toJSONString()).
-		post(getSystemAUrl() + SystemACommands.LOGIN);
+		post(getLocalHostUrl() + SystemACommands.LOGIN);
 		
 		String validToken = "00000000-0000-0000-0000-000000000000";
 		long expire = _authUtils.postValidToken(validToken);
@@ -113,7 +113,7 @@ public class TokenTest extends SystemATestAbstract {
 		EntityBuilder<Login> loginBuilder = new LoginBuilder().loadDefaultExample();
 		given().
 		body(loginBuilder.build(false).toJSONString()).
-		post(getSystemAUrl() + SystemACommands.LOGIN);
+		post(getLocalHostUrl() + SystemACommands.LOGIN);
 		
 		String validToken = "00000000-0000-0000-0000-000000000000";
 		long expire = _authUtils.postValidToken(validToken);
@@ -142,7 +142,7 @@ public class TokenTest extends SystemATestAbstract {
 		EntityBuilder<Login> loginBuilder = new LoginBuilder().loadDefaultExample();
 		given().
 		body(loginBuilder.build(false).toJSONString()).
-		post(getSystemAUrl() + SystemACommands.LOGIN);
+		post(getLocalHostUrl() + SystemACommands.LOGIN);
 		
 		String validToken = "00000000-0000-0000-0000-000000000000";
 		long expire = _authUtils.postValidToken(validToken);

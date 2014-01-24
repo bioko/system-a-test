@@ -116,7 +116,7 @@ public class FacebookCheckinTest extends SystemATestAbstract {
 		body(
 			request.toJSONString()
 		).
-		post(getSystemAUrl() + GenericCommandNames.ENGAGED_CHECK_IN);
+		post(getLocalHostUrl() + GenericCommandNames.ENGAGED_CHECK_IN);
 
 	}
 	
@@ -140,7 +140,7 @@ public class FacebookCheckinTest extends SystemATestAbstract {
 		body(
 			request.toJSONString()
 		).
-		post(getSystemAUrl() + GenericCommandNames.ENGAGED_CHECK_IN);
+		post(getLocalHostUrl() + GenericCommandNames.ENGAGED_CHECK_IN);
 
 	}
 	

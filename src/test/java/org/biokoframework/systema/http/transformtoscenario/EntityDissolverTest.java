@@ -48,7 +48,7 @@ public class EntityDissolverTest extends SystemATestAbstract{
 
 	@Before
 	public void createDissolvedCommandUrl() {
-		_dissolvedCommandUrl = getSystemAUrl() + SystemACommandNames.DISSOLVED_EXAMPLE;
+		_dissolvedCommandUrl = getLocalHostUrl() + SystemACommandNames.DISSOLVED_EXAMPLE;
 	}
 	
 	@SuppressWarnings("unchecked")

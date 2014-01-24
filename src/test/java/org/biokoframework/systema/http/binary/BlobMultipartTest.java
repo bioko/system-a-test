@@ -60,7 +60,7 @@ public class BlobMultipartTest extends SystemATestAbstract {
 	
 	@Before
 	public void createUrls() {
-		_blobUrl = getSystemAUrl() + BLOB;
+		_blobUrl = getLocalHostUrl() + BLOB;
 	}
 	
 	@Test
@@ -75,7 +75,7 @@ public class BlobMultipartTest extends SystemATestAbstract {
 		when().
 		multiPart(DummyEntity1.VALUE, entity1.get(DummyEntity1.VALUE)).
 		multiPart("my-blob", file, GenericFieldValues.JPEG_CONTENT_TYPE).
-		post(getSystemAUrl() + SystemACommandNames.MULTIPART_MULTIPLE);
+		post(getLocalHostUrl() + SystemACommandNames.MULTIPART_MULTIPLE);
 		
 		Response response = 
 		expect().

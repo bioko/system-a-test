@@ -58,7 +58,7 @@ public class CheckInTest extends SystemATestAbstract {
 	
 	@Before
 	public void createCheckInUrl() {
-		_checkInUrl = getSystemAUrl()  + CHECKIN_COMMAND;
+		_checkInUrl = getLocalHostUrl()  + CHECKIN_COMMAND;
 	}
 	
 	@Before

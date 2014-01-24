@@ -30,16 +30,22 @@ package org.biokoframework.systema.http;
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import org.biokoframework.http.rest.WebAppTest;
+
 import org.biokoframework.systema.injection.SystemAServletConfig;
 import org.biokoframework.systema.misc.TestShutdownListener;
-
 import org.junit.Test;
 
-public class ShutdownNotificationTest extends WebAppTest {
+public class ShutdownNotificationTest extends SystemATestAbstract {
 	
-	private static final String VERSION = "1.0" + "/";
-	private static final String SYSTEM_A = "systemA" + "/" + VERSION;
+	@Override
+	public void startServlet() throws Exception {
+		// NOP
+	}
+	
+	@Override
+	public void stopServlet() throws Exception {
+		// NOP
+	}
 	
 	@Test
 	public void shutdownNotificationTest() throws Exception {
@@ -47,10 +53,9 @@ public class ShutdownNotificationTest extends WebAppTest {
 		TestShutdownListener.triggered = false;
 		
 		// START SERVLET
-		init();
-		start();
+		super.startServlet();
 
-		String aCommandUrl = "http://localhost:" + getPort() + "/engagedServer/api/" + SYSTEM_A + "dummy-entity1/";
+		String aCommandUrl = getLocalHostUrl() + "dummy-entity1/";
 		
 		
 		// theSystem._context.addSystemListener(new Test)
@@ -62,7 +67,7 @@ public class ShutdownNotificationTest extends WebAppTest {
 		header("Content-Type", "text/html; charset=iso8859-1").
 		post(aCommandUrl);
 
-		stop();
+		super.stopServlet();
 		
 		// theSystem._context.getSystemListeners().systemShuttedDown();
 		// Performed by the servlet

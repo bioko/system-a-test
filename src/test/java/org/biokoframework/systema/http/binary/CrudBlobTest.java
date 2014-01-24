@@ -65,7 +65,7 @@ public class CrudBlobTest extends SystemATestAbstract {
 	
 	@Before
 	public void createUrls() {
-		_blobUrl = getSystemAUrl() + BLOB;
+		_blobUrl = getLocalHostUrl() + BLOB;
 	}
 	
 	@Test

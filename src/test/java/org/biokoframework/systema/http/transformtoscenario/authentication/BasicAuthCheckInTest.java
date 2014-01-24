@@ -59,7 +59,7 @@ public class BasicAuthCheckInTest extends SystemATestAbstract {
 
 	@Before
 	public void createCheckInUrl() {
-		_basicCheckInUrl = getSystemAUrl()  + BASIC_CHECKIN_COMMAND;
+		_basicCheckInUrl = getLocalHostUrl()  + BASIC_CHECKIN_COMMAND;
 	}
 		
 	@Before

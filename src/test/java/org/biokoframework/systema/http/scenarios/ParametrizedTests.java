@@ -112,7 +112,7 @@ public class ParametrizedTests extends SystemATestAbstract {
 	
 	@Test
 	public void test() throws Exception {
-		_scenarioRunner.test(getSystemAUrl());
+		_scenarioRunner.test(getLocalHostUrl());
 	}
 	
 }
