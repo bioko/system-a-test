@@ -30,6 +30,7 @@ package org.biokoframework.systema.http.scenarios;
 import static org.biokoframework.utils.matcher.Matchers.anyString;
 import static org.biokoframework.utils.matcher.Matchers.matchesJSONString;
 import static org.hamcrest.Matchers.equalTo;
+
 import org.biokoframework.http.rest.exception.HttpError;
 import org.biokoframework.http.rest.exception.HttpResponseBuilder;
 import org.biokoframework.http.rest.exception.HttpResponseExceptionFactory;
@@ -42,8 +43,8 @@ import org.biokoframework.systema.factory.SystemACommands;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.biokoframework.system.command.ValidationException;
 import org.biokoframework.utils.domain.ErrorEntity;
+import org.biokoframework.utils.exception.ValidationException;
 import org.biokoframework.utils.validator.ValidatorErrorBuilder;
 import org.json.simple.JSONValue;
 

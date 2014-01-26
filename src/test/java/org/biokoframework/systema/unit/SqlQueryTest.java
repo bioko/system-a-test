@@ -32,6 +32,7 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasToString;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
+
 import org.biokoframework.systema.entity.dummy1.DummyEntity1;
 import org.biokoframework.systema.entity.dummy1.DummyEntity1Builder;
 import org.biokoframework.systema.entity.dummy2.DummyEntity2;
@@ -43,11 +44,11 @@ import org.biokoframework.systema.entity.dummyWithInteger.DummyEntityWithInteger
 
 import java.util.List;
 
-import org.biokoframework.system.command.ValidationException;
-import org.biokoframework.system.repository.core.RepositoryException;
-import org.biokoframework.system.repository.core.query.Query;
 import org.biokoframework.system.repository.memory.InMemoryRepository;
 import org.biokoframework.utils.domain.EntityBuilder;
+import org.biokoframework.utils.exception.ValidationException;
+import org.biokoframework.utils.repository.RepositoryException;
+import org.biokoframework.utils.repository.query.Query;
 import org.junit.Before;
 import org.junit.Test;
 

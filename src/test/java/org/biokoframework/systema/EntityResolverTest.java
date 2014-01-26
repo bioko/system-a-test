@@ -30,6 +30,7 @@ package org.biokoframework.systema;
 import static org.biokoframework.utils.matcher.Matchers.matchesJSONString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
+
 import org.biokoframework.systema.entity.dummy1.DummyEntity1;
 import org.biokoframework.systema.entity.dummy1.DummyEntity1Builder;
 import org.biokoframework.systema.entity.dummy2.DummyEntity2;
@@ -38,15 +39,14 @@ import org.biokoframework.systema.entity.dummy3.DummyEntity3;
 import org.biokoframework.systema.entity.dummy3.DummyEntity3Builder;
 import org.biokoframework.systema.entity.dummy4.DummyEntity4;
 import org.biokoframework.systema.entity.dummy5.DummyEntity5;
-
-import org.biokoframework.system.command.ValidationException;
 import org.biokoframework.system.entity.resolution.AnnotatedEntityResolver;
 import org.biokoframework.system.entity.resolution.EntityResolver;
-import org.biokoframework.system.repository.core.Repository;
-import org.biokoframework.system.repository.core.RepositoryException;
 import org.biokoframework.system.repository.memory.InMemoryRepository;
 import org.biokoframework.utils.domain.DomainEntity;
 import org.biokoframework.utils.domain.EntityBuilder;
+import org.biokoframework.utils.exception.ValidationException;
+import org.biokoframework.utils.repository.Repository;
+import org.biokoframework.utils.repository.RepositoryException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.junit.Before;
