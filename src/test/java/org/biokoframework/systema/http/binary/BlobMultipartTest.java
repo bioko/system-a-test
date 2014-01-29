@@ -33,18 +33,17 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-import org.biokoframework.http.scenario.JSonExpectedResponseBuilder;
-import org.biokoframework.systema.commons.SystemACommandNames;
-import org.biokoframework.systema.entity.dummy1.DummyEntity1;
-import org.biokoframework.systema.entity.dummy1.DummyEntity1Builder;
-import org.biokoframework.systema.http.SystemATestAbstract;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.URL;
 
+import org.biokoframework.http.scenario.JSonExpectedResponseBuilder;
 import org.biokoframework.system.KILL_ME.commons.GenericFieldValues;
+import org.biokoframework.systema.commons.SystemACommandNames;
+import org.biokoframework.systema.entity.dummy1.DummyEntity1;
+import org.biokoframework.systema.entity.dummy1.DummyEntity1Builder;
+import org.biokoframework.systema.http.SystemATestAbstract;
 import org.junit.Before;
 import org.junit.Test;
 

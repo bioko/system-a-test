@@ -29,9 +29,9 @@ package org.biokoframework.systema.http;
 
 import static com.jayway.restassured.RestAssured.expect;
 import static org.biokoframework.utils.matcher.Matchers.matchesJSONString;
+
 import org.biokoframework.systema.entity.dummy1.DummyEntity1;
 import org.biokoframework.systema.entity.dummy1.DummyEntity1Builder;
-
 import org.junit.Before;
 import org.junit.Test;
 

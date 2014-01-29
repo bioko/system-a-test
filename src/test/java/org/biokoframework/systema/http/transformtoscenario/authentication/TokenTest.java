@@ -34,17 +34,16 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.assertThat;
 
-import org.biokoframework.http.authentication.AuthenticationUtils;
-import org.biokoframework.http.scenario.JSonExpectedResponseBuilder;
-import org.biokoframework.systema.factory.SystemACommands;
-import org.biokoframework.systema.http.SystemATestAbstract;
-
 import java.util.List;
 
+import org.biokoframework.http.authentication.AuthenticationUtils;
+import org.biokoframework.http.scenario.JSonExpectedResponseBuilder;
 import org.biokoframework.system.KILL_ME.commons.GenericFieldNames;
 import org.biokoframework.system.entity.login.Login;
 import org.biokoframework.system.entity.login.LoginBuilder;
 import org.biokoframework.system.exceptions.CommandExceptionsFactory;
+import org.biokoframework.systema.factory.SystemACommands;
+import org.biokoframework.systema.http.SystemATestAbstract;
 import org.biokoframework.utils.domain.DomainEntity;
 import org.biokoframework.utils.domain.EntityBuilder;
 import org.biokoframework.utils.domain.ErrorEntity;

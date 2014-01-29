@@ -33,6 +33,9 @@ import static org.hamcrest.Matchers.hasToString;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
+import java.util.List;
+
+import org.biokoframework.system.repository.memory.InMemoryRepository;
 import org.biokoframework.systema.entity.dummy1.DummyEntity1;
 import org.biokoframework.systema.entity.dummy1.DummyEntity1Builder;
 import org.biokoframework.systema.entity.dummy2.DummyEntity2;
@@ -41,10 +44,6 @@ import org.biokoframework.systema.entity.dummyWithDate.DummyEntityWithDate;
 import org.biokoframework.systema.entity.dummyWithDate.DummyEntityWithDateBuilder;
 import org.biokoframework.systema.entity.dummyWithInteger.DummyEntityWithInteger;
 import org.biokoframework.systema.entity.dummyWithInteger.DummyEntityWithIntegerBuilder;
-
-import java.util.List;
-
-import org.biokoframework.system.repository.memory.InMemoryRepository;
 import org.biokoframework.utils.domain.EntityBuilder;
 import org.biokoframework.utils.exception.ValidationException;
 import org.biokoframework.utils.repository.RepositoryException;

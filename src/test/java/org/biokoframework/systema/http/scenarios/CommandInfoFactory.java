@@ -31,13 +31,13 @@ import static org.biokoframework.utils.matcher.Matchers.substringMatchesPattern;
 import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.startsWith;
-import org.biokoframework.http.scenario.HttpScenarioFactory;
-import org.biokoframework.http.scenario.JSonExpectedResponseBuilder;
-import org.biokoframework.http.scenario.Scenario;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.biokoframework.http.scenario.HttpScenarioFactory;
+import org.biokoframework.http.scenario.JSonExpectedResponseBuilder;
+import org.biokoframework.http.scenario.Scenario;
 import org.biokoframework.system.KILL_ME.commons.GenericFieldNames;
 import org.biokoframework.system.entity.description.CommandEntity;
 import org.biokoframework.system.entity.description.CommandEntityBuilder;

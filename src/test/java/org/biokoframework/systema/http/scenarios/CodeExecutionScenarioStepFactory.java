@@ -29,14 +29,13 @@ package org.biokoframework.systema.http.scenarios;
 
 import static org.hamcrest.Matchers.equalTo;
 
-import org.biokoframework.utils.fields.Fields;
-
 import org.biokoframework.http.scenario.ExecutionScenarioStep;
 import org.biokoframework.http.scenario.HttpScenarioFactory;
 import org.biokoframework.http.scenario.Scenario;
 import org.biokoframework.systema.commons.SystemACommandNames;
 import org.biokoframework.systema.entity.dummy1.DummyEntity1;
 import org.biokoframework.systema.misc.Dummy1Mock;
+import org.biokoframework.utils.fields.Fields;
 
 public class CodeExecutionScenarioStepFactory {
 

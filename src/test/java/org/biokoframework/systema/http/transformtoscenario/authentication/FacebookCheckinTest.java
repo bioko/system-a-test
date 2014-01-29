@@ -34,22 +34,21 @@ import static org.biokoframework.utils.matcher.Matchers.substringMatchesPattern;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.equalTo;
 
+import java.util.HashMap;
+import java.util.Properties;
+
 import org.biokoframework.http.facebook.FacebookUtils;
 import org.biokoframework.http.rest.exception.HttpError;
 import org.biokoframework.http.rest.exception.HttpResponseBuilder;
 import org.biokoframework.http.rest.exception.HttpResponseExceptionFactory;
 import org.biokoframework.http.scenario.JSonExpectedResponseBuilder;
-import org.biokoframework.systema.commons.SystemAConstants;
-import org.biokoframework.systema.http.SystemATestAbstract;
-
-import java.util.HashMap;
-import java.util.Properties;
-
 import org.biokoframework.system.KILL_ME.commons.GenericCommandNames;
 import org.biokoframework.system.KILL_ME.commons.GenericFieldNames;
 import org.biokoframework.system.entity.login.Login;
 import org.biokoframework.system.entity.login.LoginBuilder;
 import org.biokoframework.system.exceptions.CommandExceptionsFactory;
+import org.biokoframework.systema.commons.SystemAConstants;
+import org.biokoframework.systema.http.SystemATestAbstract;
 import org.biokoframework.utils.domain.EntityBuilder;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;

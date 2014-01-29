@@ -27,6 +27,12 @@
 
 package org.biokoframework.systema.persistence.mongo;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+
 import org.biokoframework.http.AbstractSystemServletInterfaceTest;
 import org.biokoframework.http.scenario.Scenario;
 import org.biokoframework.http.scenario.ScenarioRunner;
@@ -34,13 +40,6 @@ import org.biokoframework.http.scenario.parametrized.CrudScenariosParametrizedFa
 import org.biokoframework.systema.entity.dummy1.DummyEntity1;
 import org.biokoframework.systema.entity.dummy1.DummyEntity1Builder;
 import org.biokoframework.systema.injection.SystemAServletConfig;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;

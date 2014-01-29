@@ -29,22 +29,22 @@ package org.biokoframework.systema.http.scenarios;
 
 import static org.biokoframework.http.matcher.Matchers.matchesSubjectAndContent;
 import static org.biokoframework.utils.matcher.Matchers.matchesJSONString;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import org.biokoframework.http.scenario.ExecutionScenarioStep;
 import org.biokoframework.http.scenario.HttpScenarioFactory;
 import org.biokoframework.http.scenario.JSonExpectedResponseBuilder;
 import org.biokoframework.http.scenario.Scenario;
 import org.biokoframework.http.scenario.mail.MailScenarioStep;
-import org.biokoframework.systema.command.RequestEmailConfirmationCommand;
-import org.biokoframework.systema.factory.SystemACommands;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import org.biokoframework.system.entity.authentication.EmailConfirmation;
 import org.biokoframework.system.entity.login.Login;
 import org.biokoframework.system.entity.login.LoginBuilder;
 import org.biokoframework.system.service.currenttime.impl.TestCurrentTimeService;
 import org.biokoframework.system.service.random.impl.TestRandomGeneratorService;
+import org.biokoframework.systema.command.RequestEmailConfirmationCommand;
+import org.biokoframework.systema.factory.SystemACommands;
 import org.biokoframework.utils.domain.EntityBuilder;
 import org.biokoframework.utils.fields.FieldValues;
 import org.biokoframework.utils.fields.Fields;

@@ -29,15 +29,15 @@ package org.biokoframework.systema.unit;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import org.biokoframework.systema.factory.SystemACommands;
-import org.biokoframework.systema.factory.SystemAContextFactory;
-import org.biokoframework.systema.misc.TestShutdownListener;
 
 import org.biokoframework.system.ConfigurationEnum;
 import org.biokoframework.system.KILL_ME.SystemNames;
 import org.biokoframework.system.KILL_ME.XSystem;
 import org.biokoframework.system.KILL_ME.XSystemIdentityCard;
 import org.biokoframework.system.factory.AnnotatedSystemFactory;
+import org.biokoframework.systema.factory.SystemACommands;
+import org.biokoframework.systema.factory.SystemAContextFactory;
+import org.biokoframework.systema.misc.TestShutdownListener;
 import org.junit.Test;
 
 public class ShutdownTest {

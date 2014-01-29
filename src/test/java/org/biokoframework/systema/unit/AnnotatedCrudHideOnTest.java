@@ -35,10 +35,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
-import org.biokoframework.systema.command.DummyEmptyCommand;
-import org.biokoframework.systema.command.PrintLoginIdCommand;
-import org.biokoframework.systema.factory.SystemACommands;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +51,9 @@ import org.biokoframework.system.context.Context;
 import org.biokoframework.system.event.SystemListener;
 import org.biokoframework.system.factory.AnnotatedCommandHandlerFactory;
 import org.biokoframework.system.repository.core.AbstractRepository;
+import org.biokoframework.systema.command.DummyEmptyCommand;
+import org.biokoframework.systema.command.PrintLoginIdCommand;
+import org.biokoframework.systema.factory.SystemACommands;
 import org.biokoframework.utils.domain.DomainEntity;
 import org.biokoframework.utils.fields.Fields;
 import org.biokoframework.utils.repository.Repository;

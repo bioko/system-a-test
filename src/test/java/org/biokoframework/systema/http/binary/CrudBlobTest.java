@@ -33,15 +33,14 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-import org.biokoframework.http.rest.exception.HttpError;
-import org.biokoframework.http.rest.exception.HttpResponseBuilder;
-import org.biokoframework.http.rest.exception.HttpResponseExceptionFactory;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.URL;
 
+import org.biokoframework.http.rest.exception.HttpError;
+import org.biokoframework.http.rest.exception.HttpResponseBuilder;
+import org.biokoframework.http.rest.exception.HttpResponseExceptionFactory;
 import org.biokoframework.system.KILL_ME.commons.GenericFieldValues;
 import org.biokoframework.system.entity.binary.BinaryEntity;
 import org.biokoframework.system.exceptions.CommandExceptionsFactory;

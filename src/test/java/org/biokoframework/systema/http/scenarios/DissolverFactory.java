@@ -29,22 +29,22 @@ package org.biokoframework.systema.http.scenarios;
 
 import static org.biokoframework.utils.matcher.Matchers.matchesJSONString;
 import static org.hamcrest.Matchers.equalTo;
+
+import java.util.Arrays;
+
 import org.biokoframework.http.rest.exception.HttpError;
 import org.biokoframework.http.rest.exception.HttpResponseBuilder;
 import org.biokoframework.http.rest.exception.HttpResponseExceptionFactory;
 import org.biokoframework.http.scenario.HttpScenarioFactory;
 import org.biokoframework.http.scenario.JSonExpectedResponseBuilder;
 import org.biokoframework.http.scenario.Scenario;
+import org.biokoframework.system.entity.EntityClassNameTranslator;
+import org.biokoframework.system.exceptions.CommandExceptionsFactory;
 import org.biokoframework.systema.commons.SystemACommandNames;
 import org.biokoframework.systema.entity.dummy1.DummyEntity1;
 import org.biokoframework.systema.entity.dummy1.DummyEntity1Builder;
 import org.biokoframework.systema.entity.dummy2.DummyEntity2;
 import org.biokoframework.systema.entity.dummy2.DummyEntity2Builder;
-
-import java.util.Arrays;
-
-import org.biokoframework.system.entity.EntityClassNameTranslator;
-import org.biokoframework.system.exceptions.CommandExceptionsFactory;
 import org.biokoframework.utils.domain.DomainEntity;
 import org.biokoframework.utils.domain.EntityBuilder;
 import org.hamcrest.Matcher;

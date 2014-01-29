@@ -27,6 +27,13 @@
 
 package org.biokoframework.systema.http.scenarios;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.biokoframework.http.scenario.HttpScenarioFactory;
 import org.biokoframework.http.scenario.OnlyGetScenarioFactory;
 import org.biokoframework.http.scenario.Scenario;
@@ -41,14 +48,6 @@ import org.biokoframework.systema.entity.dummy3.DummyEntity3Builder;
 import org.biokoframework.systema.entity.dummyComplex.DummyComplexDomainEntity;
 import org.biokoframework.systema.entity.dummyComplex.DummyComplexDomainEntityBuilder;
 import org.biokoframework.systema.http.SystemATestAbstract;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;

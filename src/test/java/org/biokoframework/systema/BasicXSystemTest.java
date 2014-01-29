@@ -36,6 +36,7 @@ import org.biokoframework.system.command.CommandException;
 import org.biokoframework.system.entity.login.Login;
 import org.biokoframework.system.entity.login.LoginBuilder;
 import org.biokoframework.utils.domain.EntityBuilder;
+import org.biokoframework.utils.exception.BiokoException;
 import org.biokoframework.utils.fields.FieldNames;
 import org.biokoframework.utils.fields.Fields;
 import org.json.simple.JSONValue;
@@ -54,7 +55,7 @@ public class BasicXSystemTest {
 //	}
 	
 	@Test
-	public void twoWorkingCommands() throws SystemException {
+	public void twoWorkingCommands() throws BiokoException {
 		EntityBuilder<Login> login = new LoginBuilder().loadDefaultExample();
 		login.setId("1");
 		
@@ -76,7 +77,7 @@ public class BasicXSystemTest {
 	}
 
 	@Test(expected = CommandException.class)
-	public void missingCommandName() throws SystemException {
+	public void missingCommandName() throws BiokoException {
 		Fields input = Fields.empty();
 		input.put(FieldNames.NAME, FieldNames.NAME_VALUE);
 		

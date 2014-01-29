@@ -33,11 +33,10 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
 import static org.junit.Assert.assertThat;
 
-import org.biokoframework.system.KILL_ME.commons.GenericFieldValues;
-
 import org.biokoframework.http.scenario.ExecutionScenarioStep;
 import org.biokoframework.http.scenario.Scenario;
 import org.biokoframework.http.scenario.mail.MailScenarioStep;
+import org.biokoframework.system.KILL_ME.commons.GenericFieldValues;
 import org.biokoframework.systema.commons.SystemACommandNames;
 import org.biokoframework.systema.entity.dummy1.DummyEntity1;
 import org.biokoframework.systema.misc.Dummy1Mock;

@@ -29,16 +29,16 @@ package org.biokoframework.systema.http.scenarios;
 
 import static org.biokoframework.http.matcher.Matchers.matchesAuthenticationResponse;
 import static org.biokoframework.utils.matcher.Matchers.matchesJSONString;
+
+import java.util.HashMap;
+
 import org.biokoframework.http.rest.exception.HttpError;
 import org.biokoframework.http.scenario.HttpScenarioFactory;
 import org.biokoframework.http.scenario.JSonExpectedResponseBuilder;
 import org.biokoframework.http.scenario.Scenario;
-import org.biokoframework.systema.factory.SystemACommands;
-
-import java.util.HashMap;
-
 import org.biokoframework.system.entity.login.Login;
 import org.biokoframework.system.entity.login.LoginBuilder;
+import org.biokoframework.systema.factory.SystemACommands;
 import org.json.simple.JSONValue;
 
 public class AuthenticationStoriesFactory {

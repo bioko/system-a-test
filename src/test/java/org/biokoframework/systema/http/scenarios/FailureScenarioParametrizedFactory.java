@@ -28,11 +28,11 @@
 package org.biokoframework.systema.http.scenarios;
 
 import static org.hamcrest.Matchers.equalTo;
+
 import org.biokoframework.http.rest.exception.HttpError;
 import org.biokoframework.http.scenario.HttpScenarioFactory;
 import org.biokoframework.http.scenario.JSonExpectedResponseBuilder;
 import org.biokoframework.http.scenario.Scenario;
-
 import org.json.simple.JSONValue;
 
 public class FailureScenarioParametrizedFactory {
