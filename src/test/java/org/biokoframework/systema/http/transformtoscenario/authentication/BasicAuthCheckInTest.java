@@ -84,7 +84,7 @@ public class BasicAuthCheckInTest extends SystemATestAbstract {
 	public void failureLoginNotExisting() throws Exception {
 		Login anUnexistingLogin = new LoginBuilder().loadDefaultExample().build(false);
 		
-		String authentication = anUnexistingLogin.get(GenericFieldNames.USER_EMAIL) 
+		String authentication = anUnexistingLogin.get(GenericFieldNames.USER_EMAIL).toString() 
 				+ ':' + anUnexistingLogin.get(GenericFieldNames.PASSWORD);
 		String base64Authentication = Base64.encodeBase64String(authentication.getBytes("utf-8"));
 		
@@ -104,7 +104,7 @@ public class BasicAuthCheckInTest extends SystemATestAbstract {
 	@Test
 	public void successfullLoginWithBasicAuthentication() throws UnsupportedEncodingException {
 			
-		String authentication = _login.get(GenericFieldNames.USER_EMAIL) 
+		String authentication = _login.get(GenericFieldNames.USER_EMAIL).toString()
 								+ ':' + _login.get(GenericFieldNames.PASSWORD);
 		String base64Authentication = Base64.encodeBase64String(authentication.getBytes("utf-8"));
 		
@@ -137,7 +137,7 @@ public class BasicAuthCheckInTest extends SystemATestAbstract {
 		
 		_login.set(GenericFieldNames.PASSWORD, "WrongPassword");
 			
-		String authentication = _login.get(GenericFieldNames.USER_EMAIL) 
+		String authentication = _login.get(GenericFieldNames.USER_EMAIL).toString()
 					+ ':' + _login.get(GenericFieldNames.PASSWORD);
 		String base64Authentication = Base64.encodeBase64String(authentication.getBytes("utf-8"));
 			

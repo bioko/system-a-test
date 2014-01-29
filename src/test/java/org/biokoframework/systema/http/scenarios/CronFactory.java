@@ -71,7 +71,7 @@ public class CronFactory {
 		scenario.addScenarioStep("Check that cron actually worked, mock is set to quadrato", new ExecutionScenarioStep() {
 			@Override
 			public void execute() {
-				assertThat(Dummy1Mock.getShape().get(DummyEntity1.VALUE), is(equalTo(Dummy1Mock.QUADRATO)));
+				assertThat(Dummy1Mock.getShape().get(DummyEntity1.VALUE), is(equalTo((Object) Dummy1Mock.QUADRATO)));
 			}
 		});
 		

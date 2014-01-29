@@ -65,8 +65,8 @@ public class MultipartHttpScenarioFactory {
 				equalTo(JSonExpectedResponseBuilder.asArray(builder.build(true).toJSONString())));
 		
 		
-		multipartScenarioStep.addPart(DummyMultipart.FIRST_TEXT_FIELD,builder.build(true).get(DummyMultipart.FIRST_TEXT_FIELD));
-		multipartScenarioStep.addPart(DummyMultipart.SECOND_TEXT_FIELD,builder.build(true).get(DummyMultipart.SECOND_TEXT_FIELD));
+		multipartScenarioStep.addPart(DummyMultipart.FIRST_TEXT_FIELD, builder.build(true).get(DummyMultipart.FIRST_TEXT_FIELD).toString());
+		multipartScenarioStep.addPart(DummyMultipart.SECOND_TEXT_FIELD,builder.build(true).get(DummyMultipart.SECOND_TEXT_FIELD).toString());
 		// 1st file
 		InputStream firstFileIStream = MultipartHttpScenarioFactory.class.getClassLoader().getResourceAsStream(C64KERNEL_BIN_FILE);
 		multipartScenarioStep.addPart(MultipartCommand.FIRST_FILE_PART_NAME, firstFileIStream, GenericFieldValues.OCTET_CONTENT_TYPE);

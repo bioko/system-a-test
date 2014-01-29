@@ -72,7 +72,7 @@ public class BasicXSystemTest {
 		output = _system.execute(input2);
 		
 		assertEquals("[" + login.build(true).toJSONString() + "]", 
-				JSONValue.toJSONString(output.valueFor(GenericFieldNames.RESPONSE)));
+				JSONValue.toJSONString(output.get(GenericFieldNames.RESPONSE)));
 	}
 
 	@Test(expected = CommandException.class)
