@@ -31,7 +31,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.biokoframework.system.KILL_ME.XSystem;
 import org.biokoframework.system.KILL_ME.commons.GenericFieldNames;
-import org.biokoframework.system.KILL_ME.exception.SystemException;
 import org.biokoframework.system.command.CommandException;
 import org.biokoframework.system.entity.login.Login;
 import org.biokoframework.system.entity.login.LoginBuilder;
