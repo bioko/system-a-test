@@ -92,7 +92,7 @@ public class EmailConfirmationStories {
 								+ "Conferma email</a>\n"
 						+ "<body>\n</html>"))); 
 		
-		Fields fields = Fields.empty();
+		Fields fields = new Fields();
 		fields.put(Login.USER_EMAIL, loginUserEmail);
 		fields.put(EmailConfirmation.TOKEN, token);
 		scenario.addScenarioStep("From the link contained in the mail confirm the address", HttpScenarioFactory.postSuccessful(
@@ -102,7 +102,7 @@ public class EmailConfirmationStories {
 				fields.toJSONString(), 
 				matchesJSONString("[ ]")));
 		
-		EmailConfirmation confirmation = new EmailConfirmation(Fields.empty());
+		EmailConfirmation confirmation = new EmailConfirmation(new Fields());
 		confirmation.setId("1");
 		confirmation.set(EmailConfirmation.LOGIN_ID, "1");
 		confirmation.set(EmailConfirmation.CONFIRMED, FieldValues.TRUE);

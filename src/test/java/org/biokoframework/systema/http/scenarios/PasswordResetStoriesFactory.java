@@ -108,7 +108,7 @@ public class PasswordResetStoriesFactory {
 			}
 		});
 		
-		Fields passwordResetFields = Fields.empty();
+		Fields passwordResetFields = new Fields();
 		passwordResetFields.put(Login.PASSWORD, newPassword);
 		passwordResetFields.put(PasswordReset.TOKEN, resetToken);
 		scenario.addScenarioStep("Set the new password", HttpScenarioFactory.postSuccessful(

@@ -58,13 +58,13 @@ public class BasicXSystemTest {
 		EntityBuilder<Login> login = new LoginBuilder().loadDefaultExample();
 		login.setId("1");
 		
-		Fields input = Fields.empty();
+		Fields input = new Fields();
 		input.put(FieldNames.COMMAND_NAME, "POST_login");
 		input.putAll(login.build(false).fields());
 		
 		Fields output = _system.execute(input);
 		
-		Fields input2 = Fields.empty();
+		Fields input2 = new Fields();
 		input2.put(FieldNames.COMMAND_NAME, "GET_login");
 		input2.put(GenericFieldNames.USER_EMAIL, "matto");
 		input2.put(GenericFieldNames.PASSWORD, "fatto");
@@ -77,11 +77,9 @@ public class BasicXSystemTest {
 
 	@Test(expected = CommandException.class)
 	public void missingCommandName() throws BiokoException {
-		Fields input = Fields.empty();
-		input.put(FieldNames.NAME, FieldNames.NAME_VALUE);
+
+		_system.execute(Fields.single(FieldNames.NAME, FieldNames.NAME_VALUE));
 		
-		
-		_system.execute(input);
 	}
 	
 }

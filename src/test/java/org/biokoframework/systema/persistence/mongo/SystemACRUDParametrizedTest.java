@@ -68,8 +68,8 @@ public class SystemACRUDParametrizedTest extends AbstractSystemServletInterfaceT
 			return result;
 		}
 		
-		private static HashMap<String,String> dummyEntity1UpdateMap() {
-			HashMap<String, String> result = new HashMap<String, String>();
+		private static HashMap<String, Object> dummyEntity1UpdateMap() {
+			HashMap<String, Object> result = new HashMap<String, Object>();
 			result.put(DummyEntity1.VALUE, "aValue UPDATED");
 			return result; 
 		}
