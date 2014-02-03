@@ -117,7 +117,7 @@ public class AnnotatedCrudHideOnTest {
 		AbstractCommandHandler devCh = AnnotatedCommandHandlerFactory.create(SystemACommands.class, devContext, devCard);
 		
 		Command c = devCh.getByName(HttpMethod.POST.name() + "_" + SystemACommands.DEV_MUTANT_COMMAND);
-		assertThat(c.execute(Fields.empty()), is(equalTo(Fields.single(GenericFieldNames.RESPONSE, new ArrayList<DomainEntity>()))));
+		assertThat(c.execute(new Fields()), is(equalTo(Fields.single(GenericFieldNames.RESPONSE, new ArrayList<DomainEntity>()))));
 		
 		XSystemIdentityCard prodCard = new XSystemIdentityCard(SystemNames.SYSTEM_A, "1.0", ConfigurationEnum.PROD);
 		Context prodContext = getFarloccoContext();
@@ -126,7 +126,7 @@ public class AnnotatedCrudHideOnTest {
 		c = prodCh.getByName(HttpMethod.POST.name() + "_" + SystemACommands.PROD_MUTANT_COMMAND);
 		boolean failed = false;
 		try {
-			c.execute(Fields.empty());
+			c.execute(new Fields());
 		} catch (Exception exception) {
 			assertThat(exception, is(instanceOf(PrintLoginIdCommand.class)));
 			failed = true;
