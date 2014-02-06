@@ -74,23 +74,23 @@ public class ParametrizedTests extends SystemATestAbstract {
 				new String[] {DummyComplexDomainEntity.A_STRING_FIELD_MANDATORY_ALSO_IN_GET})));
 		
 		result.addAll(HttpScenarioFactory.findScenarios(
-//				FailureScenarioParametrizedFactory.class,
-//				DissolverFactory.class,
-//				MultipleCommandFactory.class,
-//				CodeExecutionScenarioStepFactory.class,
-//				CronFactory.class,
-				ValidatorFactory.class
-//				PasswordResetStoriesFactory.class,
-//				EmailConfirmationStories.class
+				FailureScenarioParametrizedFactory.class,
+				DissolverFactory.class,
+				MultipleCommandFactory.class,
+				CodeExecutionScenarioStepFactory.class,
+				CronFactory.class,
+				ValidatorFactory.class,
+				PasswordResetStoriesFactory.class,
+				EmailConfirmationStories.class
 		));
 
 //		result.addAll(OnlyGetScenarioFactory.adaptToOnlyGet(result));
 //
-//		result.addAll(HttpScenarioFactory.findScenarios(
-//				CommandInfoFactory.class, 
-//				MultipartHttpScenarioFactory.class,
-//				AuthenticationStoriesFactory.class
-//		));
+		result.addAll(HttpScenarioFactory.findScenarios(
+				CommandInfoFactory.class, 
+				MultipartHttpScenarioFactory.class,
+				AuthenticationStoriesFactory.class
+		));
 		
 		return result;
 	
