@@ -73,7 +73,7 @@ public class CommandWithResolverTest extends SystemATestAbstract {
 		
 		JSONObject resolved2 = new JSONObject();
 		resolved2.put("id", "1");
-		resolved2.put("value", "gino2");
+		resolved2.put("value", 314);
 		resolved2.put("dummyEntity1Id", resolved1);
 		
 		JSONArray resolvedArray = new JSONArray();
