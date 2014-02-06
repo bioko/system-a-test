@@ -45,30 +45,42 @@ import org.biokoframework.system.KILL_ME.XSystemIdentityCard;
 import org.biokoframework.system.KILL_ME.commons.GenericFieldNames;
 import org.biokoframework.system.KILL_ME.commons.HttpMethod;
 import org.biokoframework.system.command.AbstractCommandHandler;
-import org.biokoframework.system.command.Command;
 import org.biokoframework.system.command.CommandException;
+import org.biokoframework.system.command.ICommand;
 import org.biokoframework.system.context.Context;
 import org.biokoframework.system.event.SystemListener;
 import org.biokoframework.system.factory.AnnotatedCommandHandlerFactory;
 import org.biokoframework.system.repository.core.AbstractRepository;
+import org.biokoframework.system.services.RepositoryModule;
 import org.biokoframework.systema.command.DummyEmptyCommand;
 import org.biokoframework.systema.command.PrintLoginIdCommand;
 import org.biokoframework.systema.factory.SystemACommands;
 import org.biokoframework.utils.domain.DomainEntity;
 import org.biokoframework.utils.fields.Fields;
 import org.biokoframework.utils.repository.Repository;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+
 public class AnnotatedCrudHideOnTest {
 
+	private Injector fInjector;
+
+	@Before
+	public void prepareInjector() {
+		fInjector = Guice.createInjector(new RepositoryModule());
+	}
+	
 	@Test
 	public void testCrudInserted() throws IllegalArgumentException, IllegalAccessException, InstantiationException, ClassNotFoundException, CommandException {
 		XSystemIdentityCard identityCard = new XSystemIdentityCard(SystemNames.SYSTEM_A, "1.0", ConfigurationEnum.DEV);
 		Context context = getFarloccoContext();
-		AbstractCommandHandler ch = AnnotatedCommandHandlerFactory.create(SystemACommands.class, context, identityCard);
+		AbstractCommandHandler ch = AnnotatedCommandHandlerFactory.create(SystemACommands.class, context, identityCard, fInjector);
 		
-		Command c = ch.getByName(HttpMethod.GET.name()+"_"+SystemACommands.DUMMY_ENTITY1_HIDDEN_ON_PROD);
+		ICommand c = ch.getByName(HttpMethod.GET.name()+"_"+SystemACommands.DUMMY_ENTITY1_HIDDEN_ON_PROD);
 		assertNotNull(c);
 	}
 	
@@ -76,9 +88,9 @@ public class AnnotatedCrudHideOnTest {
 	public void testCrudNotInserted() throws IllegalArgumentException, IllegalAccessException, InstantiationException, ClassNotFoundException, CommandException {
 		XSystemIdentityCard identityCard = new XSystemIdentityCard(SystemNames.SYSTEM_A, "1.0", ConfigurationEnum.PROD);
 		Context context = getFarloccoContext();
-		AbstractCommandHandler ch = AnnotatedCommandHandlerFactory.create(SystemACommands.class, context, identityCard);
+		AbstractCommandHandler ch = AnnotatedCommandHandlerFactory.create(SystemACommands.class, context, identityCard, fInjector);
 		
-		Command c = ch.getByName(HttpMethod.GET.name()+"_"+SystemACommands.DUMMY_ENTITY1_HIDDEN_ON_PROD);	
+		ICommand c = ch.getByName(HttpMethod.GET.name()+"_"+SystemACommands.DUMMY_ENTITY1_HIDDEN_ON_PROD);	
 		assertNull(c);
 	}
 	
@@ -87,21 +99,21 @@ public class AnnotatedCrudHideOnTest {
 		
 		XSystemIdentityCard devCard = new XSystemIdentityCard(SystemNames.SYSTEM_A, "1.0", ConfigurationEnum.DEV);
 		Context devContext = getFarloccoContext();
-		AbstractCommandHandler devCh = AnnotatedCommandHandlerFactory.create(SystemACommands.class, devContext, devCard);
+		AbstractCommandHandler devCh = AnnotatedCommandHandlerFactory.create(SystemACommands.class, devContext, devCard, fInjector);
 		
-		Command c = devCh.getByName(HttpMethod.POST.name() + "_" + SystemACommands.DEV_MUTANT_COMMAND);
+		ICommand c = devCh.getByName(HttpMethod.POST.name() + "_" + SystemACommands.DEV_MUTANT_COMMAND);
 		assertThat(c, is(instanceOf(DummyEmptyCommand.class)));
 		
 		XSystemIdentityCard prodCard = new XSystemIdentityCard(SystemNames.SYSTEM_A, "1.0", ConfigurationEnum.PROD);
 		Context prodContext = getFarloccoContext();
-		AbstractCommandHandler prodCh = AnnotatedCommandHandlerFactory.create(SystemACommands.class, prodContext, prodCard);
+		AbstractCommandHandler prodCh = AnnotatedCommandHandlerFactory.create(SystemACommands.class, prodContext, prodCard, fInjector);
 		
 		c = prodCh.getByName(HttpMethod.POST.name() + "_" + SystemACommands.PROD_MUTANT_COMMAND);
 		assertThat(c, is(instanceOf(PrintLoginIdCommand.class)));
 	
 		XSystemIdentityCard demoCard = new XSystemIdentityCard(SystemNames.SYSTEM_A, "1.0", ConfigurationEnum.DEMO);
 		Context demoContext = getFarloccoContext();
-		AbstractCommandHandler demoCh = AnnotatedCommandHandlerFactory.create(SystemACommands.class, demoContext, demoCard);
+		AbstractCommandHandler demoCh = AnnotatedCommandHandlerFactory.create(SystemACommands.class, demoContext, demoCard, fInjector);
 		
 		c = demoCh.getByName(HttpMethod.POST.name() + "_" + SystemACommands.PROD_MUTANT_COMMAND);
 		assertThat(c, is(nullValue()));
@@ -114,14 +126,14 @@ public class AnnotatedCrudHideOnTest {
 		
 		XSystemIdentityCard devCard = new XSystemIdentityCard(SystemNames.SYSTEM_A, "1.0", ConfigurationEnum.DEV);
 		Context devContext = getFarloccoContext();
-		AbstractCommandHandler devCh = AnnotatedCommandHandlerFactory.create(SystemACommands.class, devContext, devCard);
+		AbstractCommandHandler devCh = AnnotatedCommandHandlerFactory.create(SystemACommands.class, devContext, devCard, fInjector);
 		
-		Command c = devCh.getByName(HttpMethod.POST.name() + "_" + SystemACommands.DEV_MUTANT_COMMAND);
+		ICommand c = devCh.getByName(HttpMethod.POST.name() + "_" + SystemACommands.DEV_MUTANT_COMMAND);
 		assertThat(c.execute(new Fields()), is(equalTo(new Fields(GenericFieldNames.RESPONSE, new ArrayList<DomainEntity>()))));
 		
 		XSystemIdentityCard prodCard = new XSystemIdentityCard(SystemNames.SYSTEM_A, "1.0", ConfigurationEnum.PROD);
 		Context prodContext = getFarloccoContext();
-		AbstractCommandHandler prodCh = AnnotatedCommandHandlerFactory.create(SystemACommands.class, prodContext, prodCard);
+		AbstractCommandHandler prodCh = AnnotatedCommandHandlerFactory.create(SystemACommands.class, prodContext, prodCard, fInjector);
 		
 		c = prodCh.getByName(HttpMethod.POST.name() + "_" + SystemACommands.PROD_MUTANT_COMMAND);
 		boolean failed = false;
@@ -200,6 +212,5 @@ public class AnnotatedCrudHideOnTest {
 		
 		return context;
 	}
-	
 	
 }

@@ -48,7 +48,7 @@ public class ShutdownTest {
 		
 		TestShutdownListener.triggered = false;
 		
-		XSystem theSystem = AnnotatedSystemFactory.createSystem(identityCard, new SystemAContextFactory(), SystemACommands.class);
+		XSystem theSystem = AnnotatedSystemFactory.createSystem(identityCard, new SystemAContextFactory(), SystemACommands.class, null);
 		
 		// theSystem._context.addShutdownListener(new )
 		// Performed by the context factory
