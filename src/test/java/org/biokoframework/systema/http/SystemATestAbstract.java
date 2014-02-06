@@ -86,7 +86,7 @@ public class SystemATestAbstract extends AbstractSystemServletInterfaceTest {
 		init();
 		start();
 		
-		_localHostUrl = "http://localhost:" + getPort() + "/1.0/";
+		_localHostUrl = getURI() + "1.0/";
 		_loginUrl = _localHostUrl + LOGIN;
 		
 		_entity1url = getLocalHostUrl() + "dummy-entity1/";
