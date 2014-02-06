@@ -110,7 +110,7 @@ public class CheckInTest extends SystemATestAbstract {
 		body(
 				allOf(
 						substringMatchesPattern("\"authToken\":\"(\\d|a|b|c|d|e|f|-)+?\""),
-						substringMatchesPattern("\"authTokenExpire\":\"\\d+?\"")
+						substringMatchesPattern("\"authTokenExpire\":\\d+?")
 				)
 		).
 		when().
@@ -166,7 +166,7 @@ public class CheckInTest extends SystemATestAbstract {
 		body(
 				allOf(
 						substringMatchesPattern("\"authToken\":\"(\\d|a|b|c|d|e|f|-)+?\""),
-						substringMatchesPattern("\"authTokenExpire\":\"\\d+?\""),
+						substringMatchesPattern("\"authTokenExpire\":\\d+?"),
 						substringMatchesPattern("\"roles\":\"admin\"")
 				)
 		).
