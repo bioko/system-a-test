@@ -87,9 +87,10 @@ public class TokenTest extends SystemATestAbstract {
 		
 		EntityBuilder<Login> anOtherLoginBuilder = new LoginBuilder().loadExample(LoginBuilder.SIMONE);
 		
-		Fields requestBody = Fields.single(GenericFieldNames.AUTH_TOKEN, validToken);
-		requestBody.put(Login.USER_EMAIL, anOtherLoginBuilder.get(Login.USER_EMAIL));
-		requestBody.put(Login.PASSWORD, anOtherLoginBuilder.get(Login.PASSWORD));
+		Fields requestBody = new Fields(
+				GenericFieldNames.AUTH_TOKEN, validToken,
+				Login.USER_EMAIL, anOtherLoginBuilder.get(Login.USER_EMAIL),
+				Login.PASSWORD, anOtherLoginBuilder.get(Login.PASSWORD));
 		
 		String actualTokenExpire = expect().
 		statusCode(200).

@@ -39,8 +39,8 @@ import org.biokoframework.utils.fields.Fields;
 
 public class CodeExecutionScenarioStepFactory {
 
-	static DummyEntity1 quadrato = new DummyEntity1(Fields.single(DummyEntity1.VALUE, "quadrato"));
-	static DummyEntity1 triangolo = new DummyEntity1(Fields.single(DummyEntity1.VALUE, "triangolo"));
+	static DummyEntity1 quadrato = new DummyEntity1(new Fields(DummyEntity1.VALUE, "quadrato"));
+	static DummyEntity1 triangolo = new DummyEntity1(new Fields(DummyEntity1.VALUE, "triangolo"));
 	
 	static {		
 		quadrato.setId("1");
