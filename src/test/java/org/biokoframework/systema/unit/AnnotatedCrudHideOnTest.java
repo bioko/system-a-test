@@ -117,7 +117,7 @@ public class AnnotatedCrudHideOnTest {
 		AbstractCommandHandler devCh = AnnotatedCommandHandlerFactory.create(SystemACommands.class, devContext, devCard);
 		
 		Command c = devCh.getByName(HttpMethod.POST.name() + "_" + SystemACommands.DEV_MUTANT_COMMAND);
-		assertThat(c.execute(new Fields()), is(equalTo(Fields.single(GenericFieldNames.RESPONSE, new ArrayList<DomainEntity>()))));
+		assertThat(c.execute(new Fields()), is(equalTo(new Fields(GenericFieldNames.RESPONSE, new ArrayList<DomainEntity>()))));
 		
 		XSystemIdentityCard prodCard = new XSystemIdentityCard(SystemNames.SYSTEM_A, "1.0", ConfigurationEnum.PROD);
 		Context prodContext = getFarloccoContext();

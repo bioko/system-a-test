@@ -78,7 +78,7 @@ public class BasicXSystemTest {
 	@Test(expected = CommandException.class)
 	public void missingCommandName() throws BiokoException {
 
-		_system.execute(Fields.single(FieldNames.NAME, FieldNames.NAME_VALUE));
+		_system.execute(new Fields(FieldNames.NAME, FieldNames.NAME_VALUE));
 		
 	}
 	
