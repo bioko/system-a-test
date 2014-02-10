@@ -44,8 +44,8 @@ import org.biokoframework.system.command.authentication.RequestPasswordResetComm
 import org.biokoframework.system.entity.authentication.PasswordReset;
 import org.biokoframework.system.entity.login.Login;
 import org.biokoframework.system.entity.login.LoginBuilder;
-import org.biokoframework.system.service.currenttime.impl.TestCurrentTimeService;
 import org.biokoframework.system.service.random.impl.TestRandomGeneratorService;
+import org.biokoframework.system.services.currenttime.impl.TestCurrentTimeService;
 import org.biokoframework.systema.factory.SystemACommands;
 import org.biokoframework.utils.domain.EntityBuilder;
 import org.biokoframework.utils.fields.Fields;

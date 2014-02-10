@@ -35,12 +35,20 @@ import org.biokoframework.system.KILL_ME.SystemNames;
 import org.biokoframework.system.KILL_ME.XSystem;
 import org.biokoframework.system.KILL_ME.XSystemIdentityCard;
 import org.biokoframework.system.factory.AnnotatedSystemFactory;
+import org.biokoframework.system.services.currenttime.CurrentTimeModule;
 import org.biokoframework.systema.factory.SystemACommands;
 import org.biokoframework.systema.factory.SystemAContextFactory;
+import org.biokoframework.systema.injection.SystemAMemRepoModule;
 import org.biokoframework.systema.misc.TestShutdownListener;
+import org.junit.Before;
 import org.junit.Test;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+
 public class ShutdownTest {
+
+	private Injector fInjector;
 
 	@Test
 	public void testShutdownListenerIsCalled() throws Exception {
@@ -48,7 +56,7 @@ public class ShutdownTest {
 		
 		TestShutdownListener.triggered = false;
 		
-		XSystem theSystem = AnnotatedSystemFactory.createSystem(identityCard, new SystemAContextFactory(), SystemACommands.class, null);
+		XSystem theSystem = AnnotatedSystemFactory.createSystem(identityCard, new SystemAContextFactory(), SystemACommands.class, fInjector);
 		
 		// theSystem._context.addShutdownListener(new )
 		// Performed by the context factory
@@ -56,6 +64,13 @@ public class ShutdownTest {
 		theSystem.shutdown();
 			
 		assertThat(TestShutdownListener.triggered, is(true));
+	}
+
+	@Before
+	public void createInjector() {
+		fInjector = Guice.createInjector(
+				new SystemAMemRepoModule(),
+				new CurrentTimeModule(ConfigurationEnum.DEV));
 	}
 	
 }

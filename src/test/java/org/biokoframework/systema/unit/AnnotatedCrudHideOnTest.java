@@ -51,10 +51,11 @@ import org.biokoframework.system.context.Context;
 import org.biokoframework.system.event.SystemListener;
 import org.biokoframework.system.factory.AnnotatedCommandHandlerFactory;
 import org.biokoframework.system.repository.core.AbstractRepository;
-import org.biokoframework.system.services.RepositoryModule;
+import org.biokoframework.system.services.currenttime.CurrentTimeModule;
 import org.biokoframework.systema.command.DummyEmptyCommand;
 import org.biokoframework.systema.command.PrintLoginIdCommand;
 import org.biokoframework.systema.factory.SystemACommands;
+import org.biokoframework.systema.injection.SystemAMemRepoModule;
 import org.biokoframework.utils.domain.DomainEntity;
 import org.biokoframework.utils.fields.Fields;
 import org.biokoframework.utils.repository.Repository;
@@ -71,7 +72,9 @@ public class AnnotatedCrudHideOnTest {
 
 	@Before
 	public void prepareInjector() {
-		fInjector = Guice.createInjector(new RepositoryModule());
+		fInjector = Guice.createInjector(
+				new SystemAMemRepoModule(),
+				new CurrentTimeModule(ConfigurationEnum.DEV));
 	}
 	
 	@Test
