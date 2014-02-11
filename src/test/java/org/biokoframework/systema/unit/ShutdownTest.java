@@ -36,6 +36,7 @@ import org.biokoframework.system.KILL_ME.XSystem;
 import org.biokoframework.system.KILL_ME.XSystemIdentityCard;
 import org.biokoframework.system.factory.AnnotatedSystemFactory;
 import org.biokoframework.system.services.currenttime.CurrentTimeModule;
+import org.biokoframework.system.services.random.RandomModule;
 import org.biokoframework.systema.factory.SystemACommands;
 import org.biokoframework.systema.factory.SystemAContextFactory;
 import org.biokoframework.systema.injection.SystemAMemRepoModule;
@@ -70,7 +71,8 @@ public class ShutdownTest {
 	public void createInjector() {
 		fInjector = Guice.createInjector(
 				new SystemAMemRepoModule(),
-				new CurrentTimeModule(ConfigurationEnum.DEV));
+				new CurrentTimeModule(ConfigurationEnum.DEV),
+				new RandomModule(ConfigurationEnum.DEV));
 	}
 	
 }
