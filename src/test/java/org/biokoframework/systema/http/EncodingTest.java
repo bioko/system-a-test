@@ -54,21 +54,21 @@ public class EncodingTest extends SystemATestAbstract {
 	static final byte[] ENTITY_1_ISO8859_1_JSON_FIRST_PART = "{ \"value\":\"iso8859-1 ".getBytes();
 	static final byte[] ENTITY_1_JSON_SECOND_PART = "\" }".getBytes();
 
-	byte[] _entity1utf8 = new byte[UTF8_BYTES.length + ENTITY_1_UTF8_JSON_FIRST_PART.length + ENTITY_1_JSON_SECOND_PART.length];
-	byte[] _entity1latin1 = new byte[ISO8859_1_BYTES.length + ENTITY_1_ISO8859_1_JSON_FIRST_PART.length + ENTITY_1_JSON_SECOND_PART.length];
+	byte[] fEntity1utf8 = new byte[UTF8_BYTES.length + ENTITY_1_UTF8_JSON_FIRST_PART.length + ENTITY_1_JSON_SECOND_PART.length];
+	byte[] fEntity1latin1 = new byte[ISO8859_1_BYTES.length + ENTITY_1_ISO8859_1_JSON_FIRST_PART.length + ENTITY_1_JSON_SECOND_PART.length];
 	 
 	@Before
 	public void buildByteSequences() {
-		System.arraycopy(ENTITY_1_UTF8_JSON_FIRST_PART, 0, _entity1utf8, 0, ENTITY_1_UTF8_JSON_FIRST_PART.length);
-		System.arraycopy(UTF8_BYTES, 0, _entity1utf8, ENTITY_1_UTF8_JSON_FIRST_PART.length, UTF8_BYTES.length);
+		System.arraycopy(ENTITY_1_UTF8_JSON_FIRST_PART, 0, fEntity1utf8, 0, ENTITY_1_UTF8_JSON_FIRST_PART.length);
+		System.arraycopy(UTF8_BYTES, 0, fEntity1utf8, ENTITY_1_UTF8_JSON_FIRST_PART.length, UTF8_BYTES.length);
 		System.arraycopy(ENTITY_1_JSON_SECOND_PART, 0, 
-				_entity1utf8,  ENTITY_1_UTF8_JSON_FIRST_PART.length + UTF8_BYTES.length,
+				fEntity1utf8,  ENTITY_1_UTF8_JSON_FIRST_PART.length + UTF8_BYTES.length,
 				ENTITY_1_JSON_SECOND_PART.length);
 
-		System.arraycopy(ENTITY_1_ISO8859_1_JSON_FIRST_PART, 0, _entity1latin1, 0, ENTITY_1_ISO8859_1_JSON_FIRST_PART.length);
-		System.arraycopy(ISO8859_1_BYTES, 0, _entity1latin1, ENTITY_1_ISO8859_1_JSON_FIRST_PART.length, ISO8859_1_BYTES.length);
+		System.arraycopy(ENTITY_1_ISO8859_1_JSON_FIRST_PART, 0, fEntity1latin1, 0, ENTITY_1_ISO8859_1_JSON_FIRST_PART.length);
+		System.arraycopy(ISO8859_1_BYTES, 0, fEntity1latin1, ENTITY_1_ISO8859_1_JSON_FIRST_PART.length, ISO8859_1_BYTES.length);
 		System.arraycopy(ENTITY_1_JSON_SECOND_PART, 0, 
-				_entity1latin1,  ENTITY_1_ISO8859_1_JSON_FIRST_PART.length + ISO8859_1_BYTES.length,
+				fEntity1latin1,  ENTITY_1_ISO8859_1_JSON_FIRST_PART.length + ISO8859_1_BYTES.length,
 				ENTITY_1_JSON_SECOND_PART.length);
 	}
 
@@ -79,7 +79,7 @@ public class EncodingTest extends SystemATestAbstract {
 		statusCode(200).
 		given().
 		content(
-				_entity1latin1
+				fEntity1latin1
 		).
 		header("Content-Type", "text/html; charset=iso8859-1").
 		post(getEntity1Url());
@@ -88,7 +88,7 @@ public class EncodingTest extends SystemATestAbstract {
 		statusCode(200).
 		given().
 		content(
-				_entity1utf8
+				fEntity1utf8
 		).
 		header("Content-Type", "text/html; charset=utf-8").
 		post(getEntity1Url());
