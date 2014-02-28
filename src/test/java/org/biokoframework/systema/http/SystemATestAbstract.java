@@ -59,8 +59,8 @@ import com.google.inject.servlet.GuiceServletContextListener;
 
 public class SystemATestAbstract extends AbstractSystemServletInterfaceTest {
 	
-	private String _localHostUrl;
-	private String _loginUrl;
+	private String fLocalHostUrl;
+	private String fLoginUrl;
 	private static final List<String> TABLE_NAMES = Arrays.asList(
 				Authentication.class.getSimpleName(),
 				Login.class.getSimpleName(),
@@ -71,14 +71,14 @@ public class SystemATestAbstract extends AbstractSystemServletInterfaceTest {
 				DummyComplexDomainEntity.class.getSimpleName(),
 				BinaryEntity.class.getSimpleName(),
 				DummyMultipart.class.getSimpleName());
-	private String _entity1url;
-	private String _entity2url;
-	private String _entity3url;
+	private String fEntity1url;
+	private String fEntity2url;
+	private String fEntity3url;
 
 	public static final String LOGIN = Login.class.getSimpleName().toLowerCase() + "/";
 
-	private static ArrayList<PreparedStatement> _truncateTableStatements;
-	private static Connection _connection;
+	private static ArrayList<PreparedStatement> fTruncateTableStatements;
+	private static Connection fConnection;
 	
 	@Before
 	public void startServlet() throws Exception {
@@ -86,12 +86,12 @@ public class SystemATestAbstract extends AbstractSystemServletInterfaceTest {
 		init();
 		start();
 		
-		_localHostUrl = "http://localhost:" + getPort() + "/1.0/";
-		_loginUrl = _localHostUrl + LOGIN;
+		fLocalHostUrl = getURI() + "1.0/";
+		fLoginUrl = fLocalHostUrl + LOGIN;
 		
-		_entity1url = getLocalHostUrl() + "dummy-entity1/";
-		_entity2url = getLocalHostUrl() + "dummy-entity2/";
-		_entity3url = getLocalHostUrl() + "dummy-entity3/";
+		fEntity1url = getLocalHostUrl() + "dummy-entity1/";
+		fEntity2url = getLocalHostUrl() + "dummy-entity2/";
+		fEntity3url = getLocalHostUrl() + "dummy-entity3/";
 		
 	}
 
@@ -101,19 +101,19 @@ public class SystemATestAbstract extends AbstractSystemServletInterfaceTest {
 	}
 	
 	public String getLocalHostUrl() {
-		return _localHostUrl;
+		return fLocalHostUrl;
 	}
 	
 	public String getLoginUrl() {
-		return _loginUrl;
+		return fLoginUrl;
 	}
 	
 	public String getEntity1Url() {
-		return _entity1url;
+		return fEntity1url;
 	}
 	
 	public String getEntity2Url() {
-		return _entity2url;
+		return fEntity2url;
 	}
 
 	public static final boolean USE_DB = false;
@@ -129,10 +129,10 @@ public class SystemATestAbstract extends AbstractSystemServletInterfaceTest {
 			String dbPassword = properties.getProperty(SqlConstants.DB_PASSWORD);
 			String dbPort = properties.getProperty(SqlConstants.DB_PORT);
 			
-			_connection = new MySQLConnector(dbUrl, dbName, dbUser, dbPassword, dbPort).getConnection();
-			_truncateTableStatements = new ArrayList<PreparedStatement>();
+			fConnection = new MySQLConnector(dbUrl, dbName, dbUser, dbPassword, dbPort).getConnection();
+			fTruncateTableStatements = new ArrayList<PreparedStatement>();
 			for (String aTableName : TABLE_NAMES) {
-				_truncateTableStatements.add(_connection.prepareStatement("drop table " + aTableName + ";"));
+				fTruncateTableStatements.add(fConnection.prepareStatement("drop table " + aTableName + ";"));
 			}
 		}
 	}
@@ -140,17 +140,17 @@ public class SystemATestAbstract extends AbstractSystemServletInterfaceTest {
 	@AfterClass
 	public static void disconnectFromDB() throws SQLException {
 		if (USE_DB) {
-			for (PreparedStatement aStatement : _truncateTableStatements) {
+			for (PreparedStatement aStatement : fTruncateTableStatements) {
 				aStatement.close();
 			}
-			_connection.close();
+			fConnection.close();
 		}
 	}
 	
 	
 	private void dropTablesInDB() {
 		if (USE_DB) {
-			for (PreparedStatement aStatement : _truncateTableStatements) {
+			for (PreparedStatement aStatement : fTruncateTableStatements) {
 				try {
 					aStatement.execute();
 				} catch (Exception exception) {
@@ -161,7 +161,7 @@ public class SystemATestAbstract extends AbstractSystemServletInterfaceTest {
 	}
 
 	public String getEntity3Url() {
-		return _entity3url;
+		return fEntity3url;
 	}
 
 	@Override

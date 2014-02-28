@@ -116,7 +116,7 @@ public class EntityResolverTest {
 		JSONObject expectedSolved2 = new JSONObject();
 		expectedSolved2.put("id", "1");
 		expectedSolved2.put("dummyEntity1Id", new DummyEntity1Builder().loadDefaultExample().build(true));
-		expectedSolved2.put("value", "gino2");
+		expectedSolved2.put("value", 314);
 		
 		JSONObject expectedSolved3 = new JSONObject();
 		expectedSolved3.put("dummyEntity2Id", expectedSolved2);
@@ -138,7 +138,7 @@ public class EntityResolverTest {
 		JSONObject expectedSolved2 = new JSONObject();
 		expectedSolved2.put("id", "1");
 		expectedSolved2.put("dummyEntity1Id", "1");
-		expectedSolved2.put("value", "gino2");
+		expectedSolved2.put("value", 314);
 		
 		JSONObject expectedSolved3 = new JSONObject();
 		expectedSolved3.put("dummyEntity2Id", expectedSolved2);
@@ -162,7 +162,7 @@ public class EntityResolverTest {
 		JSONObject expectedSolved2 = new JSONObject();
 		expectedSolved2.put("id", "1");
 		expectedSolved2.put("dummyEntity1Id", "1");
-		expectedSolved2.put("value", "gino2");
+		expectedSolved2.put("value", 314);
 		
 		JSONObject expectedSolved3 = new JSONObject();
 		expectedSolved3.put("dummyEntity2Id", expectedSolved2);

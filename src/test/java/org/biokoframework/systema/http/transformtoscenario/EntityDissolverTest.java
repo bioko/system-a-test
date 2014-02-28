@@ -58,7 +58,7 @@ public class EntityDissolverTest extends SystemATestAbstract{
 		dummy1Builder.set(DummyEntity1.VALUE, "pino1");
 		
 		EntityBuilder<DummyEntity2> dummy2Builder = new DummyEntity2Builder().loadDefaultExample();
-		dummy2Builder.set(DummyEntity2.VALUE, "gino2");
+		dummy2Builder.set(DummyEntity2.VALUE, 12345L);
 
 		JSONObject container = new JSONObject();
 		DummyEntity2 dummy2 = dummy2Builder.build(false);

@@ -115,7 +115,7 @@ public class BasicAuthCheckInTest extends SystemATestAbstract {
 		body(
 			allOf(
 				substringMatchesPattern("\"authToken\":\"(\\d|a|b|c|d|e|f|-)+?\""),
-				substringMatchesPattern("\"authTokenExpire\":\"\\d+?\"")
+				substringMatchesPattern("\"authTokenExpire\":\\d+")
 			)
 		).
 		when().

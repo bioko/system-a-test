@@ -204,12 +204,10 @@ public class ValidatorFactory {
 	}
 	
 	
-	public static Scenario postCommandAndSuccess() throws Exception {
-		Scenario scenario = new Scenario("post command and success");
+	public static Scenario postCommandAndSuccessOnlyMandatoryFields() throws Exception {
+		Scenario scenario = new Scenario("post command and success with mandatory fields");
 		
-		String json = "{" +
-				"\"textMandatoryField\":\"some text\"" +
-				"}" ;
+		String json = "{\"textMandatoryField\":\"some text\"}" ;
 		
 		scenario.addScenarioStep("post only mandatory field", HttpScenarioFactory.postSuccessful(
 				SystemACommands.VALIDATED_COMMAND,
@@ -219,13 +217,13 @@ public class ValidatorFactory {
 	}
 	
 	
-	public static Scenario postCommandAndSuccess2() throws Exception {
-		Scenario scenario = new Scenario("post command and success");
+	public static Scenario postCommandAndSuccessWithOptionalFields() throws Exception {
+		Scenario scenario = new Scenario("post command and success with optional fields");
 		
 		String json = "{" +
 				"\"textMandatoryField\":\"some text\"," +
 				"\"textOptionalField\":\"some other text\"," +
-				"\"integerOptionalField\":\"12\"" +
+				"\"integerOptionalField\":12" +
 				"}" ;
 		
 		scenario.addScenarioStep("post all fields", HttpScenarioFactory.postSuccessful(
@@ -241,7 +239,7 @@ public class ValidatorFactory {
 		
 		String json = "{" +				
 				"\"textOptionalField\":\"some other text\"," +
-				"\"integerOptionalField\":\"12\"" +
+				"\"integerOptionalField\":12" +
 				"}" ;
 		
 		
@@ -352,11 +350,11 @@ public class ValidatorFactory {
 	}
 	
 	
-	public static Scenario testUniqueExtraValidatorOnTwoVaslidatosCommand() throws Exception {
+	public static Scenario testUniqueExtraValidatorOnTwoValidatorsCommand() throws Exception {
 		Scenario scenario = new Scenario("test unique extra validator using on two validator command and failing with the second validator");		
 		String json = "{" +
 				"\"textMandatoryField\":\"first text\"," +
-				"\"integerOptionalField\":\"11\"" +
+				"\"integerOptionalField\":11" +
 				"}" ;
 		
 		scenario.addScenarioStep("save value and succes", HttpScenarioFactory.postSuccessful(
@@ -365,7 +363,7 @@ public class ValidatorFactory {
 		
 		String json2 = "{" +
 				"\"textMandatoryField\":\"second text\"," +
-				"\"integerOptionalField\":\"11\"" +
+				"\"integerOptionalField\":11" +
 				"}" ;
 		
 		
@@ -385,11 +383,11 @@ public class ValidatorFactory {
 	
 	
 	
-	public static Scenario testUniqueExtraValidatorOnTwoVaslidatosCommand2() throws Exception {
+	public static Scenario testUniqueExtraValidatorOnTwoValidatorsCommand2() throws Exception {
 		Scenario scenario = new Scenario("test unique extra validator using on two validator command and failing with the second validator");		
 		String json = "{" +
 				"\"textMandatoryField\":\"first text\"," +
-				"\"integerOptionalField\":\"11\"" +
+				"\"integerOptionalField\":11" +
 				"}" ;
 		
 		scenario.addScenarioStep("save value and succes", HttpScenarioFactory.postSuccessful(

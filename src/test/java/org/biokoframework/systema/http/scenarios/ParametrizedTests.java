@@ -35,7 +35,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.biokoframework.http.scenario.HttpScenarioFactory;
-import org.biokoframework.http.scenario.OnlyGetScenarioFactory;
 import org.biokoframework.http.scenario.Scenario;
 import org.biokoframework.http.scenario.ScenarioRunner;
 import org.biokoframework.http.scenario.parametrized.CrudScenariosParametrizedFactory;
@@ -56,10 +55,10 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith( value = Parameterized.class )
 public class ParametrizedTests extends SystemATestAbstract {
 
-	private ScenarioRunner _scenarioRunner;
+	private ScenarioRunner fScenarioRunner;
 
 	public ParametrizedTests(String scenarioCollectorName, Scenario collector) {
-		_scenarioRunner = new ScenarioRunner(collector);
+		fScenarioRunner = new ScenarioRunner(collector);
 	}
 	
 	@Parameters(name = "{index}- {0}")
@@ -68,7 +67,7 @@ public class ParametrizedTests extends SystemATestAbstract {
 		List<Object[]> result = new ArrayList<Object[]>();
 
 		result.addAll(Arrays.asList(CrudScenariosParametrizedFactory.createFrom(DummyEntity1.class, DummyEntity1Builder.class, dummyEntityUpdateMap(), "1")));
-		result.addAll(Arrays.asList(CrudScenariosParametrizedFactory.createFrom(DummyEntity2.class, DummyEntity2Builder.class, dummyEntityUpdateMap(), "1")));
+		result.addAll(Arrays.asList(CrudScenariosParametrizedFactory.createFrom(DummyEntity2.class, DummyEntity2Builder.class, dummyEntity2UpdateMap(), "1")));
 		result.addAll(Arrays.asList(CrudScenariosParametrizedFactory.createFrom(DummyEntity3.class, DummyEntity3Builder.class, dummyEntityUpdateMap(), "1")));
 		
 		result.addAll(Arrays.asList(CrudScenariosParametrizedFactory.createFrom(DummyComplexDomainEntity.class,  DummyComplexDomainEntityBuilder.class, dummyComplexEntityUpdateMap(), "1",
@@ -76,8 +75,8 @@ public class ParametrizedTests extends SystemATestAbstract {
 		
 		result.addAll(HttpScenarioFactory.findScenarios(
 				FailureScenarioParametrizedFactory.class,
-				DissolverFactory.class,
-				MultipleCommandFactory.class,
+//				DissolverFactory.class,
+//				MultipleCommandFactory.class,
 				CodeExecutionScenarioStepFactory.class,
 				CronFactory.class,
 				ValidatorFactory.class,
@@ -85,10 +84,10 @@ public class ParametrizedTests extends SystemATestAbstract {
 				EmailConfirmationStories.class
 		));
 
-		result.addAll(OnlyGetScenarioFactory.adaptToOnlyGet(result));
-
+//		result.addAll(OnlyGetScenarioFactory.adaptToOnlyGet(result));
+//
 		result.addAll(HttpScenarioFactory.findScenarios(
-				CommandInfoFactory.class, 
+//				CommandInfoFactory.class, 
 				MultipartHttpScenarioFactory.class,
 				AuthenticationStoriesFactory.class
 		));
@@ -97,21 +96,27 @@ public class ParametrizedTests extends SystemATestAbstract {
 	
 	}
 	
-	private static Map<String, String> dummyComplexEntityUpdateMap() {
-		HashMap<String, String> result = new HashMap<String, String>();
+	private static Map<String, Object> dummyComplexEntityUpdateMap() {
+		HashMap<String, Object> result = new HashMap<String, Object>();
 		result.put(DummyComplexDomainEntity.A_STRING_MANDATORY_FIELD, "a modified string");		
 		return result;
 	}
 
-	private static HashMap<String,String> dummyEntityUpdateMap() {
-		HashMap<String, String> result = new HashMap<String, String>();
+	private static HashMap<String, Object> dummyEntityUpdateMap() {
+		HashMap<String, Object> result = new HashMap<String, Object>();
 		result.put(DummyEntity1.VALUE, "aValue UPDATED");
+		return result; 
+	}
+	
+	private static HashMap<String, Object> dummyEntity2UpdateMap() {
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		result.put(DummyEntity1.VALUE, 2);
 		return result; 
 	}
 	
 	@Test
 	public void test() throws Exception {
-		_scenarioRunner.test(getLocalHostUrl());
+		fScenarioRunner.test(getLocalHostUrl());
 	}
 	
 }

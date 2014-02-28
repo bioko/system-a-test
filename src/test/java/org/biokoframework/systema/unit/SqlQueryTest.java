@@ -102,7 +102,7 @@ public class SqlQueryTest {
 		EntityBuilder<DummyEntity2> dummyEntity2Builder = new DummyEntity2Builder().loadDefaultExample();
 		_dummy2Repo.save(dummyEntity2Builder.build(false));
 
-		dummyEntity2Builder.set(DummyEntity2.VALUE, "TheExpected");
+		dummyEntity2Builder.set(DummyEntity2.VALUE, 1234L);
 		DummyEntity2 dummyEntity2 = dummyEntity2Builder.build("2");
 		_dummy2Repo.save(dummyEntity2Builder.build(false));
 
@@ -112,13 +112,13 @@ public class SqlQueryTest {
 		Query<DummyEntity2> query = _dummy2Repo.createQuery();
 		query.select().
 		from(_dummy2Repo, DummyEntity2.class).
-		where(DummyEntity2.VALUE).like().placeholder("value").
+		where(DummyEntity2.VALUE).isEqual().placeholder("value").
 		and(DummyEntity2.ENTITY1_ID).isEqual().placeholder("id");
 
-		assertThat(query, hasToString("select * from DummyEntity2 where (value like <value>) and (dummyEntity1Id = <id>) ;"));
+		assertThat(query, hasToString("select * from DummyEntity2 where (value = <value>) and (dummyEntity1Id = <id>) ;"));
 
 		query.setValue("id", "1");
-		query.setValue("value", "TheExpected");
+		query.setValue("value", 1234L);
 
 		assertThat(query.getAll(), contains(dummyEntity2));
 
@@ -136,7 +136,7 @@ public class SqlQueryTest {
 		DummyEntity2 firstExpected = dummyEntity2Builder.build(true);
 		_dummy2Repo.save(dummyEntity2Builder.build(false));
 
-		dummyEntity2Builder.set(DummyEntity2.VALUE, "TheExpected");
+		dummyEntity2Builder.set(DummyEntity2.VALUE, 123456L);
 		_dummy2Repo.save(dummyEntity2Builder.build(false));
 
 		dummyEntity2Builder.set(DummyEntity2.ENTITY1_ID, "2");
@@ -146,13 +146,13 @@ public class SqlQueryTest {
 		Query<DummyEntity2> query = _dummy2Repo.createQuery();
 		query.select().
 		from(_dummy2Repo, DummyEntity2.class).
-		where(DummyEntity2.VALUE).notLike().placeholder("value").
+		where(DummyEntity2.VALUE).isNotEqual().placeholder("value").
 		or(DummyEntity2.ENTITY1_ID).isNotEqual().placeholder("id");
 
-		assertThat(query, hasToString("select * from DummyEntity2 where (value not like <value>) or (dummyEntity1Id != <id>) ;"));
+		assertThat(query, hasToString("select * from DummyEntity2 where (value != <value>) or (dummyEntity1Id != <id>) ;"));
 
 		query.setValue("id", "1");
-		query.setValue("value", "TheExpected");
+		query.setValue("value", 123456L);
 
 		assertThat(query.getAll(), contains(firstExpected, secondExpected));
 
@@ -169,7 +169,7 @@ public class SqlQueryTest {
 		EntityBuilder<DummyEntity2> dummyEntity2Builder = new DummyEntity2Builder().loadDefaultExample();
 		_dummy2Repo.save(dummyEntity2Builder.build(false));
 
-		dummyEntity2Builder.set(DummyEntity2.VALUE, "TheExpected");
+		dummyEntity2Builder.set(DummyEntity2.VALUE, 54321L);
 		DummyEntity2 dummyEntity2 = dummyEntity2Builder.build("2");
 		_dummy2Repo.save(dummyEntity2Builder.build(false));
 
@@ -180,10 +180,10 @@ public class SqlQueryTest {
 		query.toString();
 		query.select().
 		from(_dummy2Repo, DummyEntity2.class).
-		where(DummyEntity2.VALUE).like("TheExpected").
+		where(DummyEntity2.VALUE).isEqual(54321L).
 		and(DummyEntity2.ENTITY1_ID).isEqual("1");
 
-		assertThat(query, hasToString("select * from DummyEntity2 where (value like TheExpected) and (dummyEntity1Id = 1) ;"));
+		assertThat(query, hasToString("select * from DummyEntity2 where (value = 54321) and (dummyEntity1Id = 1) ;"));
 
 		assertThat(query.getAll(), contains(dummyEntity2));
 
