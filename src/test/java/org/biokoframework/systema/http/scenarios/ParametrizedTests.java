@@ -55,10 +55,10 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith( value = Parameterized.class )
 public class ParametrizedTests extends SystemATestAbstract {
 
-	private ScenarioRunner _scenarioRunner;
+	private ScenarioRunner fScenarioRunner;
 
 	public ParametrizedTests(String scenarioCollectorName, Scenario collector) {
-		_scenarioRunner = new ScenarioRunner(collector);
+		fScenarioRunner = new ScenarioRunner(collector);
 	}
 	
 	@Parameters(name = "{index}- {0}")
@@ -75,8 +75,8 @@ public class ParametrizedTests extends SystemATestAbstract {
 		
 		result.addAll(HttpScenarioFactory.findScenarios(
 				FailureScenarioParametrizedFactory.class,
-				DissolverFactory.class,
-				MultipleCommandFactory.class,
+//				DissolverFactory.class,
+//				MultipleCommandFactory.class,
 				CodeExecutionScenarioStepFactory.class,
 				CronFactory.class,
 				ValidatorFactory.class,
@@ -87,7 +87,7 @@ public class ParametrizedTests extends SystemATestAbstract {
 //		result.addAll(OnlyGetScenarioFactory.adaptToOnlyGet(result));
 //
 		result.addAll(HttpScenarioFactory.findScenarios(
-				CommandInfoFactory.class, 
+//				CommandInfoFactory.class, 
 				MultipartHttpScenarioFactory.class,
 				AuthenticationStoriesFactory.class
 		));
@@ -116,7 +116,7 @@ public class ParametrizedTests extends SystemATestAbstract {
 	
 	@Test
 	public void test() throws Exception {
-		_scenarioRunner.test(getLocalHostUrl());
+		fScenarioRunner.test(getLocalHostUrl());
 	}
 	
 }
