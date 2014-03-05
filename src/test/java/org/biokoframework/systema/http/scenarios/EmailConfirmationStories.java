@@ -102,7 +102,7 @@ public class EmailConfirmationStories {
 				fields.toJSONString(), 
 				matchesJSONString("[ ]")));
 		
-		EmailConfirmation confirmation = new EmailConfirmation(new Fields());
+		EmailConfirmation confirmation = new EmailConfirmation();
 		confirmation.setId("1");
 		confirmation.set(EmailConfirmation.LOGIN_ID, "1");
 		confirmation.set(EmailConfirmation.CONFIRMED, FieldValues.TRUE);

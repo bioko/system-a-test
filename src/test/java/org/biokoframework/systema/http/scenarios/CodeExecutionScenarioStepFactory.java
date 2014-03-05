@@ -35,16 +35,21 @@ import org.biokoframework.http.scenario.Scenario;
 import org.biokoframework.systema.commons.SystemACommandNames;
 import org.biokoframework.systema.entity.dummy1.DummyEntity1;
 import org.biokoframework.systema.misc.Dummy1Mock;
+import org.biokoframework.utils.domain.DomainEntity;
 import org.biokoframework.utils.fields.Fields;
 
 public class CodeExecutionScenarioStepFactory {
 
-	static DummyEntity1 quadrato = new DummyEntity1(new Fields(DummyEntity1.VALUE, "quadrato"));
-	static DummyEntity1 triangolo = new DummyEntity1(new Fields(DummyEntity1.VALUE, "triangolo"));
+	static DummyEntity1 quadrato = new DummyEntity1();
+	static DummyEntity1 triangolo = new DummyEntity1();
 	
 	static {		
-		quadrato.setId("1");
-		triangolo.setId("2");
+		quadrato.setAll(new Fields(
+				DummyEntity1.VALUE, "quadrato",
+				DomainEntity.ID, "1"));
+		triangolo.setAll(new Fields(
+				DummyEntity1.VALUE, "triangolo",
+				DomainEntity.ID, "2"));
 	}
 
 	public static Scenario testWithoutExecutionStep() throws Exception {

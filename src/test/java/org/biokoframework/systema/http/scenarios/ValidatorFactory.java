@@ -44,7 +44,7 @@ import org.biokoframework.systema.entity.dummyComplex.DummyComplexDomainEntityBu
 import org.biokoframework.systema.factory.SystemACommands;
 import org.biokoframework.utils.domain.ErrorEntity;
 import org.biokoframework.utils.exception.ValidationException;
-import org.biokoframework.utils.validator.ValidatorErrorBuilder;
+import org.biokoframework.utils.validation.ValidationErrorBuilder;
 import org.json.simple.JSONValue;
 
 public class ValidatorFactory {
@@ -73,8 +73,8 @@ public class ValidatorFactory {
 		
 		// build expected error
 		ArrayList<ErrorEntity> errors= new ArrayList<ErrorEntity>();
-		errors.add(ValidatorErrorBuilder.buildMandatoryFieldsMissingError(DummyComplexDomainEntity.A_STRING_FIELD_MANDATORY_ALSO_IN_GET));
-		errors.add(ValidatorErrorBuilder.buildMandatoryFieldsMissingError(DummyComplexDomainEntity.A_STRING_MANDATORY_FIELD));		
+		errors.add(ValidationErrorBuilder.buildMandatoryFieldsMissingError(DummyComplexDomainEntity.A_STRING_FIELD_MANDATORY_ALSO_IN_GET));
+		errors.add(ValidationErrorBuilder.buildMandatoryFieldsMissingError(DummyComplexDomainEntity.A_STRING_MANDATORY_FIELD));		
 		ValidationException expectedException = new ValidationException(errors);
 
 		HttpResponseBuilder responseBuilder = new HttpResponseBuilder(HttpResponseExceptionFactory.create());
@@ -97,9 +97,9 @@ public class ValidatorFactory {
 		
 		// build expected error
 		ArrayList<ErrorEntity> errors= new ArrayList<ErrorEntity>();
-		errors.add(ValidatorErrorBuilder.buildMandatoryFieldsMissingError(DummyComplexDomainEntity.A_STRING_FIELD_MANDATORY_ALSO_IN_GET));
-		errors.add(ValidatorErrorBuilder.buildMandatoryFieldsMissingError(DummyComplexDomainEntity.A_STRING_MANDATORY_FIELD));
-		errors.add(ValidatorErrorBuilder.buildWrongTypeError(DummyComplexDomainEntity.AN_INTEGER_OPTIONAL_FIELD));
+		errors.add(ValidationErrorBuilder.buildMandatoryFieldsMissingError(DummyComplexDomainEntity.A_STRING_FIELD_MANDATORY_ALSO_IN_GET));
+		errors.add(ValidationErrorBuilder.buildMandatoryFieldsMissingError(DummyComplexDomainEntity.A_STRING_MANDATORY_FIELD));
+		errors.add(ValidationErrorBuilder.buildWrongTypeError(DummyComplexDomainEntity.AN_INTEGER_OPTIONAL_FIELD));
 		ValidationException expectedException = new ValidationException(errors);
 
 		HttpResponseBuilder responseBuilder = new HttpResponseBuilder(HttpResponseExceptionFactory.create());
@@ -123,9 +123,9 @@ public class ValidatorFactory {
 
 		// build expected error
 		ArrayList<ErrorEntity> errors= new ArrayList<ErrorEntity>();
-		errors.add(ValidatorErrorBuilder.buildMandatoryFieldsMissingError(DummyComplexDomainEntity.A_STRING_FIELD_MANDATORY_ALSO_IN_GET));
-		errors.add(ValidatorErrorBuilder.buildMandatoryFieldsMissingError(DummyComplexDomainEntity.A_STRING_MANDATORY_FIELD));
-		errors.add(ValidatorErrorBuilder.buildMandatoryFieldsMissingError(DummyComplexDomainEntity.ID));
+		errors.add(ValidationErrorBuilder.buildMandatoryFieldsMissingError(DummyComplexDomainEntity.A_STRING_FIELD_MANDATORY_ALSO_IN_GET));
+		errors.add(ValidationErrorBuilder.buildMandatoryFieldsMissingError(DummyComplexDomainEntity.A_STRING_MANDATORY_FIELD));
+		errors.add(ValidationErrorBuilder.buildMandatoryFieldsMissingError(DummyComplexDomainEntity.ID));
 		ValidationException expectedException = new ValidationException(errors);
 
 		HttpResponseBuilder responseBuilder = new HttpResponseBuilder(HttpResponseExceptionFactory.create());
@@ -151,7 +151,7 @@ public class ValidatorFactory {
 
 		// build expected error
 		ArrayList<ErrorEntity> errors= new ArrayList<ErrorEntity>();
-		errors.add(ValidatorErrorBuilder.buildMandatoryFieldsMissingError(DummyComplexDomainEntity.ID));
+		errors.add(ValidationErrorBuilder.buildMandatoryFieldsMissingError(DummyComplexDomainEntity.ID));
 		ValidationException expectedException = new ValidationException(errors);
 
 		HttpResponseBuilder responseBuilder = new HttpResponseBuilder(HttpResponseExceptionFactory.create());
@@ -173,7 +173,7 @@ public class ValidatorFactory {
 		
 		// build expected error
 		ArrayList<ErrorEntity> errors= new ArrayList<ErrorEntity>();
-		errors.add(ValidatorErrorBuilder.buildMandatoryFieldsMissingError(DummyComplexDomainEntity.A_STRING_FIELD_MANDATORY_ALSO_IN_GET));
+		errors.add(ValidationErrorBuilder.buildMandatoryFieldsMissingError(DummyComplexDomainEntity.A_STRING_FIELD_MANDATORY_ALSO_IN_GET));
 		ValidationException expectedException = new ValidationException(errors);
 		
 		HttpResponseBuilder responseBuilder = new HttpResponseBuilder(HttpResponseExceptionFactory.create());
@@ -245,7 +245,7 @@ public class ValidatorFactory {
 		
 		// build expected error
 		ArrayList<ErrorEntity> errors= new ArrayList<ErrorEntity>();
-		errors.add(ValidatorErrorBuilder.buildMandatoryFieldsMissingError("textMandatoryField"));
+		errors.add(ValidationErrorBuilder.buildMandatoryFieldsMissingError("textMandatoryField"));
 		ValidationException expectedException = new ValidationException(errors);
 
 		HttpResponseBuilder responseBuilder = new HttpResponseBuilder(HttpResponseExceptionFactory.create());
@@ -271,8 +271,8 @@ public class ValidatorFactory {
 		
 		// build expected error
 		ArrayList<ErrorEntity> errors= new ArrayList<ErrorEntity>();
-		errors.add(ValidatorErrorBuilder.buildMandatoryFieldsMissingError("textMandatoryField"));
-		errors.add(ValidatorErrorBuilder.buildWrongTypeError("integerOptionalField"));
+		errors.add(ValidationErrorBuilder.buildMandatoryFieldsMissingError("textMandatoryField"));
+		errors.add(ValidationErrorBuilder.buildWrongTypeError("integerOptionalField"));
 		ValidationException expectedException = new ValidationException(errors);
 
 		HttpResponseBuilder responseBuilder = new HttpResponseBuilder(HttpResponseExceptionFactory.create());
@@ -299,7 +299,7 @@ public class ValidatorFactory {
 		
 		
 		ArrayList<ErrorEntity> errors= new ArrayList<ErrorEntity>();
-		errors.add(ValidatorErrorBuilder.buildUniqueViolationError("textMandatoryField"));
+		errors.add(ValidationErrorBuilder.buildUniqueViolationError("textMandatoryField"));
 		
 		ValidationException expectedException = new ValidationException(errors);
 
@@ -336,7 +336,7 @@ public class ValidatorFactory {
 		
 		
 		ArrayList<ErrorEntity> errors= new ArrayList<ErrorEntity>();
-		errors.add(ValidatorErrorBuilder.buildUniqueViolationError("textMandatoryField"));
+		errors.add(ValidationErrorBuilder.buildUniqueViolationError("textMandatoryField"));
 		
 		ValidationException expectedException = new ValidationException(errors);
 
@@ -368,7 +368,7 @@ public class ValidatorFactory {
 		
 		
 		ArrayList<ErrorEntity> errors= new ArrayList<ErrorEntity>();
-		errors.add(ValidatorErrorBuilder.buildUniqueViolationError("integerOptionalField"));
+		errors.add(ValidationErrorBuilder.buildUniqueViolationError("integerOptionalField"));
 		
 		ValidationException expectedException = new ValidationException(errors);
 
@@ -396,8 +396,8 @@ public class ValidatorFactory {
 		
 		
 		ArrayList<ErrorEntity> errors= new ArrayList<ErrorEntity>();
-		errors.add(ValidatorErrorBuilder.buildUniqueViolationError("integerOptionalField"));
-		errors.add(ValidatorErrorBuilder.buildUniqueViolationError("textMandatoryField"));
+		errors.add(ValidationErrorBuilder.buildUniqueViolationError("integerOptionalField"));
+		errors.add(ValidationErrorBuilder.buildUniqueViolationError("textMandatoryField"));
 		
 		ValidationException expectedException = new ValidationException(errors);
 
