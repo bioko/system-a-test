@@ -36,6 +36,8 @@ import static org.junit.Assert.assertThat;
 import java.util.List;
 
 import org.biokoframework.system.repository.memory.InMemoryRepository;
+import org.biokoframework.system.services.entity.EntityModule;
+import org.biokoframework.system.services.entity.IEntityBuilderService;
 import org.biokoframework.systema.entity.dummy1.DummyEntity1;
 import org.biokoframework.systema.entity.dummy1.DummyEntity1Builder;
 import org.biokoframework.systema.entity.dummy2.DummyEntity2;
@@ -48,39 +50,55 @@ import org.biokoframework.utils.domain.EntityBuilder;
 import org.biokoframework.utils.exception.ValidationException;
 import org.biokoframework.utils.repository.RepositoryException;
 import org.biokoframework.utils.repository.query.Query;
+import org.biokoframework.utils.validation.ValidationModule;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+
 public class SqlQueryTest {
 
-	private InMemoryRepository<DummyEntity1> _dummy1Repo;
-	private InMemoryRepository<DummyEntity2> _dummy2Repo;
-	private InMemoryRepository<DummyEntityWithInteger> _dummyWithIntegerRepo;
-	private InMemoryRepository<DummyEntityWithDate> _dummyWithDateRepo;
+	private InMemoryRepository<DummyEntity1> fDummy1Repo;
+	private InMemoryRepository<DummyEntity2> fDummy2Repo;
+	private InMemoryRepository<DummyEntityWithInteger> fDummyWithIntegerRepo;
+	private InMemoryRepository<DummyEntityWithDate> fDummyWithDateRepo;
 
+	private Injector fInjector;
+	private DummyEntity1Builder fDummy1Builder;
+	private DummyEntity2Builder fDummy2Builder;
+	private DummyEntityWithDateBuilder fDummyWithDateBuilder;
+	private DummyEntityWithIntegerBuilder fDummyWithIntegerBuilder;
 
 	@Before
 	public void createRepository() throws Exception {
-		_dummy1Repo = new InMemoryRepository<DummyEntity1>(DummyEntity1.class);
-		_dummy2Repo = new InMemoryRepository<DummyEntity2>(DummyEntity2.class);
-		_dummyWithIntegerRepo = new InMemoryRepository<DummyEntityWithInteger>(DummyEntityWithInteger.class);
-		_dummyWithDateRepo = new InMemoryRepository<DummyEntityWithDate>(DummyEntityWithDate.class);
+		fInjector = Guice.createInjector(new EntityModule(), new ValidationModule());
+		
+		fDummy1Builder = fInjector.getInstance(DummyEntity1Builder.class);
+		fDummy2Builder = fInjector.getInstance(DummyEntity2Builder.class);
+		fDummyWithDateBuilder = fInjector.getInstance(DummyEntityWithDateBuilder.class);
+		fDummyWithIntegerBuilder = fInjector.getInstance(DummyEntityWithIntegerBuilder.class);
+		
+		fDummy1Repo = new InMemoryRepository<DummyEntity1>(DummyEntity1.class, fInjector.getInstance(IEntityBuilderService.class));
+		fDummy2Repo = new InMemoryRepository<DummyEntity2>(DummyEntity2.class, fInjector.getInstance(IEntityBuilderService.class));
+		fDummyWithIntegerRepo = new InMemoryRepository<DummyEntityWithInteger>(DummyEntityWithInteger.class, fInjector.getInstance(IEntityBuilderService.class));
+		fDummyWithDateRepo = new InMemoryRepository<DummyEntityWithDate>(DummyEntityWithDate.class, fInjector.getInstance(IEntityBuilderService.class));
 	}
 
 	@Test
 	public void simpleQueryTest() throws Exception {
 		String placeholderName = "label";
 
-		EntityBuilder<DummyEntity1> dummyEntity1Builder = new DummyEntity1Builder().loadDefaultExample();
-		_dummy1Repo.save(dummyEntity1Builder.build(false));
+		EntityBuilder<DummyEntity1> dummyEntity1Builder = fDummy1Builder.loadDefaultExample();
+		fDummy1Repo.save(dummyEntity1Builder.build(false));
 
 		dummyEntity1Builder.set(DummyEntity1.VALUE, "Pino");
-		_dummy1Repo.save(dummyEntity1Builder.build(false));
+		fDummy1Repo.save(dummyEntity1Builder.build(false));
 
 
-		Query<DummyEntity1> query = _dummy1Repo.createQuery();
+		Query<DummyEntity1> query = fDummy1Repo.createQuery();
 		query.select().
-		from(_dummy1Repo, DummyEntity1.class).
+		from(fDummy1Repo, DummyEntity1.class).
 		where(DummyEntity1.VALUE).like().placeholder(placeholderName);
 
 		assertThat(query, hasToString("select * from DummyEntity1 where (value like <label>) ;"));
@@ -94,24 +112,24 @@ public class SqlQueryTest {
 	@Test
 	public void twoConstraintsQueryTest() throws Exception {
 
-		EntityBuilder<DummyEntity1> dummyEntity1Builder = new DummyEntity1Builder().loadDefaultExample();
-		_dummy1Repo.save(dummyEntity1Builder.build(false));
+		EntityBuilder<DummyEntity1> dummyEntity1Builder = fDummy1Builder.loadDefaultExample();
+		fDummy1Repo.save(dummyEntity1Builder.build(false));
 		dummyEntity1Builder.set(DummyEntity1.VALUE, "Pino");
-		_dummy1Repo.save(dummyEntity1Builder.build(false));
+		fDummy1Repo.save(dummyEntity1Builder.build(false));
 
-		EntityBuilder<DummyEntity2> dummyEntity2Builder = new DummyEntity2Builder().loadDefaultExample();
-		_dummy2Repo.save(dummyEntity2Builder.build(false));
+		EntityBuilder<DummyEntity2> dummyEntity2Builder = fDummy2Builder.loadDefaultExample();
+		fDummy2Repo.save(dummyEntity2Builder.build(false));
 
 		dummyEntity2Builder.set(DummyEntity2.VALUE, 1234L);
 		DummyEntity2 dummyEntity2 = dummyEntity2Builder.build("2");
-		_dummy2Repo.save(dummyEntity2Builder.build(false));
+		fDummy2Repo.save(dummyEntity2Builder.build(false));
 
 		dummyEntity2Builder.set(DummyEntity2.ENTITY1_ID, "2");
-		_dummy2Repo.save(dummyEntity2Builder.build(false));
+		fDummy2Repo.save(dummyEntity2Builder.build(false));
 
-		Query<DummyEntity2> query = _dummy2Repo.createQuery();
+		Query<DummyEntity2> query = fDummy2Repo.createQuery();
 		query.select().
-		from(_dummy2Repo, DummyEntity2.class).
+		from(fDummy2Repo, DummyEntity2.class).
 		where(DummyEntity2.VALUE).isEqual().placeholder("value").
 		and(DummyEntity2.ENTITY1_ID).isEqual().placeholder("id");
 
@@ -126,26 +144,25 @@ public class SqlQueryTest {
 
 	@Test
 	public void twoConstraintsWithNotQueryTest() throws Exception {
-
-		EntityBuilder<DummyEntity1> dummyEntity1Builder = new DummyEntity1Builder().loadDefaultExample();
-		_dummy1Repo.save(dummyEntity1Builder.build(false));
+		EntityBuilder<DummyEntity1> dummyEntity1Builder = fDummy1Builder.loadDefaultExample();
+		fDummy1Repo.save(dummyEntity1Builder.build(false));
 		dummyEntity1Builder.set(DummyEntity1.VALUE, "Pino");
-		_dummy1Repo.save(dummyEntity1Builder.build(false));
+		fDummy1Repo.save(dummyEntity1Builder.build(false));
 
-		EntityBuilder<DummyEntity2> dummyEntity2Builder = new DummyEntity2Builder().loadDefaultExample();
+		EntityBuilder<DummyEntity2> dummyEntity2Builder = fDummy2Builder.loadDefaultExample();
 		DummyEntity2 firstExpected = dummyEntity2Builder.build(true);
-		_dummy2Repo.save(dummyEntity2Builder.build(false));
+		fDummy2Repo.save(dummyEntity2Builder.build(false));
 
 		dummyEntity2Builder.set(DummyEntity2.VALUE, 123456L);
-		_dummy2Repo.save(dummyEntity2Builder.build(false));
+		fDummy2Repo.save(dummyEntity2Builder.build(false));
 
 		dummyEntity2Builder.set(DummyEntity2.ENTITY1_ID, "2");
 		DummyEntity2 secondExpected = dummyEntity2Builder.build("3");
-		_dummy2Repo.save(dummyEntity2Builder.build(false));
+		fDummy2Repo.save(dummyEntity2Builder.build(false));
 
-		Query<DummyEntity2> query = _dummy2Repo.createQuery();
+		Query<DummyEntity2> query = fDummy2Repo.createQuery();
 		query.select().
-		from(_dummy2Repo, DummyEntity2.class).
+		from(fDummy2Repo, DummyEntity2.class).
 		where(DummyEntity2.VALUE).isNotEqual().placeholder("value").
 		or(DummyEntity2.ENTITY1_ID).isNotEqual().placeholder("id");
 
@@ -161,25 +178,25 @@ public class SqlQueryTest {
 	@Test
 	public void twoConstraintWithValueQueryTest() throws Exception {
 
-		EntityBuilder<DummyEntity1> dummyEntity1Builder = new DummyEntity1Builder().loadDefaultExample();
-		_dummy1Repo.save(dummyEntity1Builder.build(false));
+		EntityBuilder<DummyEntity1> dummyEntity1Builder = fDummy1Builder.loadDefaultExample();
+		fDummy1Repo.save(dummyEntity1Builder.build(false));
 		dummyEntity1Builder.set(DummyEntity1.VALUE, "Pino");
-		_dummy1Repo.save(dummyEntity1Builder.build(false));
+		fDummy1Repo.save(dummyEntity1Builder.build(false));
 
-		EntityBuilder<DummyEntity2> dummyEntity2Builder = new DummyEntity2Builder().loadDefaultExample();
-		_dummy2Repo.save(dummyEntity2Builder.build(false));
+		EntityBuilder<DummyEntity2> dummyEntity2Builder = fDummy2Builder.loadDefaultExample();
+		fDummy2Repo.save(dummyEntity2Builder.build(false));
 
 		dummyEntity2Builder.set(DummyEntity2.VALUE, 54321L);
 		DummyEntity2 dummyEntity2 = dummyEntity2Builder.build("2");
-		_dummy2Repo.save(dummyEntity2Builder.build(false));
+		fDummy2Repo.save(dummyEntity2Builder.build(false));
 
 		dummyEntity2Builder.set(DummyEntity2.ENTITY1_ID, "2");
-		_dummy2Repo.save(dummyEntity2Builder.build(false));
+		fDummy2Repo.save(dummyEntity2Builder.build(false));
 
-		Query<DummyEntity2> query = _dummy2Repo.createQuery();
+		Query<DummyEntity2> query = fDummy2Repo.createQuery();
 		query.toString();
 		query.select().
-		from(_dummy2Repo, DummyEntity2.class).
+		from(fDummy2Repo, DummyEntity2.class).
 		where(DummyEntity2.VALUE).isEqual(54321L).
 		and(DummyEntity2.ENTITY1_ID).isEqual("1");
 
@@ -191,16 +208,16 @@ public class SqlQueryTest {
 
 	@Test
 	public void ilikeTest() throws RepositoryException, ValidationException {
-		EntityBuilder<DummyEntity1> builder = new DummyEntity1Builder();
+		EntityBuilder<DummyEntity1> builder = fDummy1Builder;
 
-		_dummy1Repo.save(builder.loadExample(DummyEntity1Builder.EXAMPLE1).build(false));
-		_dummy1Repo.save(builder.loadExample(DummyEntity1Builder.EXAMPLE2).build(false));
-		_dummy1Repo.save(builder.loadExample(DummyEntity1Builder.EXAMPLE3).build(false));
+		fDummy1Repo.save(builder.loadExample(DummyEntity1Builder.EXAMPLE1).build(false));
+		fDummy1Repo.save(builder.loadExample(DummyEntity1Builder.EXAMPLE2).build(false));
+		fDummy1Repo.save(builder.loadExample(DummyEntity1Builder.EXAMPLE3).build(false));
 
-		Query<DummyEntity1> q = _dummy1Repo.createQuery();
+		Query<DummyEntity1> q = fDummy1Repo.createQuery();
 
 		q.select().
-		from(_dummy1Repo, DummyEntity1.class).
+		from(fDummy1Repo, DummyEntity1.class).
 		where(DummyEntity1.VALUE).ilike("pino1");
 
 		List<DummyEntity1> res = q.getAll();
@@ -216,16 +233,16 @@ public class SqlQueryTest {
 
 	@Test
 	public void slikeTest() throws RepositoryException, ValidationException {
-		EntityBuilder<DummyEntity1> builder = new DummyEntity1Builder();
+		EntityBuilder<DummyEntity1> builder = fDummy1Builder;
 
-		_dummy1Repo.save(builder.loadExample(DummyEntity1Builder.EXAMPLE1).build(false));
-		_dummy1Repo.save(builder.loadExample(DummyEntity1Builder.EXAMPLE2).build(false));
-		_dummy1Repo.save(builder.loadExample(DummyEntity1Builder.EXAMPLE3).build(false));
+		fDummy1Repo.save(builder.loadExample(DummyEntity1Builder.EXAMPLE1).build(false));
+		fDummy1Repo.save(builder.loadExample(DummyEntity1Builder.EXAMPLE2).build(false));
+		fDummy1Repo.save(builder.loadExample(DummyEntity1Builder.EXAMPLE3).build(false));
 
-		Query<DummyEntity1> q = _dummy1Repo.createQuery();
+		Query<DummyEntity1> q = fDummy1Repo.createQuery();
 
 		q.select().
-		from(_dummy1Repo, DummyEntity1.class).
+		from(fDummy1Repo, DummyEntity1.class).
 		where(DummyEntity1.VALUE).slike("pino1");
 
 		List<DummyEntity1> res = q.getAll();
@@ -237,17 +254,15 @@ public class SqlQueryTest {
 
 	@Test
 	public void lesserTest() throws RepositoryException, ValidationException {
-		DummyEntityWithIntegerBuilder builder = new DummyEntityWithIntegerBuilder();
+		fDummyWithIntegerRepo.save(fDummyWithIntegerBuilder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE1).build(false));
+		fDummyWithIntegerRepo.save(fDummyWithIntegerBuilder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE2).build(false));
+		fDummyWithIntegerRepo.save(fDummyWithIntegerBuilder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE3).build(false));
+		fDummyWithIntegerRepo.save(fDummyWithIntegerBuilder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE4).build(false));
+		fDummyWithIntegerRepo.save(fDummyWithIntegerBuilder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE5).build(false));
 
-		_dummyWithIntegerRepo.save(builder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE1).build(false));
-		_dummyWithIntegerRepo.save(builder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE2).build(false));
-		_dummyWithIntegerRepo.save(builder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE3).build(false));
-		_dummyWithIntegerRepo.save(builder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE4).build(false));
-		_dummyWithIntegerRepo.save(builder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE5).build(false));
-
-		Query<DummyEntityWithInteger> q = _dummyWithIntegerRepo.createQuery();
+		Query<DummyEntityWithInteger> q = fDummyWithIntegerRepo.createQuery();
 		q.select().
-		from(_dummyWithIntegerRepo, DummyEntityWithInteger.class).
+		from(fDummyWithIntegerRepo, DummyEntityWithInteger.class).
 		where(DummyEntityWithInteger.VALUE).
 		lt("5");
 		
@@ -255,27 +270,27 @@ public class SqlQueryTest {
 		List<DummyEntityWithInteger> res = q.getAll();		
 		assertEquals(4, res.size());
 		assertThat(res, containsInAnyOrder(
-				builder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE1).build(true),
-				builder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE2).build(true),
-				builder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE3).build(true),
-				builder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE4).build(true)
+				fDummyWithIntegerBuilder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE1).build(true),
+				fDummyWithIntegerBuilder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE2).build(true),
+				fDummyWithIntegerBuilder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE3).build(true),
+				fDummyWithIntegerBuilder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE4).build(true)
 				));
 
 
-		q = _dummyWithIntegerRepo.createQuery();
+		q = fDummyWithIntegerRepo.createQuery();
 		q.select().
-		from(_dummyWithIntegerRepo, DummyEntityWithInteger.class).
+		from(fDummyWithIntegerRepo, DummyEntityWithInteger.class).
 		where(DummyEntityWithInteger.VALUE).
 		lte("5");
 
 		res = q.getAll();		
 		assertEquals(5, res.size());
 		assertThat(res, containsInAnyOrder(
-				builder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE1).build(true),
-				builder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE2).build(true),
-				builder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE3).build(true),
-				builder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE4).build(true),
-				builder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE5).build(true)
+				fDummyWithIntegerBuilder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE1).build(true),
+				fDummyWithIntegerBuilder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE2).build(true),
+				fDummyWithIntegerBuilder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE3).build(true),
+				fDummyWithIntegerBuilder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE4).build(true),
+				fDummyWithIntegerBuilder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE5).build(true)
 				));
 
 	}
@@ -283,92 +298,85 @@ public class SqlQueryTest {
 	
 	@Test
 	public void greaterTest() throws RepositoryException, ValidationException {
-		DummyEntityWithIntegerBuilder builder = new DummyEntityWithIntegerBuilder();
+		fDummyWithIntegerRepo.save(fDummyWithIntegerBuilder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE1).build(false));
+		fDummyWithIntegerRepo.save(fDummyWithIntegerBuilder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE2).build(false));
+		fDummyWithIntegerRepo.save(fDummyWithIntegerBuilder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE3).build(false));
+		fDummyWithIntegerRepo.save(fDummyWithIntegerBuilder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE4).build(false));
+		fDummyWithIntegerRepo.save(fDummyWithIntegerBuilder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE5).build(false));
 
-		_dummyWithIntegerRepo.save(builder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE1).build(false));
-		_dummyWithIntegerRepo.save(builder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE2).build(false));
-		_dummyWithIntegerRepo.save(builder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE3).build(false));
-		_dummyWithIntegerRepo.save(builder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE4).build(false));
-		_dummyWithIntegerRepo.save(builder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE5).build(false));
-
-		Query<DummyEntityWithInteger> q = _dummyWithIntegerRepo.createQuery();
+		Query<DummyEntityWithInteger> q = fDummyWithIntegerRepo.createQuery();
 		q.select().
-		from(_dummyWithIntegerRepo, DummyEntityWithInteger.class).
-		where(DummyEntityWithInteger.VALUE).
-		gt("3");
+			from(fDummyWithIntegerRepo, DummyEntityWithInteger.class).
+			where(DummyEntityWithInteger.VALUE).
+			gt("3");
 		
 
 		List<DummyEntityWithInteger> res = q.getAll();		
 		assertEquals(2, res.size());
 		assertThat(res, containsInAnyOrder(
-				builder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE4).build(true),
-				builder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE5).build(true)
-				));
+				fDummyWithIntegerBuilder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE4).build(true),
+				fDummyWithIntegerBuilder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE5).build(true)));
 
 
-		q = _dummyWithIntegerRepo.createQuery();
+		q = fDummyWithIntegerRepo.createQuery();
 		q.select().
-		from(_dummyWithIntegerRepo, DummyEntityWithInteger.class).
-		where(DummyEntityWithInteger.VALUE).
-		gte("3");
+			from(fDummyWithIntegerRepo, DummyEntityWithInteger.class).
+			where(DummyEntityWithInteger.VALUE).
+			gte("3");
 
 		res = q.getAll();
 		
 		assertEquals(3, res.size());
 		assertThat(res, containsInAnyOrder(
-				builder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE3).build(true),
-				builder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE4).build(true),
-				builder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE5).build(true)
-				));
+				fDummyWithIntegerBuilder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE3).build(true),
+				fDummyWithIntegerBuilder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE4).build(true),
+				fDummyWithIntegerBuilder.loadExample(DummyEntityWithIntegerBuilder.EXAMPLE5).build(true)));
 
 	}
 	
 	
 	@Test
 	public void lesserWithDateTest() throws RepositoryException, ValidationException {
-		DummyEntityWithDateBuilder builder = new DummyEntityWithDateBuilder();
+		fDummyWithDateRepo.save(fDummyWithDateBuilder.loadExample(DummyEntityWithDateBuilder.EXAMPLE1).build(false));
+		fDummyWithDateRepo.save(fDummyWithDateBuilder.loadExample(DummyEntityWithDateBuilder.EXAMPLE2).build(false));
+		fDummyWithDateRepo.save(fDummyWithDateBuilder.loadExample(DummyEntityWithDateBuilder.EXAMPLE3).build(false));
+		fDummyWithDateRepo.save(fDummyWithDateBuilder.loadExample(DummyEntityWithDateBuilder.EXAMPLE4).build(false));
+		fDummyWithDateRepo.save(fDummyWithDateBuilder.loadExample(DummyEntityWithDateBuilder.EXAMPLE5).build(false));
 
-		_dummyWithDateRepo.save(builder.loadExample(DummyEntityWithDateBuilder.EXAMPLE1).build(false));
-		_dummyWithDateRepo.save(builder.loadExample(DummyEntityWithDateBuilder.EXAMPLE2).build(false));
-		_dummyWithDateRepo.save(builder.loadExample(DummyEntityWithDateBuilder.EXAMPLE3).build(false));
-		_dummyWithDateRepo.save(builder.loadExample(DummyEntityWithDateBuilder.EXAMPLE4).build(false));
-		_dummyWithDateRepo.save(builder.loadExample(DummyEntityWithDateBuilder.EXAMPLE5).build(false));
-
-		Query<DummyEntityWithDate> q = _dummyWithDateRepo.createQuery();
+		Query<DummyEntityWithDate> q = fDummyWithDateRepo.createQuery();
 		q.select().
-		from(_dummyWithDateRepo, DummyEntityWithDate.class).
+		from(fDummyWithDateRepo, DummyEntityWithDate.class).
 		where(DummyEntityWithInteger.VALUE).
-		lt(builder.loadExample(DummyEntityWithDateBuilder.EXAMPLE5).get(DummyEntityWithDate.VALUE));
+		lt(fDummyWithDateBuilder.loadExample(DummyEntityWithDateBuilder.EXAMPLE5).get(DummyEntityWithDate.VALUE));
 		
 
 		List<DummyEntityWithDate> res = q.getAll();	
 		
 		assertEquals(4, res.size());
 		assertThat(res, containsInAnyOrder(
-				builder.loadExample(DummyEntityWithDateBuilder.EXAMPLE1).build(true),
-				builder.loadExample(DummyEntityWithDateBuilder.EXAMPLE2).build(true),
-				builder.loadExample(DummyEntityWithDateBuilder.EXAMPLE3).build(true),
-				builder.loadExample(DummyEntityWithDateBuilder.EXAMPLE4).build(true)
+				fDummyWithDateBuilder.loadExample(DummyEntityWithDateBuilder.EXAMPLE1).build(true),
+				fDummyWithDateBuilder.loadExample(DummyEntityWithDateBuilder.EXAMPLE2).build(true),
+				fDummyWithDateBuilder.loadExample(DummyEntityWithDateBuilder.EXAMPLE3).build(true),
+				fDummyWithDateBuilder.loadExample(DummyEntityWithDateBuilder.EXAMPLE4).build(true)
 				));
 
 		
 		
 		
-		q = _dummyWithDateRepo.createQuery();
+		q = fDummyWithDateRepo.createQuery();
 		q.select().
-		from(_dummyWithDateRepo, DummyEntityWithDate.class).
+		from(fDummyWithDateRepo, DummyEntityWithDate.class).
 		where(DummyEntityWithDate.VALUE).
-		lte(builder.loadExample(DummyEntityWithDateBuilder.EXAMPLE5).get(DummyEntityWithDate.VALUE));
+		lte(fDummyWithDateBuilder.loadExample(DummyEntityWithDateBuilder.EXAMPLE5).get(DummyEntityWithDate.VALUE));
 
 		res = q.getAll();		
 		assertEquals(5, res.size());
 		assertThat(res, containsInAnyOrder(
-				builder.loadExample(DummyEntityWithDateBuilder.EXAMPLE1).build(true),
-				builder.loadExample(DummyEntityWithDateBuilder.EXAMPLE2).build(true),
-				builder.loadExample(DummyEntityWithDateBuilder.EXAMPLE3).build(true),
-				builder.loadExample(DummyEntityWithDateBuilder.EXAMPLE4).build(true),
-				builder.loadExample(DummyEntityWithDateBuilder.EXAMPLE5).build(true)
-				));
+				fDummyWithDateBuilder.loadExample(DummyEntityWithDateBuilder.EXAMPLE1).build(true),
+				fDummyWithDateBuilder.loadExample(DummyEntityWithDateBuilder.EXAMPLE2).build(true),
+				fDummyWithDateBuilder.loadExample(DummyEntityWithDateBuilder.EXAMPLE3).build(true),
+				fDummyWithDateBuilder.loadExample(DummyEntityWithDateBuilder.EXAMPLE4).build(true),
+				fDummyWithDateBuilder.loadExample(DummyEntityWithDateBuilder.EXAMPLE5).build(true)));
 
 	}
 	
@@ -376,19 +384,17 @@ public class SqlQueryTest {
 	
 	@Test
 	public void greaterWithDateTest() throws RepositoryException, ValidationException {
-		DummyEntityWithDateBuilder builder = new DummyEntityWithDateBuilder();
+		fDummyWithDateRepo.save(fDummyWithDateBuilder.loadExample(DummyEntityWithDateBuilder.EXAMPLE1).build(false));
+		fDummyWithDateRepo.save(fDummyWithDateBuilder.loadExample(DummyEntityWithDateBuilder.EXAMPLE2).build(false));
+		fDummyWithDateRepo.save(fDummyWithDateBuilder.loadExample(DummyEntityWithDateBuilder.EXAMPLE3).build(false));
+		fDummyWithDateRepo.save(fDummyWithDateBuilder.loadExample(DummyEntityWithDateBuilder.EXAMPLE4).build(false));
+		fDummyWithDateRepo.save(fDummyWithDateBuilder.loadExample(DummyEntityWithDateBuilder.EXAMPLE5).build(false));
 
-		_dummyWithDateRepo.save(builder.loadExample(DummyEntityWithDateBuilder.EXAMPLE1).build(false));
-		_dummyWithDateRepo.save(builder.loadExample(DummyEntityWithDateBuilder.EXAMPLE2).build(false));
-		_dummyWithDateRepo.save(builder.loadExample(DummyEntityWithDateBuilder.EXAMPLE3).build(false));
-		_dummyWithDateRepo.save(builder.loadExample(DummyEntityWithDateBuilder.EXAMPLE4).build(false));
-		_dummyWithDateRepo.save(builder.loadExample(DummyEntityWithDateBuilder.EXAMPLE5).build(false));
-
-		Query<DummyEntityWithDate> q = _dummyWithDateRepo.createQuery();
+		Query<DummyEntityWithDate> q = fDummyWithDateRepo.createQuery();
 		q.select().
-		from(_dummyWithDateRepo, DummyEntityWithDate.class).
+		from(fDummyWithDateRepo, DummyEntityWithDate.class).
 		where(DummyEntityWithInteger.VALUE).
-		gt(builder.loadExample(DummyEntityWithDateBuilder.EXAMPLE3).get(DummyEntityWithDate.VALUE));
+		gt(fDummyWithDateBuilder.loadExample(DummyEntityWithDateBuilder.EXAMPLE3).get(DummyEntityWithDate.VALUE));
 		
 
 		List<DummyEntityWithDate> res = q.getAll();	
@@ -396,26 +402,24 @@ public class SqlQueryTest {
 		
 		assertEquals(2, res.size());
 		assertThat(res, containsInAnyOrder(
-				builder.loadExample(DummyEntityWithDateBuilder.EXAMPLE4).build(true),
-				builder.loadExample(DummyEntityWithDateBuilder.EXAMPLE5).build(true)
-				));
+				fDummyWithDateBuilder.loadExample(DummyEntityWithDateBuilder.EXAMPLE4).build(true),
+				fDummyWithDateBuilder.loadExample(DummyEntityWithDateBuilder.EXAMPLE5).build(true)));
 
 		
 		
 		
-		q = _dummyWithDateRepo.createQuery();
+		q = fDummyWithDateRepo.createQuery();
 		q.select().
-		from(_dummyWithDateRepo, DummyEntityWithDate.class).
+		from(fDummyWithDateRepo, DummyEntityWithDate.class).
 		where(DummyEntityWithDate.VALUE).
-		gte(builder.loadExample(DummyEntityWithDateBuilder.EXAMPLE3).get(DummyEntityWithDate.VALUE));
+		gte(fDummyWithDateBuilder.loadExample(DummyEntityWithDateBuilder.EXAMPLE3).get(DummyEntityWithDate.VALUE));
 
 		res = q.getAll();		
 		assertEquals(3, res.size());
 		assertThat(res, containsInAnyOrder(
-				builder.loadExample(DummyEntityWithDateBuilder.EXAMPLE3).build(true),
-				builder.loadExample(DummyEntityWithDateBuilder.EXAMPLE4).build(true),
-				builder.loadExample(DummyEntityWithDateBuilder.EXAMPLE5).build(true)
-				));
+				fDummyWithDateBuilder.loadExample(DummyEntityWithDateBuilder.EXAMPLE3).build(true),
+				fDummyWithDateBuilder.loadExample(DummyEntityWithDateBuilder.EXAMPLE4).build(true),
+				fDummyWithDateBuilder.loadExample(DummyEntityWithDateBuilder.EXAMPLE5).build(true)));
 
 	}
 

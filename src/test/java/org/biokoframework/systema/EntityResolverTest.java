@@ -34,6 +34,8 @@ import static org.junit.Assert.assertThat;
 import org.biokoframework.system.entity.resolution.AnnotatedEntityResolver;
 import org.biokoframework.system.entity.resolution.EntityResolver;
 import org.biokoframework.system.repository.memory.InMemoryRepository;
+import org.biokoframework.system.services.entity.EntityModule;
+import org.biokoframework.system.services.entity.IEntityBuilderService;
 import org.biokoframework.systema.entity.dummy1.DummyEntity1;
 import org.biokoframework.systema.entity.dummy1.DummyEntity1Builder;
 import org.biokoframework.systema.entity.dummy2.DummyEntity2;
@@ -53,33 +55,37 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+
 public class EntityResolverTest {
 
-	private InMemoryRepository<DummyEntity1> _repository1;
-	private InMemoryRepository<DummyEntity2> _repository2;
-	private Repository<DummyEntity3> _repository3;
-	private Repository<DummyEntity4> _repository4;
-	private Repository<DummyEntity5> _repository5;
+	private InMemoryRepository<DummyEntity1> fRepository1;
+	private InMemoryRepository<DummyEntity2> fRepository2;
+	private Repository<DummyEntity3> fRepository3;
+	private Repository<DummyEntity4> fRepository4;
+	private Repository<DummyEntity5> fRepository5;
 	
 	@Before
 	public void populateRepositories() throws ValidationException, RepositoryException {
+		Injector injector = Guice.createInjector(new EntityModule());
 		
-		_repository1 = new InMemoryRepository<DummyEntity1>(DummyEntity1.class);
-		_repository2 = new InMemoryRepository<DummyEntity2>(DummyEntity2.class);
-		_repository3 = new InMemoryRepository<DummyEntity3>(DummyEntity3.class);
-		_repository4 = new InMemoryRepository<DummyEntity4>(DummyEntity4.class);
-		_repository5 = new InMemoryRepository<DummyEntity5>(DummyEntity5.class);
+		fRepository1 = new InMemoryRepository<DummyEntity1>(DummyEntity1.class, injector.getInstance(IEntityBuilderService.class));
+		fRepository2 = new InMemoryRepository<DummyEntity2>(DummyEntity2.class, injector.getInstance(IEntityBuilderService.class));
+		fRepository3 = new InMemoryRepository<DummyEntity3>(DummyEntity3.class, injector.getInstance(IEntityBuilderService.class));
+		fRepository4 = new InMemoryRepository<DummyEntity4>(DummyEntity4.class, injector.getInstance(IEntityBuilderService.class));
+		fRepository5 = new InMemoryRepository<DummyEntity5>(DummyEntity5.class, injector.getInstance(IEntityBuilderService.class));
 		
 		
 		
 		EntityBuilder<DummyEntity1> builder1 = new DummyEntity1Builder().loadDefaultExample();
-		_repository1.save(builder1.build(false));
+		fRepository1.save(builder1.build(false));
 		
 		EntityBuilder<DummyEntity2> builder2 = new DummyEntity2Builder().loadDefaultExample();
-		_repository2.save(builder2.build(false));
+		fRepository2.save(builder2.build(false));
 		
 		EntityBuilder<DummyEntity3> builder3 = new DummyEntity3Builder().loadDefaultExample();
-		_repository3.save(builder3.build(false));
+		fRepository3.save(builder3.build(false));
 		
 
 //	ARRAYS now are not supported from the sqlrepo
@@ -106,11 +112,11 @@ public class EntityResolverTest {
 	@SuppressWarnings("unchecked")
 	@Test
 	public void simpleResolutionTest() throws Exception {
-		DummyEntity3 entity3 = _repository3.retrieve("1");
+		DummyEntity3 entity3 = fRepository3.retrieve("1");
 		
 		EntityResolver resolver = new AnnotatedEntityResolver();
-		DummyEntity3 solved3 = resolver.with(_repository1, DummyEntity1.class)
-									   .with(_repository2, DummyEntity2.class)
+		DummyEntity3 solved3 = resolver.with(fRepository1, DummyEntity1.class)
+									   .with(fRepository2, DummyEntity2.class)
 									   .solve(entity3, DummyEntity3.class);
 		
 		JSONObject expectedSolved2 = new JSONObject();
@@ -129,10 +135,10 @@ public class EntityResolverTest {
 	@SuppressWarnings("unchecked")
 	@Test
 	public void missingRepository() throws Exception {
-		DummyEntity3 entity3 = _repository3.retrieve("1");
+		DummyEntity3 entity3 = fRepository3.retrieve("1");
 		
 		EntityResolver resolver = new AnnotatedEntityResolver();
-		DummyEntity3 solved3 = resolver.with(_repository2, DummyEntity2.class)
+		DummyEntity3 solved3 = resolver.with(fRepository2, DummyEntity2.class)
 									   .solve(entity3, DummyEntity3.class);
 		
 		JSONObject expectedSolved2 = new JSONObject();
@@ -151,11 +157,11 @@ public class EntityResolverTest {
 	@SuppressWarnings("unchecked")
 	@Test
 	public void depthLimitedResolution() throws Exception {		
-		DummyEntity3 entity3 = _repository3.retrieve("1");
+		DummyEntity3 entity3 = fRepository3.retrieve("1");
 		
 		EntityResolver resolver = new AnnotatedEntityResolver();
-		DummyEntity3 solved3 = resolver.with(_repository2, DummyEntity2.class)
-									   .with(_repository1, DummyEntity1.class)
+		DummyEntity3 solved3 = resolver.with(fRepository2, DummyEntity2.class)
+									   .with(fRepository1, DummyEntity1.class)
 									   .maxDepth(1)
 									   .solve(entity3, DummyEntity3.class);
 		
@@ -176,10 +182,10 @@ public class EntityResolverTest {
 	@Ignore("Arrays are not supported")
 	@Test
 	public void resolutionWithList() throws Exception {
-		DummyEntity4 entity4 = _repository4.retrieve("1");
+		DummyEntity4 entity4 = fRepository4.retrieve("1");
 		
 		EntityResolver resolver = new AnnotatedEntityResolver();
-		DummyEntity4 solved4 = resolver.with(_repository1, DummyEntity1.class)
+		DummyEntity4 solved4 = resolver.with(fRepository1, DummyEntity1.class)
 										.solve(entity4, DummyEntity4.class);
 		
 		JSONObject expectedSolved1a = new JSONObject();
@@ -206,10 +212,10 @@ public class EntityResolverTest {
 	@Ignore("Arrays are not supported")
 	@Test
 	public void resolutionWithListOfEntitiesContainingListOfIds() throws Exception {
-		DummyEntity5 entity5 = _repository5.retrieve("1");
+		DummyEntity5 entity5 = fRepository5.retrieve("1");
 		
 		EntityResolver resolver = new AnnotatedEntityResolver();
-		DummyEntity5 solved5 = resolver.with(_repository1, DummyEntity1.class)
+		DummyEntity5 solved5 = resolver.with(fRepository1, DummyEntity1.class)
 										 .solve(entity5, DummyEntity5.class);
 		
 		JSONObject expectedSolved1a = new JSONObject();

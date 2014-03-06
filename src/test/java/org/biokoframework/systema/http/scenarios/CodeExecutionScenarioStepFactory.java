@@ -34,6 +34,7 @@ import org.biokoframework.http.scenario.HttpScenarioFactory;
 import org.biokoframework.http.scenario.Scenario;
 import org.biokoframework.systema.commons.SystemACommandNames;
 import org.biokoframework.systema.entity.dummy1.DummyEntity1;
+import org.biokoframework.systema.factory.SystemACommands;
 import org.biokoframework.systema.misc.Dummy1Mock;
 import org.biokoframework.utils.domain.DomainEntity;
 import org.biokoframework.utils.fields.Fields;
@@ -61,14 +62,14 @@ public class CodeExecutionScenarioStepFactory {
 		Dummy1Mock.setShape(Dummy1Mock.TRIANGOLO);
 		// but I will get a quadrato because of the second static setShape below.
 		scenario.addScenarioStep("getting wrong quadrato", HttpScenarioFactory.getSuccessful(
-						SystemACommandNames.DUMMY1_MOCK_COMMAND, 
+						SystemACommands.DUMMY1_MOCK_COMMAND, 
 						null, null, null, equalTo("["+quadrato.toJSONString()+"]")));
 
 		
 		Dummy1Mock.setShape(Dummy1Mock.QUADRATO);
 		
 		scenario.addScenarioStep("use mock dependent command to get quadrato", HttpScenarioFactory.getSuccessful(
-				SystemACommandNames.DUMMY1_MOCK_COMMAND, 
+				SystemACommands.DUMMY1_MOCK_COMMAND, 
 				null, null, null, equalTo("["+quadrato.toJSONString()+"]")));
 		
 		return scenario;
@@ -78,7 +79,7 @@ public class CodeExecutionScenarioStepFactory {
 	
 	public static Scenario testWithExecutionStep() throws Exception {
 		
-		Scenario scenario = new Scenario("Test execution without executionStep");
+		Scenario scenario = new Scenario("Test execution with executionStep");
 		
 		// I want a triangolo, so I will use ExecutionStep to execute code NOW
 		scenario.addScenarioStep("setting mock to tirangolo", new ExecutionScenarioStep() {
