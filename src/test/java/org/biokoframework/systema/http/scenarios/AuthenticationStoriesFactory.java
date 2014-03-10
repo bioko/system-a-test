@@ -33,17 +33,19 @@ import static org.biokoframework.utils.matcher.Matchers.matchesJSONString;
 import java.util.HashMap;
 
 import org.biokoframework.http.rest.exception.HttpError;
+import org.biokoframework.http.scenario.ExecutionScenarioStep;
 import org.biokoframework.http.scenario.HttpScenarioFactory;
 import org.biokoframework.http.scenario.JSonExpectedResponseBuilder;
 import org.biokoframework.http.scenario.Scenario;
 import org.biokoframework.system.entity.login.Login;
 import org.biokoframework.system.entity.login.LoginBuilder;
+import org.biokoframework.system.services.random.impl.TestRandomGeneratorService;
 import org.biokoframework.systema.factory.SystemACommands;
 import org.json.simple.JSONValue;
 
 public class AuthenticationStoriesFactory {
 		
-	private static HashMap<String, String> _tokenMap = new HashMap<String, String>();
+	private static HashMap<String, String> sTokenMap = new HashMap<String, String>();
 	
 	public static Scenario registerTestUsers() throws Exception {
 		Scenario scenario = new Scenario("Register test users");
@@ -73,7 +75,14 @@ public class AuthenticationStoriesFactory {
 
 	
 	public static Scenario loginAsUser() throws Exception{
-		Scenario scenario = new Scenario("Login as user");		
+		Scenario scenario = new Scenario("Login as user");
+		
+		scenario.addScenarioStep("Prepare random", new ExecutionScenarioStep() {
+			@Override
+			public void execute() {
+				TestRandomGeneratorService.setSingleRandomValue("authToken", "550e8400-e29b-41d4-a716-446655440000");
+			}
+		});
 		
 		LoginBuilder loginBuilder = new LoginBuilder();
 		
@@ -81,21 +90,28 @@ public class AuthenticationStoriesFactory {
 		
 		String loginJson = loginBuilder.loadExample(LoginBuilder.GENERIC_USER_WITHOUT_ROLE).getJsonForFields(Login.USER_EMAIL,Login.PASSWORD);			
 		scenario.addScenarioStep("login as user", HttpScenarioFactory.postSuccessful(SystemACommands.ENGAGED_CHECK_IN, 
-				null, null, loginJson, matchesAuthenticationResponse(_tokenMap)));
+				null, null, loginJson, matchesAuthenticationResponse(sTokenMap)));
 				
 		return scenario;		
 	}
 	
-	public static Scenario loginAsAdmin() throws Exception{
-		Scenario scenario = new Scenario("Login as admin");		
+	public static Scenario loginAsAdmin() throws Exception {
+		Scenario scenario = new Scenario("Login as admin");
 		
 		LoginBuilder loginBuilder = new LoginBuilder();
+		
+		scenario.addScenarioStep("Prepare random", new ExecutionScenarioStep() {
+			@Override
+			public void execute() {
+				TestRandomGeneratorService.setSingleRandomValue("authToken", "550e8400-e29b-41d4-a716-446655440000");
+			}
+		});
 		
 		scenario.addScenario(registerTestUsers());
 		
 		String loginJson = loginBuilder.loadExample(LoginBuilder.GENERIC_USER_WITH_ADMIN_ROLE).getJsonForFields(Login.USER_EMAIL,Login.PASSWORD);			
 		scenario.addScenarioStep("login as admin", HttpScenarioFactory.postSuccessful(SystemACommands.ENGAGED_CHECK_IN, 
-				null, null, loginJson, matchesAuthenticationResponse(_tokenMap)));
+				null, null, loginJson, matchesAuthenticationResponse(sTokenMap)));
 				
 		return scenario;		
 	}
@@ -103,13 +119,20 @@ public class AuthenticationStoriesFactory {
 	public static Scenario loginAsAnotherRole() throws Exception{
 		Scenario scenario = new Scenario("Login as user with another role");		
 		
+		scenario.addScenarioStep("Prepare random", new ExecutionScenarioStep() {
+			@Override
+			public void execute() {
+				TestRandomGeneratorService.setSingleRandomValue("authToken", "550e8400-e29b-41d4-a716-446655440000");
+			}
+		});
+		
 		LoginBuilder loginBuilder = new LoginBuilder();
 		
 		scenario.addScenario(registerTestUsers());
 		
 		String loginJson = loginBuilder.loadExample(LoginBuilder.GENERIC_USER_WITH_ANOTHER_ROLE).getJsonForFields(Login.USER_EMAIL,Login.PASSWORD);			
 		scenario.addScenarioStep("login as admin", HttpScenarioFactory.postSuccessful(SystemACommands.ENGAGED_CHECK_IN, 
-				null, null, loginJson, matchesAuthenticationResponse(_tokenMap)));
+				null, null, loginJson, matchesAuthenticationResponse(sTokenMap)));
 				
 		return scenario;		
 	}
@@ -119,11 +142,18 @@ public class AuthenticationStoriesFactory {
 		
 		LoginBuilder loginBuilder = new LoginBuilder();
 		
+		scenario.addScenarioStep("Prepare random", new ExecutionScenarioStep() {
+			@Override
+			public void execute() {
+				TestRandomGeneratorService.setSingleRandomValue("authToken", "550e8400-e29b-41d4-a716-446655440000");
+			}
+		});
+		
 		scenario.addScenario(registerTestUsers());
 		
 		String loginJson = loginBuilder.loadExample(LoginBuilder.GENERIC_USER_WITH_BOTH_ROLES).getJsonForFields(Login.USER_EMAIL,Login.PASSWORD);			
 		scenario.addScenarioStep("login as admin", HttpScenarioFactory.postSuccessful(SystemACommands.ENGAGED_CHECK_IN, 
-				null, null, loginJson, matchesAuthenticationResponse(_tokenMap)));
+				null, null, loginJson, matchesAuthenticationResponse(sTokenMap)));
 				
 		return scenario;		
 	}
@@ -133,6 +163,13 @@ public class AuthenticationStoriesFactory {
 		Scenario scenario = new Scenario("test authentication without roles");
 		
 		String testJson = "{\"gino\":\"pino\"}";
+		
+		scenario.addScenarioStep("Prepare random", new ExecutionScenarioStep() {
+			@Override
+			public void execute() {
+				TestRandomGeneratorService.setSingleRandomValue("authToken", "550e8400-e29b-41d4-a716-446655440000");
+			}
+		});
 		
 		scenario.addScenarioStep("use public command without login and success", HttpScenarioFactory.postSuccessful(
 				SystemACommands.DUMMY_COMMAND_NOT_AUTHENTICATED, null, null, testJson, matchesJSONString("[]")));
@@ -149,7 +186,7 @@ public class AuthenticationStoriesFactory {
 		scenario.addScenario(loginAsUser());
 		
 		scenario.addScenarioStep("after login use generic auth command with success", HttpScenarioFactory.postSuccessful(
-				SystemACommands.DUMMY_COMMAND_NOT_AUTHENTICATED, _tokenMap, null, testJson, matchesJSONString("[]")));
+				SystemACommands.DUMMY_COMMAND_NOT_AUTHENTICATED, sTokenMap, null, testJson, matchesJSONString("[]")));
 		
 		
 		return scenario;
@@ -158,13 +195,19 @@ public class AuthenticationStoriesFactory {
 	public static Scenario testAuthWithRoleAndFail() throws Exception {
 		Scenario scenario = new Scenario("test authentication with roles and fail because the user have not privileges");
 		
+		scenario.addScenarioStep("Prepare random", new ExecutionScenarioStep() {
+			@Override
+			public void execute() {
+				TestRandomGeneratorService.setSingleRandomValue("authToken", "550e8400-e29b-41d4-a716-446655440000");
+			}
+		});
 		
 		scenario.addScenario(loginAsUser());
 		
 		HttpError expectedError = JSonExpectedResponseBuilder.insufficientPrivileges();		
 		String testJson = "{\"gino\":\"pino\"}";		
 		scenario.addScenarioStep("", HttpScenarioFactory.postFailed(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_ONYL_FOR_ADMIN, 
-				_tokenMap, null, testJson, expectedError.status(), matchesJSONString(JSONValue.toJSONString(expectedError.body()))));
+				sTokenMap, null, testJson, expectedError.status(), matchesJSONString(JSONValue.toJSONString(expectedError.body()))));
 		
 		return scenario;
 	}
@@ -177,7 +220,7 @@ public class AuthenticationStoriesFactory {
 				
 		String testJson = "{\"gino\":\"pino\"}";		
 		scenario.addScenarioStep("use command for admins", HttpScenarioFactory.postSuccessful(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_ONYL_FOR_ADMIN, 
-				_tokenMap, null, testJson,  matchesJSONString("[]")));
+				sTokenMap, null, testJson,  matchesJSONString("[]")));
 		
 		return scenario;
 	}
@@ -190,13 +233,13 @@ public class AuthenticationStoriesFactory {
 		
 		scenario.addScenario(loginAsAdmin());
 		scenario.addScenarioStep("use not auth command and success", HttpScenarioFactory.postSuccessful(SystemACommands.DUMMY_COMMAND_NOT_AUTHENTICATED, 
-				_tokenMap, null, testJson,  matchesJSONString("[]")));
+				sTokenMap, null, testJson,  matchesJSONString("[]")));
 		scenario.addScenarioStep("use command for admins with admin and success", HttpScenarioFactory.postSuccessful(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_ONYL_FOR_ADMIN, 
-				_tokenMap, null, testJson,  matchesJSONString("[]")));
+				sTokenMap, null, testJson,  matchesJSONString("[]")));
 		scenario.addScenarioStep("use command for another with  admin and fail", HttpScenarioFactory.postFailed(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_ONYL_FOR_ANOTHER, 
-				_tokenMap, null, testJson, expectedError.status(), matchesJSONString(JSONValue.toJSONString(expectedError.body()))));
+				sTokenMap, null, testJson, expectedError.status(), matchesJSONString(JSONValue.toJSONString(expectedError.body()))));
 		scenario.addScenarioStep("use command for both with admin user and success", HttpScenarioFactory.postSuccessful(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_FOR_BOTH, 
-				_tokenMap, null, testJson,  matchesJSONString("[]")));
+				sTokenMap, null, testJson,  matchesJSONString("[]")));
 		
 		return scenario;
 	}
@@ -208,13 +251,13 @@ public class AuthenticationStoriesFactory {
 		
 		scenario.addScenario(loginAsBothRoles());
 		scenario.addScenarioStep("use not auth command and success", HttpScenarioFactory.postSuccessful(SystemACommands.DUMMY_COMMAND_NOT_AUTHENTICATED, 
-				_tokenMap, null, testJson,  matchesJSONString("[]")));
+				sTokenMap, null, testJson,  matchesJSONString("[]")));
 		scenario.addScenarioStep("use command for admins with both user and success", HttpScenarioFactory.postSuccessful(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_ONYL_FOR_ADMIN, 
-				_tokenMap, null, testJson,  matchesJSONString("[]")));
+				sTokenMap, null, testJson,  matchesJSONString("[]")));
 		scenario.addScenarioStep("use command for another with both user and success", HttpScenarioFactory.postSuccessful(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_ONYL_FOR_ANOTHER, 
-				_tokenMap, null, testJson,  matchesJSONString("[]")));
+				sTokenMap, null, testJson,  matchesJSONString("[]")));
 		scenario.addScenarioStep("use command for both with both user and success", HttpScenarioFactory.postSuccessful(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_FOR_BOTH, 
-				_tokenMap, null, testJson,  matchesJSONString("[]")));
+				sTokenMap, null, testJson,  matchesJSONString("[]")));
 		
 		
 		return scenario;
@@ -228,13 +271,13 @@ public class AuthenticationStoriesFactory {
 		
 		scenario.addScenario(loginAsAnotherRole());
 		scenario.addScenarioStep("use not auth command and success", HttpScenarioFactory.postSuccessful(SystemACommands.DUMMY_COMMAND_NOT_AUTHENTICATED, 
-				_tokenMap, null, testJson,  matchesJSONString("[]")));
+				sTokenMap, null, testJson,  matchesJSONString("[]")));
 		scenario.addScenarioStep("use command for another with another and success", HttpScenarioFactory.postSuccessful(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_ONYL_FOR_ANOTHER, 
-				_tokenMap, null, testJson,  matchesJSONString("[]")));
+				sTokenMap, null, testJson,  matchesJSONString("[]")));
 		scenario.addScenarioStep("use command for admin with  another and fail", HttpScenarioFactory.postFailed(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_ONYL_FOR_ADMIN, 
-				_tokenMap, null, testJson, expectedError.status(), matchesJSONString(JSONValue.toJSONString(expectedError.body()))));
+				sTokenMap, null, testJson, expectedError.status(), matchesJSONString(JSONValue.toJSONString(expectedError.body()))));
 		scenario.addScenarioStep("use command for both with another user and success", HttpScenarioFactory.postSuccessful(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_FOR_BOTH, 
-				_tokenMap, null, testJson,  matchesJSONString("[]")));
+				sTokenMap, null, testJson,  matchesJSONString("[]")));
 		
 		return scenario;
 	}
@@ -245,15 +288,15 @@ public class AuthenticationStoriesFactory {
 		HttpError expectedError = JSonExpectedResponseBuilder.authenticationRequired();
 				
 		scenario.addScenarioStep("use not auth command and success", HttpScenarioFactory.postSuccessful(SystemACommands.DUMMY_COMMAND_NOT_AUTHENTICATED, 
-				_tokenMap, null, testJson,  matchesJSONString("[]")));		
+				sTokenMap, null, testJson,  matchesJSONString("[]")));		
 		scenario.addScenarioStep("use auth command and fail", HttpScenarioFactory.postFailed(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_WITHOUT_ROLES, 
-				_tokenMap, null, testJson, expectedError.status(), matchesJSONString(JSONValue.toJSONString(expectedError.body()))));
+				sTokenMap, null, testJson, expectedError.status(), matchesJSONString(JSONValue.toJSONString(expectedError.body()))));
 		scenario.addScenarioStep("use command for admin and fail", HttpScenarioFactory.postFailed(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_ONYL_FOR_ADMIN, 
-				_tokenMap, null, testJson, expectedError.status(), matchesJSONString(JSONValue.toJSONString(expectedError.body()))));
+				sTokenMap, null, testJson, expectedError.status(), matchesJSONString(JSONValue.toJSONString(expectedError.body()))));
 		scenario.addScenarioStep("use command for another and fail", HttpScenarioFactory.postFailed(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_ONYL_FOR_ANOTHER, 
-				_tokenMap, null, testJson, expectedError.status(), matchesJSONString(JSONValue.toJSONString(expectedError.body()))));
+				sTokenMap, null, testJson, expectedError.status(), matchesJSONString(JSONValue.toJSONString(expectedError.body()))));
 		scenario.addScenarioStep("use command for both and fail", HttpScenarioFactory.postFailed(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_FOR_BOTH, 
-				_tokenMap, null, testJson, expectedError.status(), matchesJSONString(JSONValue.toJSONString(expectedError.body()))));
+				sTokenMap, null, testJson, expectedError.status(), matchesJSONString(JSONValue.toJSONString(expectedError.body()))));
 		
 		
 		return scenario;
@@ -268,10 +311,10 @@ public class AuthenticationStoriesFactory {
 		scenario.addScenario(loginAsUser());
 		
 		scenario.addScenarioStep("call non auth command", HttpScenarioFactory.postSuccessful(SystemACommands.CHECK_AUTH_LOGIN_ID_WITHOUT_AUTH_ANNOITION, 
-				_tokenMap, null, testJson, matchesJSONString(expectedJson)));
+				sTokenMap, null, testJson, matchesJSONString(expectedJson)));
 		
 		scenario.addScenarioStep("call  auth command", HttpScenarioFactory.postSuccessful(SystemACommands.CHECK_AUTH_LOGIN_ID_WITH_AUTH_ANNOITION, 
-				_tokenMap, null, testJson, matchesJSONString(expectedJson)));
+				sTokenMap, null, testJson, matchesJSONString(expectedJson)));
 		
 		return scenario;
 		
