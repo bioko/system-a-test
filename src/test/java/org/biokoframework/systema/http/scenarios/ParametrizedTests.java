@@ -77,18 +77,18 @@ public class ParametrizedTests extends SystemATestAbstract {
 				FailureScenarioParametrizedFactory.class,
 //				DissolverFactory.class,
 //				MultipleCommandFactory.class,
-				CodeExecutionScenarioStepFactory.class,
-				CronFactory.class,
-				ValidatorFactory.class,
-				PasswordResetStoriesFactory.class,
-				EmailConfirmationStories.class
+				CodeExecutionScenarioStepFactory.class
+//				CronFactory.class,
+//				ValidatorFactory.class,
+//				PasswordResetStoriesFactory.class,
+//				EmailConfirmationStories.class
 		));
 
 //		result.addAll(OnlyGetScenarioFactory.adaptToOnlyGet(result));
 //
 		result.addAll(HttpScenarioFactory.findScenarios(
 //				CommandInfoFactory.class, 
-				MultipartHttpScenarioFactory.class,
+//				MultipartHttpScenarioFactory.class,
 				AuthenticationStoriesFactory.class
 		));
 		
