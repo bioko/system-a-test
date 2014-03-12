@@ -310,10 +310,10 @@ public class AuthenticationStoriesFactory {
 		
 		scenario.addScenario(loginAsUser());
 		
-		scenario.addScenarioStep("call non auth command", HttpScenarioFactory.postSuccessful(SystemACommands.CHECK_AUTH_LOGIN_ID_WITHOUT_AUTH_ANNOITION, 
+		scenario.addScenarioStep("call non auth command", HttpScenarioFactory.postSuccessful(SystemACommands.CHECK_AUTH_LOGIN_ID_WITHOUT_AUTH_ANNOTATION,
 				sTokenMap, null, testJson, matchesJSONString(expectedJson)));
 		
-		scenario.addScenarioStep("call  auth command", HttpScenarioFactory.postSuccessful(SystemACommands.CHECK_AUTH_LOGIN_ID_WITH_AUTH_ANNOITION, 
+		scenario.addScenarioStep("call  auth command", HttpScenarioFactory.postSuccessful(SystemACommands.CHECK_AUTH_LOGIN_ID_WITH_AUTH_ANNOTATION,
 				sTokenMap, null, testJson, matchesJSONString(expectedJson)));
 		
 		return scenario;

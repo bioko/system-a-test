@@ -61,29 +61,29 @@ public class TokenTest extends SystemATestAbstract {
 	private static final String ENGAGED_AUTH_TOKEN_EXPIRE = "Engaged-Auth-Token-Expire";
 	private static final String ENGAGED_AUTH_TOKEN = "Engaged-Auth-Token";
 	
-	private String _authenticationCommandUrl;
-	private String _authenticationOptionalCommandUrl; 
-	private String _authenticationUrl;
-	private AuthenticationUtils _authUtils;
+	private String fAuthenticationCommandUrl;
+	private String fAuthenticationOptionalCommandUrl;
+	private String fAuthenticationUrl;
+	private AuthenticationUtils fAuthUtils;
 	
 	@Before
 	public void createUrls() {
-		_authenticationCommandUrl = getLocalHostUrl() + Login.class.getSimpleName().toLowerCase() + '-' + "authenticated";
-		_authenticationOptionalCommandUrl = _authenticationCommandUrl + "-optional";
-		_authenticationUrl = getLocalHostUrl() + "authentication";
-		_authUtils = new AuthenticationUtils(_authenticationUrl);
-	
+		fAuthenticationCommandUrl = getLocalHostUrl() + SystemACommands.LOGIN_AUTHENTICATED;
+		fAuthenticationOptionalCommandUrl = getLocalHostUrl() + SystemACommands.LOGIN_AUTHENTICATED_OPTIONAL;
+		fAuthenticationUrl = getLocalHostUrl() + "authentication";
+		fAuthUtils = new AuthenticationUtils(fAuthenticationUrl);
 	}
 	
 	@Test
 	public void successfulExecutionOfSecuredCommandWithTokenInBody() {
 		EntityBuilder<Login> loginBuilder = new LoginBuilder().loadDefaultExample();
 		given().
-		body(loginBuilder.build(false).toJSONString()).
+        contentType(ContentType.JSON).
+        body(loginBuilder.build(false).toJSONString()).
 		post(getLocalHostUrl() + SystemACommands.LOGIN);
 		
 		String validToken = "00000000-0000-0000-0000-000000000000";
-		long expire = _authUtils.postValidToken(validToken);
+		long expire = fAuthUtils.postValidToken(validToken);
 		
 		EntityBuilder<Login> anOtherLoginBuilder = new LoginBuilder().loadExample(LoginBuilder.SIMONE);
 		
@@ -95,14 +95,15 @@ public class TokenTest extends SystemATestAbstract {
 		String actualTokenExpire = expect().
 		statusCode(200).
 		body(
-				equalTo(JSonExpectedResponseBuilder.asArray(anOtherLoginBuilder.build(true).toJSONString()))
-		).
+                equalTo(JSonExpectedResponseBuilder.asArray(anOtherLoginBuilder.build(true).toJSONString()))
+        ).
 		when().
 		given().
+        contentType(ContentType.JSON).
 		body(
-				requestBody.toJSONString()
-		).
-		post(_authenticationCommandUrl).
+                requestBody.toJSONString()
+        ).
+		post(fAuthenticationCommandUrl).
 		header(ENGAGED_AUTH_TOKEN_EXPIRE);
 		
 		assertThat(Long.parseLong(actualTokenExpire), greaterThan(expire));
@@ -112,11 +113,12 @@ public class TokenTest extends SystemATestAbstract {
 	public void successfulExecutionOfSecuredCommandWithTokenInHeader() {
 		EntityBuilder<Login> loginBuilder = new LoginBuilder().loadDefaultExample();
 		given().
+        contentType(ContentType.JSON).
 		body(loginBuilder.build(false).toJSONString()).
-		post(getLocalHostUrl() + SystemACommands.LOGIN);
+		post(getLocalHostUrl() + "login");
 		
 		String validToken = "00000000-0000-0000-0000-000000000000";
-		long expire = _authUtils.postValidToken(validToken);
+		long expire = fAuthUtils.postValidToken(validToken);
 		
 		EntityBuilder<Login> anOtherLoginBuilder = new LoginBuilder().loadExample(LoginBuilder.SIMONE);
 		
@@ -127,11 +129,12 @@ public class TokenTest extends SystemATestAbstract {
 		).
 		when().
 		given().
+        contentType(ContentType.JSON).
 		body(
 				anOtherLoginBuilder.getJsonForFields(Login.USER_EMAIL, Login.PASSWORD)
 		).
 		header(ENGAGED_AUTH_TOKEN, validToken).
-		post(_authenticationCommandUrl).
+		post(fAuthenticationCommandUrl).
 		header(ENGAGED_AUTH_TOKEN_EXPIRE);
 		
 		assertThat(Long.parseLong(actualTokenExpire), greaterThan(expire));
@@ -139,28 +142,34 @@ public class TokenTest extends SystemATestAbstract {
 	
 	@Test
 	public void successfulExecutionOfOptionalSecuredCommandWithTokenInHeader() {
-		EntityBuilder<Login> loginBuilder = new LoginBuilder().loadDefaultExample();
+		EntityBuilder<Login> loginBuilder = new LoginBuilder().loadExample(LoginBuilder.MATTIA);
+
+        expect().
+        statusCode(200).
+        when().
 		given().
+        contentType(ContentType.JSON).
 		body(loginBuilder.build(false).toJSONString()).
 		post(getLocalHostUrl() + SystemACommands.LOGIN);
 		
 		String validToken = "00000000-0000-0000-0000-000000000000";
-		long expire = _authUtils.postValidToken(validToken);
+		long expire = fAuthUtils.postValidToken(validToken);
 		
 		EntityBuilder<Login> anOtherLoginBuilder = new LoginBuilder().loadExample(LoginBuilder.SIMONE);
 		
 		String actualTokenExpire = expect().
 		statusCode(200).
 		body(
-				matchesJSONString(JSonExpectedResponseBuilder.asJSONArray(anOtherLoginBuilder.build(true)))
-		).
+                matchesJSONString(JSonExpectedResponseBuilder.asJSONArray(anOtherLoginBuilder.build(true)))
+        ).
 		when().
 		given().
+        contentType(ContentType.JSON).
 		body(
 				anOtherLoginBuilder.getJsonForFields(Login.USER_EMAIL, Login.PASSWORD)
 		).
 		header(ENGAGED_AUTH_TOKEN, validToken).
-		post(_authenticationOptionalCommandUrl).
+		post(fAuthenticationOptionalCommandUrl).
 		header(ENGAGED_AUTH_TOKEN_EXPIRE);
 		
 		assertThat(Long.parseLong(actualTokenExpire), greaterThan(expire));
@@ -169,7 +178,7 @@ public class TokenTest extends SystemATestAbstract {
 	@Test
 	public void successfulExecutionOfOptionalSecuredCommandWithoutToken() {
 		String validToken = "00000000-0000-0000-0000-000000000000";
-		_authUtils.postValidToken(validToken);
+		fAuthUtils.postValidToken(validToken);
 		
 		expect().
 		statusCode(200).
@@ -178,10 +187,11 @@ public class TokenTest extends SystemATestAbstract {
 		).
 		when().
 		given().
+        contentType(ContentType.JSON).
 		body(
 				createLoginEntity().toJSONString()
 		).
-		post(_authenticationOptionalCommandUrl);
+		post(fAuthenticationOptionalCommandUrl);
 	}
 	
 	@Test
@@ -196,10 +206,11 @@ public class TokenTest extends SystemATestAbstract {
 		).
 		when().
 		given().
+        contentType(ContentType.JSON).
 		body(
-				createLoginWithToken(unexistingToken).toJSONString()
-		).
-		post(_authenticationCommandUrl);
+                createLoginWithToken(unexistingToken).toJSONString()
+        ).
+		post(fAuthenticationCommandUrl);
 	}
 	
 	@Test
@@ -216,14 +227,14 @@ public class TokenTest extends SystemATestAbstract {
 		body(
 				createLoginEntity().toJSONString()
 		).
-		post(_authenticationCommandUrl);
+		post(fAuthenticationCommandUrl);
 	}
 	
 
 	@Test
 	public void failedExecutionBecauseOfTimeOut() {
 		String expiredToken = "00000000-0000-0000-0000-000000000002";
-		_authUtils.postToken(expiredToken, 1369038000); // 20/05/2013 - 08:20:00 GMT
+		fAuthUtils.postToken(expiredToken, 1369038000); // 20/05/2013 - 08:20:00 GMT
 		
 		List<ErrorEntity> errors = CommandExceptionsFactory.createTokenExpiredException().getErrors();
 		expect().
@@ -238,7 +249,7 @@ public class TokenTest extends SystemATestAbstract {
 				createLoginEntity().toJSONString()
 		).
 		headers(GenericFieldNames.TOKEN_HEADER, expiredToken).
-		post(_authenticationCommandUrl);
+		post(fAuthenticationCommandUrl);
 	}
 	
 	@SuppressWarnings("unchecked")
