@@ -40,6 +40,7 @@ import java.util.List;
 import org.biokoframework.system.entity.login.Login;
 import org.biokoframework.system.entity.login.LoginBuilder;
 import org.biokoframework.system.exceptions.CommandExceptionsFactory;
+import org.biokoframework.system.services.random.impl.TestRandomGeneratorService;
 import org.biokoframework.systema.http.SystemATestAbstract;
 import org.biokoframework.utils.domain.EntityBuilder;
 import org.biokoframework.utils.domain.ErrorEntity;
@@ -67,15 +68,21 @@ public class CheckInTest extends SystemATestAbstract {
 		_builder.set(Login.USER_EMAIL, "pino@home");
 		_builder.set(Login.PASSWORD, "secret");
 	}
+
+    @Before
+    public void configureRandomService() {
+        TestRandomGeneratorService.setSingleRandomValue("authToken", "0000-0000-0000-0000");
+    }
 	
 	@Test
 	public void failureLoginNotExisting() {
-		LoginBuilder anOtherBuilder = new LoginBuilder();
+		EntityBuilder<Login> anOtherBuilder = new LoginBuilder().loadDefaultExample();
 		given().
 		request().
+        contentType(ContentType.JSON).
 		body(
-				anOtherBuilder.build(false).toJSONString()
-		).
+                anOtherBuilder.build(false).toJSONString()
+        ).
 		post(getLoginUrl());
 		
 		List<ErrorEntity> errors = CommandExceptionsFactory.createInvalidLoginException().getErrors();
@@ -98,6 +105,7 @@ public class CheckInTest extends SystemATestAbstract {
 		
 		given().
 		request().
+        contentType(ContentType.JSON).
 		body(
 				_builder.build(false).toJSONString()
 		).
@@ -154,6 +162,7 @@ public class CheckInTest extends SystemATestAbstract {
 		EntityBuilder<Login> adminBuilder = new LoginBuilder().loadExample(LoginBuilder.GENERIC_USER_WITH_ADMIN_ROLE);
 		given().
 		request().
+        contentType(ContentType.JSON).
 		body(
 				adminBuilder.build(false).toJSONString()
 		).
