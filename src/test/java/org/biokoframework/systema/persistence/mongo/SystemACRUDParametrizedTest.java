@@ -27,12 +27,6 @@
 
 package org.biokoframework.systema.persistence.mongo;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-
 import org.biokoframework.http.AbstractSystemServletInterfaceTest;
 import org.biokoframework.http.scenario.Scenario;
 import org.biokoframework.http.scenario.ScenarioRunner;
@@ -45,6 +39,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
+
+import java.util.*;
 
 @Ignore
 @RunWith(value = Parameterized.class)

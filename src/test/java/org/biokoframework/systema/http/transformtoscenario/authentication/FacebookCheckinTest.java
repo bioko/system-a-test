@@ -27,16 +27,6 @@
 
 package org.biokoframework.systema.http.transformtoscenario.authentication;
 
-import static com.jayway.restassured.RestAssured.expect;
-import static org.biokoframework.utils.matcher.Matchers.matchesJSONString;
-import static org.biokoframework.utils.matcher.Matchers.matchesPattern;
-import static org.biokoframework.utils.matcher.Matchers.substringMatchesPattern;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.equalTo;
-
-import java.util.HashMap;
-import java.util.Properties;
-
 import org.biokoframework.http.facebook.FacebookUtils;
 import org.biokoframework.http.rest.exception.HttpError;
 import org.biokoframework.http.rest.exception.HttpResponseBuilder;
@@ -55,6 +45,14 @@ import org.json.simple.JSONValue;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import java.util.HashMap;
+import java.util.Properties;
+
+import static com.jayway.restassured.RestAssured.expect;
+import static org.biokoframework.utils.matcher.Matchers.*;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.equalTo;
 
 public class FacebookCheckinTest extends SystemATestAbstract {
 

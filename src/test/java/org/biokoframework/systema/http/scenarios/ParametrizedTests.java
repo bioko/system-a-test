@@ -27,13 +27,6 @@
 
 package org.biokoframework.systema.http.scenarios;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.biokoframework.http.scenario.HttpScenarioFactory;
 import org.biokoframework.http.scenario.Scenario;
 import org.biokoframework.http.scenario.ScenarioRunner;
@@ -51,6 +44,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
+
+import java.util.*;
 
 @RunWith( value = Parameterized.class )
 public class ParametrizedTests extends SystemATestAbstract {

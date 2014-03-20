@@ -27,11 +27,6 @@
 
 package org.biokoframework.systema.http.scenarios;
 
-import static org.biokoframework.http.matcher.Matchers.matchesAuthenticationResponse;
-import static org.biokoframework.utils.matcher.Matchers.matchesJSONString;
-
-import java.util.HashMap;
-
 import org.biokoframework.http.rest.exception.HttpError;
 import org.biokoframework.http.scenario.ExecutionScenarioStep;
 import org.biokoframework.http.scenario.HttpScenarioFactory;
@@ -42,6 +37,11 @@ import org.biokoframework.system.entity.login.LoginBuilder;
 import org.biokoframework.system.services.random.impl.TestRandomGeneratorService;
 import org.biokoframework.systema.factory.SystemACommands;
 import org.json.simple.JSONValue;
+
+import java.util.HashMap;
+
+import static org.biokoframework.http.matcher.Matchers.matchesAuthenticationResponse;
+import static org.biokoframework.utils.matcher.Matchers.matchesJSONString;
 
 public class AuthenticationStoriesFactory {
 		

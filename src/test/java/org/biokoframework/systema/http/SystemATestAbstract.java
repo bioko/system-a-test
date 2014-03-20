@@ -27,15 +27,7 @@
 
 package org.biokoframework.systema.http;
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Properties;
-
+import com.google.inject.servlet.GuiceServletContextListener;
 import org.biokoframework.http.AbstractSystemServletInterfaceTest;
 import org.biokoframework.system.KILL_ME.SystemNames;
 import org.biokoframework.system.entity.authentication.Authentication;
@@ -55,7 +47,14 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 
-import com.google.inject.servlet.GuiceServletContextListener;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Properties;
 
 public class SystemATestAbstract extends AbstractSystemServletInterfaceTest {
 	

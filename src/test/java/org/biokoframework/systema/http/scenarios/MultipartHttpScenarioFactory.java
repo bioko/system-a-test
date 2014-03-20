@@ -27,10 +27,6 @@
 
 package org.biokoframework.systema.http.scenarios;
 
-import static org.hamcrest.Matchers.equalTo;
-
-import java.io.InputStream;
-
 import org.biokoframework.http.scenario.HttpMultipartScenarioStep;
 import org.biokoframework.http.scenario.JSonExpectedResponseBuilder;
 import org.biokoframework.http.scenario.Scenario;
@@ -40,6 +36,10 @@ import org.biokoframework.systema.command.MultipartCommand;
 import org.biokoframework.systema.commons.SystemACommandNames;
 import org.biokoframework.systema.entity.dummyMultipart.DummyMultipart;
 import org.biokoframework.systema.entity.dummyMultipart.DummyMultipartBuilder;
+
+import java.io.InputStream;
+
+import static org.hamcrest.Matchers.equalTo;
 
 
 public class MultipartHttpScenarioFactory {

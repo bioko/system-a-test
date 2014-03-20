@@ -27,14 +27,8 @@
 
 package org.biokoframework.systema.unit;
 
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.hasToString;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-
-import java.util.List;
-
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import org.biokoframework.system.repository.memory.InMemoryRepository;
 import org.biokoframework.system.services.entity.EntityModule;
 import org.biokoframework.system.services.entity.IEntityBuilderService;
@@ -54,8 +48,11 @@ import org.biokoframework.utils.validation.ValidationModule;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
+import java.util.List;
+
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 public class SqlQueryTest {
 

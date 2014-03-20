@@ -27,14 +27,6 @@
 
 package org.biokoframework.systema.http.scenarios;
 
-import static org.biokoframework.utils.matcher.Matchers.substringMatchesPattern;
-import static org.hamcrest.Matchers.endsWith;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.startsWith;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import org.biokoframework.http.scenario.HttpScenarioFactory;
 import org.biokoframework.http.scenario.JSonExpectedResponseBuilder;
 import org.biokoframework.http.scenario.Scenario;
@@ -44,6 +36,12 @@ import org.biokoframework.system.entity.description.CommandEntityBuilder;
 import org.biokoframework.system.entity.description.ParameterEntity;
 import org.biokoframework.system.entity.description.ParameterEntityBuilder;
 import org.hamcrest.core.AllOf;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import static org.biokoframework.utils.matcher.Matchers.substringMatchesPattern;
+import static org.hamcrest.Matchers.*;
 
 public class CommandInfoFactory {
 

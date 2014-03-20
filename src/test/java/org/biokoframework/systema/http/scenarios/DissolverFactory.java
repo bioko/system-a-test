@@ -27,11 +27,6 @@
 
 package org.biokoframework.systema.http.scenarios;
 
-import static org.biokoframework.utils.matcher.Matchers.matchesJSONString;
-import static org.hamcrest.Matchers.equalTo;
-
-import java.util.Arrays;
-
 import org.biokoframework.http.rest.exception.HttpError;
 import org.biokoframework.http.rest.exception.HttpResponseBuilder;
 import org.biokoframework.http.rest.exception.HttpResponseExceptionFactory;
@@ -50,6 +45,11 @@ import org.biokoframework.utils.domain.EntityBuilder;
 import org.hamcrest.Matcher;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
+
+import java.util.Arrays;
+
+import static org.biokoframework.utils.matcher.Matchers.matchesJSONString;
+import static org.hamcrest.Matchers.equalTo;
 
 public class DissolverFactory {
 

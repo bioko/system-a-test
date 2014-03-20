@@ -27,13 +27,13 @@
 
 package org.biokoframework.systema.http.scenarios;
 
-import static org.hamcrest.Matchers.equalTo;
-
 import org.biokoframework.http.scenario.HttpScenarioFactory;
 import org.biokoframework.http.scenario.Scenario;
 import org.biokoframework.utils.domain.ErrorEntity;
 import org.biokoframework.utils.fields.FieldNames;
 import org.biokoframework.utils.fields.Fields;
+
+import static org.hamcrest.Matchers.equalTo;
 
 public class FailureScenarioParametrizedFactory {
 

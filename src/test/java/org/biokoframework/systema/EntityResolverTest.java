@@ -27,10 +27,8 @@
 
 package org.biokoframework.systema;
 
-import static org.biokoframework.utils.matcher.Matchers.matchesJSONString;
-import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertThat;
-
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import org.biokoframework.system.entity.resolution.AnnotatedEntityResolver;
 import org.biokoframework.system.entity.resolution.EntityResolver;
 import org.biokoframework.system.repository.memory.InMemoryRepository;
@@ -55,8 +53,9 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
+import static org.biokoframework.utils.matcher.Matchers.matchesJSONString;
+import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertThat;
 
 public class EntityResolverTest {
 

@@ -27,16 +27,7 @@
 
 package org.biokoframework.systema.http.transformtoscenario.authentication;
 
-import static com.jayway.restassured.RestAssured.expect;
-import static com.jayway.restassured.RestAssured.given;
-import static org.biokoframework.utils.matcher.Matchers.matchesPattern;
-import static org.biokoframework.utils.matcher.Matchers.substringMatchesPattern;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.equalTo;
-
-import java.io.UnsupportedEncodingException;
-import java.util.List;
-
+import com.jayway.restassured.http.ContentType;
 import org.apache.commons.codec.binary.Base64;
 import org.biokoframework.system.KILL_ME.commons.GenericFieldNames;
 import org.biokoframework.system.entity.login.Login;
@@ -49,7 +40,15 @@ import org.json.simple.JSONValue;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.jayway.restassured.http.ContentType;
+import java.io.UnsupportedEncodingException;
+import java.util.List;
+
+import static com.jayway.restassured.RestAssured.expect;
+import static com.jayway.restassured.RestAssured.given;
+import static org.biokoframework.utils.matcher.Matchers.matchesPattern;
+import static org.biokoframework.utils.matcher.Matchers.substringMatchesPattern;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.equalTo;
 
 public class BasicAuthCheckInTest extends SystemATestAbstract {
 		

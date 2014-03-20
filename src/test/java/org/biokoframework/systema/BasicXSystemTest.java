@@ -27,8 +27,6 @@
 
 package org.biokoframework.systema;
 
-import static org.junit.Assert.assertEquals;
-
 import org.biokoframework.system.KILL_ME.XSystem;
 import org.biokoframework.system.KILL_ME.commons.GenericFieldNames;
 import org.biokoframework.system.command.CommandException;
@@ -41,6 +39,8 @@ import org.biokoframework.utils.fields.Fields;
 import org.json.simple.JSONValue;
 import org.junit.Ignore;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 @Ignore("Probabilmente sono cadaveri!")
 public class BasicXSystemTest {

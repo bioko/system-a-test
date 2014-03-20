@@ -27,13 +27,13 @@
 
 package org.biokoframework.systema.http;
 
-import static com.jayway.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-
 import org.biokoframework.systema.injection.SystemAServletConfig;
 import org.biokoframework.systema.misc.TestShutdownListener;
 import org.junit.Test;
+
+import static com.jayway.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 public class ShutdownNotificationTest extends SystemATestAbstract {
 	

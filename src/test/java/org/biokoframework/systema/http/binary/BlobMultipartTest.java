@@ -27,17 +27,7 @@
 
 package org.biokoframework.systema.http.binary;
 
-import static com.jayway.restassured.RestAssured.expect;
-import static org.biokoframework.utils.matcher.Matchers.equalToStream;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.net.URL;
-
+import com.jayway.restassured.response.Response;
 import org.biokoframework.http.scenario.JSonExpectedResponseBuilder;
 import org.biokoframework.system.KILL_ME.commons.GenericFieldValues;
 import org.biokoframework.systema.commons.SystemACommandNames;
@@ -47,7 +37,16 @@ import org.biokoframework.systema.http.SystemATestAbstract;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.jayway.restassured.response.Response;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.net.URL;
+
+import static com.jayway.restassured.RestAssured.expect;
+import static org.biokoframework.utils.matcher.Matchers.equalToStream;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 public class BlobMultipartTest extends SystemATestAbstract {
 

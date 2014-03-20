@@ -28,15 +28,7 @@
 package org.biokoframework.systema.http.transformtoscenario.authentication;
 
 
-import static com.jayway.restassured.RestAssured.expect;
-import static com.jayway.restassured.RestAssured.given;
-import static org.biokoframework.utils.matcher.Matchers.matchesPattern;
-import static org.biokoframework.utils.matcher.Matchers.substringMatchesPattern;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.equalTo;
-
-import java.util.List;
-
+import com.jayway.restassured.http.ContentType;
 import org.biokoframework.system.entity.login.Login;
 import org.biokoframework.system.entity.login.LoginBuilder;
 import org.biokoframework.system.exceptions.CommandExceptionsFactory;
@@ -48,7 +40,14 @@ import org.json.simple.JSONValue;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.jayway.restassured.http.ContentType;
+import java.util.List;
+
+import static com.jayway.restassured.RestAssured.expect;
+import static com.jayway.restassured.RestAssured.given;
+import static org.biokoframework.utils.matcher.Matchers.matchesPattern;
+import static org.biokoframework.utils.matcher.Matchers.substringMatchesPattern;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.equalTo;
 
 public class CheckInTest extends SystemATestAbstract {
 	
