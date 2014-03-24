@@ -45,7 +45,7 @@ import static org.biokoframework.utils.matcher.Matchers.matchesJSONString;
 
 public class AuthenticationStoriesFactory {
 		
-	private static HashMap<String, String> sTokenMap = new HashMap<String, String>();
+	private static HashMap<String, String> sTokenMap = new HashMap<>();
 	
 	public static Scenario registerTestUsers() throws Exception {
 		Scenario scenario = new Scenario("Register test users");

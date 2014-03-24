@@ -40,6 +40,8 @@ import org.biokoframework.utils.domain.DomainEntity;
 import org.biokoframework.utils.domain.EntityBuilder;
 import org.biokoframework.utils.domain.ErrorEntity;
 import org.biokoframework.utils.fields.Fields;
+import org.joda.time.DateTime;
+import org.joda.time.format.ISODateTimeFormat;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -50,9 +52,10 @@ import java.util.List;
 
 import static com.jayway.restassured.RestAssured.expect;
 import static com.jayway.restassured.RestAssured.given;
+import static org.biokoframework.utils.matcher.Matchers.after;
 import static org.biokoframework.utils.matcher.Matchers.matchesJSONString;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 public class TokenTest extends SystemATestAbstract {
@@ -82,7 +85,7 @@ public class TokenTest extends SystemATestAbstract {
 		post(getLocalHostUrl() + SystemACommands.LOGIN);
 		
 		String validToken = "00000000-0000-0000-0000-000000000000";
-		long expire = fAuthUtils.postValidToken(validToken);
+		DateTime expire = fAuthUtils.postValidToken(validToken);
 		
 		EntityBuilder<Login> anOtherLoginBuilder = new LoginBuilder().loadExample(LoginBuilder.SIMONE);
 		
@@ -104,8 +107,8 @@ public class TokenTest extends SystemATestAbstract {
         ).
 		post(fAuthenticationCommandUrl).
 		header(ENGAGED_AUTH_TOKEN_EXPIRE);
-		
-		assertThat(Long.parseLong(actualTokenExpire), greaterThan(expire));
+
+        assertThat(ISODateTimeFormat.dateTimeNoMillis().parseDateTime(actualTokenExpire), is(after(expire)));
 	}
 	
 	@Test
@@ -117,7 +120,7 @@ public class TokenTest extends SystemATestAbstract {
 		post(getLocalHostUrl() + "login");
 		
 		String validToken = "00000000-0000-0000-0000-000000000000";
-		long expire = fAuthUtils.postValidToken(validToken);
+		DateTime expire = fAuthUtils.postValidToken(validToken);
 		
 		EntityBuilder<Login> anOtherLoginBuilder = new LoginBuilder().loadExample(LoginBuilder.SIMONE);
 		
@@ -136,7 +139,7 @@ public class TokenTest extends SystemATestAbstract {
 		post(fAuthenticationCommandUrl).
 		header(ENGAGED_AUTH_TOKEN_EXPIRE);
 		
-		assertThat(Long.parseLong(actualTokenExpire), greaterThan(expire));
+		assertThat(ISODateTimeFormat.dateTimeNoMillis().parseDateTime(actualTokenExpire), is(after(expire)));
 	}
 	
 	@Test
@@ -152,11 +155,11 @@ public class TokenTest extends SystemATestAbstract {
 		post(getLocalHostUrl() + SystemACommands.LOGIN);
 		
 		String validToken = "00000000-0000-0000-0000-000000000000";
-		long expire = fAuthUtils.postValidToken(validToken);
+		DateTime expire = fAuthUtils.postValidToken(validToken);
 		
 		EntityBuilder<Login> anOtherLoginBuilder = new LoginBuilder().loadExample(LoginBuilder.SIMONE);
 		
-		String actualTokenExpire = expect().
+		String actualTokenExpireStr = expect().
 		statusCode(200).
 		body(
                 matchesJSONString(JSonExpectedResponseBuilder.asJSONArray(anOtherLoginBuilder.build(true)))
@@ -170,11 +173,14 @@ public class TokenTest extends SystemATestAbstract {
 		header(ENGAGED_AUTH_TOKEN, validToken).
 		post(fAuthenticationOptionalCommandUrl).
 		header(ENGAGED_AUTH_TOKEN_EXPIRE);
-		
-		assertThat(Long.parseLong(actualTokenExpire), greaterThan(expire));
+
+        DateTime actualTokenExpire = ISODateTimeFormat.dateTimeNoMillis().parseDateTime(actualTokenExpireStr);
+		assertThat(actualTokenExpire, is(after(expire)));
 	}
-	
-	@Test
+
+
+
+    @Test
 	public void successfulExecutionOfOptionalSecuredCommandWithoutToken() {
 		String validToken = "00000000-0000-0000-0000-000000000000";
 		fAuthUtils.postValidToken(validToken);
@@ -207,7 +213,7 @@ public class TokenTest extends SystemATestAbstract {
 		given().
         contentType(ContentType.JSON).
 		body(
-                createLoginWithToken(unexistingToken).toJSONString()
+                new Fields(GenericFieldNames.AUTH_TOKEN, unexistingToken).toJSONString()
         ).
 		post(fAuthenticationCommandUrl);
 	}
@@ -223,9 +229,6 @@ public class TokenTest extends SystemATestAbstract {
 		when().
 		given().
 		contentType(ContentType.JSON).
-		body(
-				createLoginEntity().toJSONString()
-		).
 		post(fAuthenticationCommandUrl);
 	}
 	
@@ -233,7 +236,7 @@ public class TokenTest extends SystemATestAbstract {
 	@Test
 	public void failedExecutionBecauseOfTimeOut() {
 		String expiredToken = "00000000-0000-0000-0000-000000000002";
-		fAuthUtils.postToken(expiredToken, 1369038000); // 20/05/2013 - 08:20:00 GMT
+		fAuthUtils.postToken(expiredToken, ISODateTimeFormat.dateTimeNoMillis().parseDateTime("2013-05-20T08:20:00Z"));
 		
 		List<ErrorEntity> errors = CommandExceptionsFactory.createTokenExpiredException().getErrors();
 		expect().

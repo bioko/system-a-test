@@ -113,11 +113,11 @@ public class CheckInTest extends SystemATestAbstract {
 		expect().
 		statusCode(200).
 		header("Engaged-Auth-Token", matchesPattern("(\\d|a|b|c|d|e|f|-)+?")).
-		header("Engaged-Auth-Token-Expire", matchesPattern("\\d+?")).
+		header("Engaged-Auth-Token-Expire", matchesPattern("\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(Z|(\\+|-)\\d{2}:\\d{2})")).
 		body(
 				allOf(
-						substringMatchesPattern("\"authToken\":\"(\\d|a|b|c|d|e|f|-)+?\""),
-						substringMatchesPattern("\"authTokenExpire\":\\d+?")
+						substringMatchesPattern("\"authToken\":\"[\\d|a|b|c|d|e|f|-]+\""),
+						substringMatchesPattern("\"authTokenExpire\":\"\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(Z|(\\+|-)\\d{2}:\\d{2})\"")
 				)
 		).
 		when().
@@ -169,12 +169,12 @@ public class CheckInTest extends SystemATestAbstract {
 		
 		expect().
 		statusCode(200).
-		header("Engaged-Auth-Token", matchesPattern("(\\d|a|b|c|d|e|f|-)+?")).
-		header("Engaged-Auth-Token-Expire", matchesPattern("\\d+?")).
+        header("Engaged-Auth-Token", matchesPattern("(\\d|a|b|c|d|e|f|-)+?")).
+        header("Engaged-Auth-Token-Expire", matchesPattern("\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(Z|(\\+|-)\\d{2}:\\d{2})")).
 		body(
 				allOf(
-						substringMatchesPattern("\"authToken\":\"(\\d|a|b|c|d|e|f|-)+?\""),
-						substringMatchesPattern("\"authTokenExpire\":\\d+?"),
+                        substringMatchesPattern("\"authToken\":\"[\\d|a|b|c|d|e|f|-]+\""),
+                        substringMatchesPattern("\"authTokenExpire\":\"\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(Z|(\\+|-)\\d{2}:\\d{2})\""),
 						substringMatchesPattern("\"roles\":\"admin\"")
 				)
 		).
