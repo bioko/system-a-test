@@ -4,7 +4,7 @@
 	<groupId>org.biokoframework</groupId>
 	<artifactId>system-a-test</artifactId>
 	<version>0.1-SNAPSHOT</version>
-	<name>Bioko Framework</name>
+	<name>Bioko Framework - SystemATest</name>
 	<url>http://biokoframework.org</url>
 	<dependencies>
 		<dependency>
