@@ -57,6 +57,7 @@ import static org.biokoframework.utils.matcher.Matchers.matchesJSONString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
+@Ignore("Probably not needed anymore!")
 public class EntityResolverTest {
 
 	private InMemoryRepository<DummyEntity1> fRepository1;
@@ -64,7 +65,7 @@ public class EntityResolverTest {
 	private Repository<DummyEntity3> fRepository3;
 	private Repository<DummyEntity4> fRepository4;
 	private Repository<DummyEntity5> fRepository5;
-	
+
 	@Before
 	public void populateRepositories() throws ValidationException, RepositoryException {
 		Injector injector = Guice.createInjector(new EntityModule());
