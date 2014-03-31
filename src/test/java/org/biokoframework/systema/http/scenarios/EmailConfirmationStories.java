@@ -50,11 +50,11 @@ import static org.biokoframework.http.matcher.Matchers.matchesSubjectAndContent;
 import static org.biokoframework.utils.matcher.Matchers.matchesJSONString;
 
 public class EmailConfirmationStories {
-	
+
 	public static Scenario simpleEmailConfirmation() throws Exception {
 		Scenario scenario = new Scenario("Simple email confirmation"); 
 		
-		final String token = "1234567890"; 
+		final String token = "00000000-0000-0000-0000-000000000000";
 		
 		scenario.addScenarioStep("Prepare time for password request reset", new ExecutionScenarioStep() {
 			@Override
@@ -90,8 +90,8 @@ public class EmailConfirmationStories {
 						+ "Clicca sul link riportato sotto per confermare la tua mail\n"
 						+ "<a href=\"http://www.example.net/confirm-email?token=" + token + "&userEmail=" + loginUserEmail + ">"
 								+ "Conferma email</a>\n"
-						+ "<body>\n</html>"))); 
-		
+						+ "<body>\n</html>")));
+
 		Fields fields = new Fields();
 		fields.put(Login.USER_EMAIL, loginUserEmail);
 		fields.put(EmailConfirmation.TOKEN, token);
@@ -105,7 +105,7 @@ public class EmailConfirmationStories {
 		EmailConfirmation confirmation = new EmailConfirmation();
 		confirmation.setId("1");
 		confirmation.set(EmailConfirmation.LOGIN_ID, "1");
-		confirmation.set(EmailConfirmation.CONFIRMED, FieldValues.TRUE);
+		confirmation.set(EmailConfirmation.CONFIRMED, true);
 		confirmation.set(EmailConfirmation.TOKEN, token);
 		confirmation.set(EmailConfirmation.CONFIRMATION_TIMESTAMP, "2013-12-03T12:30:00+0100");
 		scenario.addScenarioStep("The email is confirmed in the entity", HttpScenarioFactory.getSuccessful(
