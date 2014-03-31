@@ -29,12 +29,14 @@ package org.biokoframework.systema.http;
 
 import org.biokoframework.systema.injection.SystemAServletConfig;
 import org.biokoframework.systema.misc.TestShutdownListener;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
+@Ignore("not yet required")
 public class ShutdownNotificationTest extends SystemATestAbstract {
 	
 	@Override

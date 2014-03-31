@@ -37,11 +37,13 @@ import org.biokoframework.utils.domain.EntityBuilder;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static com.jayway.restassured.RestAssured.expect;
 import static org.hamcrest.Matchers.equalTo;
 
+@Ignore("will be replaced by better functionality")
 public class EntityDissolverTest extends SystemATestAbstract{
 	
 	private String _dissolvedCommandUrl;

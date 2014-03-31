@@ -37,6 +37,7 @@ import org.biokoframework.system.exceptions.CommandExceptionsFactory;
 import org.biokoframework.systema.http.SystemATestAbstract;
 import org.json.simple.JSONValue;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
@@ -50,6 +51,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
+@Ignore("not yet required")
 public class CrudBlobTest extends SystemATestAbstract {
 
 	private static final String EXAMPLE_1 = "example.jpg";

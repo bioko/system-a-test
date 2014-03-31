@@ -34,6 +34,7 @@ import org.biokoframework.system.KILL_ME.commons.GenericFieldNames;
 import org.biokoframework.system.entity.login.Login;
 import org.biokoframework.system.entity.login.LoginBuilder;
 import org.biokoframework.system.exceptions.CommandExceptionsFactory;
+import org.biokoframework.system.services.currenttime.impl.TestCurrentTimeService;
 import org.biokoframework.systema.factory.SystemACommands;
 import org.biokoframework.systema.http.SystemATestAbstract;
 import org.biokoframework.utils.domain.DomainEntity;
@@ -67,14 +68,21 @@ public class TokenTest extends SystemATestAbstract {
 	private String fAuthenticationOptionalCommandUrl;
 	private String fAuthenticationUrl;
 	private AuthenticationUtils fAuthUtils;
-	
-	@Before
+    private DateTime fNow;
+
+    @Before
 	public void createUrls() {
 		fAuthenticationCommandUrl = getLocalHostUrl() + SystemACommands.LOGIN_AUTHENTICATED;
 		fAuthenticationOptionalCommandUrl = getLocalHostUrl() + SystemACommands.LOGIN_AUTHENTICATED_OPTIONAL;
 		fAuthenticationUrl = getLocalHostUrl() + "authentication";
 		fAuthUtils = new AuthenticationUtils(fAuthenticationUrl);
 	}
+
+    @Before
+    public void setCurrentTime() {
+        TestCurrentTimeService.setCalendar("2013-12-03T11:45:00+01:00");
+        fNow = ISODateTimeFormat.dateTimeNoMillis().parseDateTime("2013-12-03T11:45:00+01:00");
+    }
 	
 	@Test
 	public void successfulExecutionOfSecuredCommandWithTokenInBody() {
@@ -85,7 +93,7 @@ public class TokenTest extends SystemATestAbstract {
 		post(getLocalHostUrl() + SystemACommands.LOGIN);
 		
 		String validToken = "00000000-0000-0000-0000-000000000000";
-		DateTime expire = fAuthUtils.postValidToken(validToken);
+		fAuthUtils.postValidToken(validToken);
 		
 		EntityBuilder<Login> anOtherLoginBuilder = new LoginBuilder().loadExample(LoginBuilder.SIMONE);
 		
@@ -108,7 +116,7 @@ public class TokenTest extends SystemATestAbstract {
 		post(fAuthenticationCommandUrl).
 		header(ENGAGED_AUTH_TOKEN_EXPIRE);
 
-        assertThat(ISODateTimeFormat.dateTimeNoMillis().parseDateTime(actualTokenExpire), is(after(expire)));
+        assertThat(ISODateTimeFormat.dateTimeNoMillis().parseDateTime(actualTokenExpire), is(after(fNow)));
 	}
 	
 	@Test
@@ -120,7 +128,7 @@ public class TokenTest extends SystemATestAbstract {
 		post(getLocalHostUrl() + "login");
 		
 		String validToken = "00000000-0000-0000-0000-000000000000";
-		DateTime expire = fAuthUtils.postValidToken(validToken);
+		fAuthUtils.postValidToken(validToken);
 		
 		EntityBuilder<Login> anOtherLoginBuilder = new LoginBuilder().loadExample(LoginBuilder.SIMONE);
 		
@@ -139,7 +147,7 @@ public class TokenTest extends SystemATestAbstract {
 		post(fAuthenticationCommandUrl).
 		header(ENGAGED_AUTH_TOKEN_EXPIRE);
 		
-		assertThat(ISODateTimeFormat.dateTimeNoMillis().parseDateTime(actualTokenExpire), is(after(expire)));
+		assertThat(ISODateTimeFormat.dateTimeNoMillis().parseDateTime(actualTokenExpire), is(after(fNow)));
 	}
 	
 	@Test
@@ -155,7 +163,7 @@ public class TokenTest extends SystemATestAbstract {
 		post(getLocalHostUrl() + SystemACommands.LOGIN);
 		
 		String validToken = "00000000-0000-0000-0000-000000000000";
-		DateTime expire = fAuthUtils.postValidToken(validToken);
+		fAuthUtils.postValidToken(validToken);
 		
 		EntityBuilder<Login> anOtherLoginBuilder = new LoginBuilder().loadExample(LoginBuilder.SIMONE);
 		
@@ -175,7 +183,7 @@ public class TokenTest extends SystemATestAbstract {
 		header(ENGAGED_AUTH_TOKEN_EXPIRE);
 
         DateTime actualTokenExpire = ISODateTimeFormat.dateTimeNoMillis().parseDateTime(actualTokenExpireStr);
-		assertThat(actualTokenExpire, is(after(expire)));
+		assertThat(actualTokenExpire, is(after(fNow)));
 	}
 
 
@@ -263,13 +271,6 @@ public class TokenTest extends SystemATestAbstract {
 		return expected;
 	}
 
-	@SuppressWarnings("unchecked")
-	private JSONObject createLoginWithToken(String token) {
-		JSONObject loginAndToken = createLoginEntity();
-		loginAndToken.put(GenericFieldNames.AUTH_TOKEN, token);
-		return loginAndToken;
-	}
-	
 	@SuppressWarnings("unchecked")
 	private JSONObject createLoginEntity() {
 		JSONObject expectedLogin = new JSONObject();

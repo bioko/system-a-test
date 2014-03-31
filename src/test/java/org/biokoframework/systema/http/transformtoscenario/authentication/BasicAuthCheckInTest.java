@@ -38,6 +38,7 @@ import org.biokoframework.utils.domain.EntityBuilder;
 import org.biokoframework.utils.domain.ErrorEntity;
 import org.json.simple.JSONValue;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.UnsupportedEncodingException;
@@ -50,6 +51,7 @@ import static org.biokoframework.utils.matcher.Matchers.substringMatchesPattern;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.equalTo;
 
+@Ignore("not yet needed")
 public class BasicAuthCheckInTest extends SystemATestAbstract {
 		
 	private static final String BASIC_CHECKIN_COMMAND = "engaged-check-in";

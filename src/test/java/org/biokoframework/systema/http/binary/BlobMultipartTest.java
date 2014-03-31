@@ -35,6 +35,7 @@ import org.biokoframework.systema.entity.dummy1.DummyEntity1;
 import org.biokoframework.systema.entity.dummy1.DummyEntity1Builder;
 import org.biokoframework.systema.http.SystemATestAbstract;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
@@ -48,6 +49,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
+@Ignore("not yet required")
 public class BlobMultipartTest extends SystemATestAbstract {
 
 	private static final String EXAMPLE_1 = "example.jpg";
