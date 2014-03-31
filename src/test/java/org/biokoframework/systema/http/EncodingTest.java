@@ -29,6 +29,7 @@ package org.biokoframework.systema.http;
 
 import org.biokoframework.systema.entity.dummy1.DummyEntity1;
 import org.biokoframework.systema.entity.dummy1.DummyEntity1Builder;
+import org.biokoframework.utils.fields.Fields;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -81,7 +82,7 @@ public class EncodingTest extends SystemATestAbstract {
 		content(
 				fEntity1latin1
 		).
-		header("Content-Type", "text/html; charset=iso8859-1").
+		header("Content-Type", "application/json; charset=iso8859-1").
 		post(getEntity1Url());
 		
 		expect().
@@ -90,7 +91,7 @@ public class EncodingTest extends SystemATestAbstract {
 		content(
 				fEntity1utf8
 		).
-		header("Content-Type", "text/html; charset=utf-8").
+		header("Content-Type", "application/json; charset=utf-8").
 		post(getEntity1Url());
 	}
 
@@ -103,15 +104,15 @@ public class EncodingTest extends SystemATestAbstract {
 		statusCode(200).
 		body(matchesJSONString("[" + dummyEntity1.toJSONString() + "]")).
 		given().
-		param(DummyEntity1.VALUE, dummyEntity1.get(DummyEntity1.VALUE)).
-		param("command", "POST_dummy-entity1").
-		get(getLocalHostUrl() + "/only-get");
+		content(new Fields(DummyEntity1.VALUE, dummyEntity1.get(DummyEntity1.VALUE)).toJSONString()).
+        header("Content-Type", "application/json; charset=utf-8").
+        post(getLocalHostUrl() + "dummy-entity1");
 		
 		expect().
 		statusCode(200).
 		body(matchesJSONString("[" + dummyEntity1.toJSONString() + "]")).
 		given().
-		get(getEntity1Url() + "1");
+		get(getEntity1Url() + "1.json");
 		
 	}
 		
