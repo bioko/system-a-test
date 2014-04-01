@@ -6,6 +6,7 @@
 	<version>0.1-SNAPSHOT</version>
 	<name>Bioko Framework - SystemATest</name>
 	<url>http://biokoframework.org</url>
+	<!-- This module contains only test code, so it is not installed in the repository -->
 	<dependencies>
 		<dependency>
 			<groupId>org.biokoframework</groupId>
@@ -52,24 +53,15 @@
 					<target>1.7</target>
 				</configuration>
 			</plugin>
-                        <plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.6.4.201312101107</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>prepare-agent</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>report</id>
-						<phase>prepare-package</phase>
-						<goals>
-							<goal>report</goal>
-						</goals>
-					</execution>
-				</executions>
+			<plugin>
+			  <groupId>org.apache.maven.plugins</groupId>
+			  <artifactId>maven-install-plugin</artifactId>
+			  <executions>
+			    <execution>
+			      <id>default-install</id>
+			      <phase>none</phase>
+			    </execution>
+			  </executions>
 			</plugin>
 		</plugins>
 	</build>
