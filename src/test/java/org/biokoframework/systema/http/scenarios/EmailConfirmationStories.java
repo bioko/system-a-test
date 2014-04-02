@@ -88,7 +88,7 @@ public class EmailConfirmationStories {
 						"Email confirmation", 
 						"<html>\n<body>\n"
 						+ "Clicca sul link riportato sotto per confermare la tua mail\n"
-						+ "<a href=\"http://www.example.net/confirm-email?token=" + token + "&userEmail=" + loginUserEmail + ">"
+						+ "<a href=\"http://www.example.net/confirm-email?token=" + token + "&userEmail=" + loginUserEmail + "\">"
 								+ "Conferma email</a>\n"
 						+ "<body>\n</html>")));
 
