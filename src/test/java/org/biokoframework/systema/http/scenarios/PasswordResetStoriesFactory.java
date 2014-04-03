@@ -96,7 +96,7 @@ public class PasswordResetStoriesFactory {
 		
 		scenario.addScenarioStep("Receive mail with the new password ", new MailScenarioStep(userEmail, matchesSubjectAndContent("Password reset", 
 				"Abbiamo ricevuto una richiesta di reset della password. "
-				+ "Clicca <a href=\"http://local.engaged.it/password-reset&token=" + resetToken + "\">qui</a> per resettare la tua password")));
+				+ "Clicca <a href=\"http://local.engaged.it/password-reset?token=" + resetToken + "\">qui</a> per resettare la tua password")));
 		
 		String newPassword = "myNewPassword";
 		loginBuilder.set(Login.PASSWORD, newPassword);

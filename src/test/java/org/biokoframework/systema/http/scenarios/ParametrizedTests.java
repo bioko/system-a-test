@@ -77,7 +77,7 @@ public class ParametrizedTests extends SystemATestAbstract {
 
 //				CronFactory.class,
 //				ValidatorFactory.class,
-//				PasswordResetStoriesFactory.class,
+				PasswordResetStoriesFactory.class,
 				EmailConfirmationStories.class
 		));
 
