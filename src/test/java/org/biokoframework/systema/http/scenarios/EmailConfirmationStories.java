@@ -40,7 +40,6 @@ import org.biokoframework.system.services.random.impl.TestRandomGeneratorService
 import org.biokoframework.systema.command.RequestEmailConfirmationCommand;
 import org.biokoframework.systema.factory.SystemACommands;
 import org.biokoframework.utils.domain.EntityBuilder;
-import org.biokoframework.utils.fields.FieldValues;
 import org.biokoframework.utils.fields.Fields;
 
 import java.util.HashMap;
