@@ -180,7 +180,7 @@ public class AuthenticationStoriesFactory {
 		scenario.addScenarioStep("use generic auth command with fail", HttpScenarioFactory.postFailed(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_WITHOUT_ROLES, 
 				null, null, testJson, expectedError.status(), matchesJSONString(JSONValue.toJSONString(expectedError.body()))));
 		
-		scenario.addScenarioStep("use admin auth command with fail", HttpScenarioFactory.postFailed(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_ONYL_FOR_ADMIN, 
+		scenario.addScenarioStep("use admin auth command with fail", HttpScenarioFactory.postFailed(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_ONLY_FOR_ADMIN,
 				null, null, testJson, expectedError.status(), matchesJSONString(JSONValue.toJSONString(expectedError.body()))));
 		
 		scenario.addScenario(loginAsUser());
@@ -206,7 +206,7 @@ public class AuthenticationStoriesFactory {
 		
 		HttpError expectedError = JSonExpectedResponseBuilder.insufficientPrivileges();		
 		String testJson = "{\"gino\":\"pino\"}";		
-		scenario.addScenarioStep("", HttpScenarioFactory.postFailed(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_ONYL_FOR_ADMIN, 
+		scenario.addScenarioStep("", HttpScenarioFactory.postFailed(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_ONLY_FOR_ADMIN,
 				sTokenMap, null, testJson, expectedError.status(), matchesJSONString(JSONValue.toJSONString(expectedError.body()))));
 		
 		return scenario;
@@ -219,7 +219,7 @@ public class AuthenticationStoriesFactory {
 		scenario.addScenario(loginAsAdmin());		
 				
 		String testJson = "{\"gino\":\"pino\"}";		
-		scenario.addScenarioStep("use command for admins", HttpScenarioFactory.postSuccessful(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_ONYL_FOR_ADMIN, 
+		scenario.addScenarioStep("use command for admins", HttpScenarioFactory.postSuccessful(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_ONLY_FOR_ADMIN,
 				sTokenMap, null, testJson,  matchesJSONString("[]")));
 		
 		return scenario;
@@ -234,9 +234,9 @@ public class AuthenticationStoriesFactory {
 		scenario.addScenario(loginAsAdmin());
 		scenario.addScenarioStep("use not auth command and success", HttpScenarioFactory.postSuccessful(SystemACommands.DUMMY_COMMAND_NOT_AUTHENTICATED, 
 				sTokenMap, null, testJson,  matchesJSONString("[]")));
-		scenario.addScenarioStep("use command for admins with admin and success", HttpScenarioFactory.postSuccessful(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_ONYL_FOR_ADMIN, 
+		scenario.addScenarioStep("use command for admins with admin and success", HttpScenarioFactory.postSuccessful(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_ONLY_FOR_ADMIN,
 				sTokenMap, null, testJson,  matchesJSONString("[]")));
-		scenario.addScenarioStep("use command for another with  admin and fail", HttpScenarioFactory.postFailed(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_ONYL_FOR_ANOTHER, 
+		scenario.addScenarioStep("use command for another with  admin and fail", HttpScenarioFactory.postFailed(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_ONLY_FOR_ANOTHER,
 				sTokenMap, null, testJson, expectedError.status(), matchesJSONString(JSONValue.toJSONString(expectedError.body()))));
 		scenario.addScenarioStep("use command for both with admin user and success", HttpScenarioFactory.postSuccessful(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_FOR_BOTH, 
 				sTokenMap, null, testJson,  matchesJSONString("[]")));
@@ -252,9 +252,9 @@ public class AuthenticationStoriesFactory {
 		scenario.addScenario(loginAsBothRoles());
 		scenario.addScenarioStep("use not auth command and success", HttpScenarioFactory.postSuccessful(SystemACommands.DUMMY_COMMAND_NOT_AUTHENTICATED, 
 				sTokenMap, null, testJson,  matchesJSONString("[]")));
-		scenario.addScenarioStep("use command for admins with both user and success", HttpScenarioFactory.postSuccessful(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_ONYL_FOR_ADMIN, 
+		scenario.addScenarioStep("use command for admins with both user and success", HttpScenarioFactory.postSuccessful(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_ONLY_FOR_ADMIN,
 				sTokenMap, null, testJson,  matchesJSONString("[]")));
-		scenario.addScenarioStep("use command for another with both user and success", HttpScenarioFactory.postSuccessful(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_ONYL_FOR_ANOTHER, 
+		scenario.addScenarioStep("use command for another with both user and success", HttpScenarioFactory.postSuccessful(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_ONLY_FOR_ANOTHER,
 				sTokenMap, null, testJson,  matchesJSONString("[]")));
 		scenario.addScenarioStep("use command for both with both user and success", HttpScenarioFactory.postSuccessful(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_FOR_BOTH, 
 				sTokenMap, null, testJson,  matchesJSONString("[]")));
@@ -272,9 +272,9 @@ public class AuthenticationStoriesFactory {
 		scenario.addScenario(loginAsAnotherRole());
 		scenario.addScenarioStep("use not auth command and success", HttpScenarioFactory.postSuccessful(SystemACommands.DUMMY_COMMAND_NOT_AUTHENTICATED, 
 				sTokenMap, null, testJson,  matchesJSONString("[]")));
-		scenario.addScenarioStep("use command for another with another and success", HttpScenarioFactory.postSuccessful(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_ONYL_FOR_ANOTHER, 
+		scenario.addScenarioStep("use command for another with another and success", HttpScenarioFactory.postSuccessful(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_ONLY_FOR_ANOTHER,
 				sTokenMap, null, testJson,  matchesJSONString("[]")));
-		scenario.addScenarioStep("use command for admin with  another and fail", HttpScenarioFactory.postFailed(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_ONYL_FOR_ADMIN, 
+		scenario.addScenarioStep("use command for admin with  another and fail", HttpScenarioFactory.postFailed(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_ONLY_FOR_ADMIN,
 				sTokenMap, null, testJson, expectedError.status(), matchesJSONString(JSONValue.toJSONString(expectedError.body()))));
 		scenario.addScenarioStep("use command for both with another user and success", HttpScenarioFactory.postSuccessful(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_FOR_BOTH, 
 				sTokenMap, null, testJson,  matchesJSONString("[]")));
@@ -291,9 +291,9 @@ public class AuthenticationStoriesFactory {
 				sTokenMap, null, testJson,  matchesJSONString("[]")));		
 		scenario.addScenarioStep("use auth command and fail", HttpScenarioFactory.postFailed(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_WITHOUT_ROLES, 
 				sTokenMap, null, testJson, expectedError.status(), matchesJSONString(JSONValue.toJSONString(expectedError.body()))));
-		scenario.addScenarioStep("use command for admin and fail", HttpScenarioFactory.postFailed(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_ONYL_FOR_ADMIN, 
+		scenario.addScenarioStep("use command for admin and fail", HttpScenarioFactory.postFailed(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_ONLY_FOR_ADMIN,
 				sTokenMap, null, testJson, expectedError.status(), matchesJSONString(JSONValue.toJSONString(expectedError.body()))));
-		scenario.addScenarioStep("use command for another and fail", HttpScenarioFactory.postFailed(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_ONYL_FOR_ANOTHER, 
+		scenario.addScenarioStep("use command for another and fail", HttpScenarioFactory.postFailed(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_ONLY_FOR_ANOTHER,
 				sTokenMap, null, testJson, expectedError.status(), matchesJSONString(JSONValue.toJSONString(expectedError.body()))));
 		scenario.addScenarioStep("use command for both and fail", HttpScenarioFactory.postFailed(SystemACommands.DUMMY_COMMAND_AUTHENTICATED_FOR_BOTH, 
 				sTokenMap, null, testJson, expectedError.status(), matchesJSONString(JSONValue.toJSONString(expectedError.body()))));
