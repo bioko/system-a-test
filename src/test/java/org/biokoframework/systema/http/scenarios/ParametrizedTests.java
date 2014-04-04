@@ -87,7 +87,7 @@ public class ParametrizedTests extends SystemATestAbstract {
 //				CommandInfoFactory.class, 
 //				MultipartHttpScenarioFactory.class,
 
-    				AuthenticationStoriesFactory.class
+    			AuthenticationStoriesFactory.class
 		));
 		
 		return result;

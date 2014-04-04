@@ -33,7 +33,6 @@ import org.biokoframework.http.scenario.HttpScenarioFactory;
 import org.biokoframework.http.scenario.JSonExpectedResponseBuilder;
 import org.biokoframework.http.scenario.Scenario;
 import org.biokoframework.http.scenario.mail.MailScenarioStep;
-import org.biokoframework.system.command.authentication.RequestPasswordResetCommand;
 import org.biokoframework.system.entity.authentication.PasswordReset;
 import org.biokoframework.system.entity.login.Login;
 import org.biokoframework.system.entity.login.LoginBuilder;
@@ -58,15 +57,15 @@ public class PasswordResetStoriesFactory {
 	private static Map<String, String> _tokenMap = new HashMap<String, String>();
 
 	public static Scenario userResetsItsPassword() throws Exception {
-		final String resetToken = "1234-5678-90-abcde";
-		
-		Scenario scenario = new Scenario("User resets his password");
-		
+        Scenario scenario = new Scenario("User resets his password");
+
+        final String resetToken = "00000000-0000-0000-0000-000000000000";
+
 		scenario.addScenarioStep("Prepare time for password request reset", new ExecutionScenarioStep() {
 			@Override
 			public void execute() {
 				TestCurrentTimeService.setCalendar("2013-10-19T11:33:00+0100");
-				TestRandomGeneratorService.setSingleRandomValue(RequestPasswordResetCommand.PASSWORD_RESET_TOKEN, resetToken);
+				TestRandomGeneratorService.setSingleRandomValue("passwordResetToken", resetToken);
 			}
 		});
 				
@@ -129,10 +128,10 @@ public class PasswordResetStoriesFactory {
 	}
 	
 	public static Scenario userTriesToResetAnUnexistingLogin() throws Exception {
-		String wrongUserEmail = "aWrongEmail@example.it";
+        Scenario scenario = new Scenario("User tries to reset an unexisting login");
 
-		Scenario scenario = new Scenario("User tries to reset an unexisting login");
-		
+        String wrongUserEmail = "aWrongEmail@example.it";
+
 		scenario.addScenario(AuthenticationStoriesFactory.registerTestUsers());
 		
 		EntityBuilder<Login> loginBuilder = new LoginBuilder().loadDefaultExample().set(Login.USER_EMAIL, wrongUserEmail);
