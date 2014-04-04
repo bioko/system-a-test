@@ -168,7 +168,7 @@ public class CrudBlobTest extends SystemATestAbstract {
 		delete(_blobUrl + "1");
 		
 		HttpResponseBuilder httpResponseBuilder = new HttpResponseBuilder(HttpResponseExceptionFactory.create());
-		HttpError httpError = httpResponseBuilder.buildFrom(CommandExceptionsFactory.createEntityNotFound(BinaryEntity.class.getSimpleName(), "1"));
+		HttpError httpError = httpResponseBuilder.buildFrom(CommandExceptionsFactory.createEntityNotFound(BinaryEntity.class, "1"));
 		expect().
 		statusCode(httpError.status()).
 		body(equalTo(JSONValue.toJSONString(httpError.body()))).
@@ -178,7 +178,7 @@ public class CrudBlobTest extends SystemATestAbstract {
 	@Test
 	public void getFailed() throws Exception {
 		HttpResponseBuilder httpResponseBuilder = new HttpResponseBuilder(HttpResponseExceptionFactory.create());
-		HttpError httpError = httpResponseBuilder.buildFrom(CommandExceptionsFactory.createEntityNotFound(BinaryEntity.class.getSimpleName(), "1"));
+		HttpError httpError = httpResponseBuilder.buildFrom(CommandExceptionsFactory.createEntityNotFound(BinaryEntity.class, "1"));
 		expect().
 		statusCode(httpError.status()).
 		body(equalTo(JSONValue.toJSONString(httpError.body()))).
@@ -188,7 +188,7 @@ public class CrudBlobTest extends SystemATestAbstract {
 	@Test
 	public void headFailed() throws Exception {
 		HttpResponseBuilder httpResponseBuilder = new HttpResponseBuilder(HttpResponseExceptionFactory.create());
-		HttpError httpError = httpResponseBuilder.buildFrom(CommandExceptionsFactory.createEntityNotFound(BinaryEntity.class.getSimpleName(), "1"));
+		HttpError httpError = httpResponseBuilder.buildFrom(CommandExceptionsFactory.createEntityNotFound(BinaryEntity.class, "1"));
 		expect().
 		statusCode(httpError.status()).
 		head(_blobUrl + "1");
@@ -197,7 +197,7 @@ public class CrudBlobTest extends SystemATestAbstract {
 	@Test
 	public void deleteFailed() throws Exception {
 		HttpResponseBuilder httpResponseBuilder = new HttpResponseBuilder(HttpResponseExceptionFactory.create());
-		HttpError httpError = httpResponseBuilder.buildFrom(CommandExceptionsFactory.createEntityNotFound(BinaryEntity.class.getSimpleName(), "1"));
+		HttpError httpError = httpResponseBuilder.buildFrom(CommandExceptionsFactory.createEntityNotFound(BinaryEntity.class, "1"));
 		expect().
 		statusCode(httpError.status()).
 		body(equalTo(JSONValue.toJSONString(httpError.body()))).
@@ -207,7 +207,7 @@ public class CrudBlobTest extends SystemATestAbstract {
 	@Test
 	public void putFailed() throws Exception {
 		HttpResponseBuilder httpResponseBuilder = new HttpResponseBuilder(HttpResponseExceptionFactory.create());
-		HttpError httpError = httpResponseBuilder.buildFrom(CommandExceptionsFactory.createEntityNotFound(BinaryEntity.class.getSimpleName(), "1"));
+		HttpError httpError = httpResponseBuilder.buildFrom(CommandExceptionsFactory.createEntityNotFound(BinaryEntity.class, "1"));
 		expect().
 		statusCode(httpError.status()).
 		body(equalTo(JSONValue.toJSONString(httpError.body()))).
@@ -234,7 +234,7 @@ public class CrudBlobTest extends SystemATestAbstract {
 		post(_blobUrl);
 		
 		HttpResponseBuilder httpResponseBuilder = new HttpResponseBuilder(HttpResponseExceptionFactory.create());
-		HttpError httpError = httpResponseBuilder.buildFrom(CommandExceptionsFactory.createEntityNotFound(BinaryEntity.class.getSimpleName(), "1"));
+		HttpError httpError = httpResponseBuilder.buildFrom(CommandExceptionsFactory.createEntityNotFound(BinaryEntity.class, "1"));
 		expect().
 		statusCode(httpError.status()).
 		body(equalTo(JSONValue.toJSONString(httpError.body()))).
