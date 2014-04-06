@@ -61,12 +61,12 @@ public class ParametrizedTests extends SystemATestAbstract {
 		
 		List<Object[]> result = new ArrayList<Object[]>();
 
-    		result.addAll(Arrays.asList(CrudScenariosParametrizedFactory.createFrom(DummyEntity1.class, DummyEntity1Builder.class, dummyEntityUpdateMap(), "1")));
-    		result.addAll(Arrays.asList(CrudScenariosParametrizedFactory.createFrom(DummyEntity2.class, DummyEntity2Builder.class, dummyEntity2UpdateMap(), "1")));
-    		result.addAll(Arrays.asList(CrudScenariosParametrizedFactory.createFrom(DummyEntity3.class, DummyEntity3Builder.class, dummyEntityUpdateMap(), "1")));
+        result.addAll(Arrays.asList(CrudScenariosParametrizedFactory.createFrom(DummyEntity1.class, DummyEntity1Builder.class, dummyEntityUpdateMap(), "1")));
+        result.addAll(Arrays.asList(CrudScenariosParametrizedFactory.createFrom(DummyEntity2.class, DummyEntity2Builder.class, dummyEntity2UpdateMap(), "1")));
+        result.addAll(Arrays.asList(CrudScenariosParametrizedFactory.createFrom(DummyEntity3.class, DummyEntity3Builder.class, dummyEntityUpdateMap(), "1")));
 
-    		result.addAll(Arrays.asList(CrudScenariosParametrizedFactory.createFrom(DummyComplexDomainEntity.class,  DummyComplexDomainEntityBuilder.class, dummyComplexEntityUpdateMap(), "1",
-    				new String[] {DummyComplexDomainEntity.A_STRING_FIELD_MANDATORY_ALSO_IN_GET})));
+        result.addAll(Arrays.asList(CrudScenariosParametrizedFactory.createFrom(DummyComplexDomainEntity.class,  DummyComplexDomainEntityBuilder.class, dummyComplexEntityUpdateMap(), "1",
+                new String[] {DummyComplexDomainEntity.A_STRING_FIELD_MANDATORY_ALSO_IN_GET})));
 
 		result.addAll(HttpScenarioFactory.findScenarios(
                 FailureScenarioParametrizedFactory.class,
