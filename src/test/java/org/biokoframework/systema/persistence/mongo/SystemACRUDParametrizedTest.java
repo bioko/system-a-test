@@ -56,8 +56,7 @@ public class SystemACRUDParametrizedTest extends AbstractSystemServletInterfaceT
 		public static Collection<Object[]> scenarios() throws Exception {		
 			List<Object[]> result = new ArrayList<Object[]>();
 			
-			List<Object[]> dummyEntity1 = Arrays.asList(
-					CrudScenariosParametrizedFactory.createFrom(DummyEntity1.class, DummyEntity1Builder.class, dummyEntity1UpdateMap(), "1"));
+			List<Object[]> dummyEntity1 = CrudScenariosParametrizedFactory.createFrom(DummyEntity1.class, DummyEntity1Builder.class, dummyEntity1UpdateMap(), "1");
 			
 			result.addAll(dummyEntity1);
 			
