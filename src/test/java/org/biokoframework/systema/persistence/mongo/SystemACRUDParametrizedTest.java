@@ -30,7 +30,6 @@ package org.biokoframework.systema.persistence.mongo;
 import org.biokoframework.http.AbstractSystemServletInterfaceTest;
 import org.biokoframework.http.scenario.Scenario;
 import org.biokoframework.http.scenario.ScenarioRunner;
-import org.biokoframework.http.scenario.parametrized.CrudScenariosParametrizedFactory;
 import org.biokoframework.systema.entity.dummy1.DummyEntity1;
 import org.biokoframework.systema.entity.dummy1.DummyEntity1Builder;
 import org.biokoframework.systema.injection.SystemAServletConfig;
@@ -40,25 +39,28 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+
+import static org.biokoframework.http.scenario.parametrized.CrudScenariosParametrizedFactory.createFrom;
 
 @Ignore
 @RunWith(value = Parameterized.class)
 public class SystemACRUDParametrizedTest extends AbstractSystemServletInterfaceTest {
-		private String _requestUrl;
-		private ScenarioRunner _scenarioRunner;
+		private String fRequestUrl;
+		private ScenarioRunner fScenarioRunner;
 
-		public SystemACRUDParametrizedTest(String scenarioCollectorName, Scenario collector) {
-			_scenarioRunner = new ScenarioRunner(collector);
+		public SystemACRUDParametrizedTest(Scenario collector) {
+			fScenarioRunner = new ScenarioRunner(collector);
 		}
 		
 		@Parameters(name = "{index}-{0}")
-		public static Collection<Object[]> scenarios() throws Exception {		
-			List<Object[]> result = new ArrayList<Object[]>();
+		public static Collection<Scenario> scenarios() throws Exception {
+			List<Scenario> result = new ArrayList<>();
 			
-			List<Object[]> dummyEntity1 = CrudScenariosParametrizedFactory.createFrom(DummyEntity1.class, DummyEntity1Builder.class, dummyEntity1UpdateMap(), "1");
-			
-			result.addAll(dummyEntity1);
+			result.addAll(createFrom(DummyEntity1.class, DummyEntity1Builder.class, dummyEntity1UpdateMap(), "1"));
 			
 			return result;
 		}
@@ -71,7 +73,7 @@ public class SystemACRUDParametrizedTest extends AbstractSystemServletInterfaceT
 
 		@Test
 		public void test() throws Exception {
-			_scenarioRunner.test(_requestUrl);
+			fScenarioRunner.test(fRequestUrl);
 		}
 
 		@Override
@@ -84,7 +86,7 @@ public class SystemACRUDParametrizedTest extends AbstractSystemServletInterfaceT
 //			initWithRandomPort();
 //			addEngagedServlet("SystemBServlet", "/api/" + SystemNames.SYSTEM_A_MONGO + "/*", testSystemBMongo());
 //			start();
-//			_requestUrl = "http://localhost:" + getPort() + "/engagedServer/api/" + SystemNames.SYSTEM_A_MONGO + "/";
+//			fRequestUrl = "http://localhost:" + getPort() + "/engagedServer/api/" + SystemNames.SYSTEM_A_MONGO + "/";
 //		}
 
 //		@After

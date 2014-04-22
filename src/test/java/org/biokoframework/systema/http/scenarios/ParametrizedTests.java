@@ -30,7 +30,6 @@ package org.biokoframework.systema.http.scenarios;
 import org.biokoframework.http.scenario.HttpScenarioFactory;
 import org.biokoframework.http.scenario.Scenario;
 import org.biokoframework.http.scenario.ScenarioRunner;
-import org.biokoframework.http.scenario.parametrized.CrudScenariosParametrizedFactory;
 import org.biokoframework.systema.entity.dummy1.DummyEntity1;
 import org.biokoframework.systema.entity.dummy1.DummyEntity1Builder;
 import org.biokoframework.systema.entity.dummy2.DummyEntity2;
@@ -47,26 +46,28 @@ import org.junit.runners.Parameterized.Parameters;
 
 import java.util.*;
 
+import static org.biokoframework.http.scenario.parametrized.CrudScenariosParametrizedFactory.createFrom;
+
 @RunWith( value = Parameterized.class )
 public class ParametrizedTests extends SystemATestAbstract {
 
-	private ScenarioRunner fScenarioRunner;
+	private final ScenarioRunner fScenarioRunner;
 
-	public ParametrizedTests(String scenarioName, Scenario scenario) {
+	public ParametrizedTests(Scenario scenario) {
 		fScenarioRunner = new ScenarioRunner(scenario);
 	}
 	
 	@Parameters(name = "{index}- {0}")
 	public static Collection<Object[]> scenarios() throws Exception {
 		
-		List<Object[]> result = new ArrayList<Object[]>();
+		List<Scenario> result = new ArrayList<>();
 
-        result.addAll(CrudScenariosParametrizedFactory.createFrom(DummyEntity1.class, DummyEntity1Builder.class, dummyEntityUpdateMap(), "1"));
-        result.addAll(CrudScenariosParametrizedFactory.createFrom(DummyEntity2.class, DummyEntity2Builder.class, dummyEntity2UpdateMap(), "1"));
-        result.addAll(CrudScenariosParametrizedFactory.createFrom(DummyEntity3.class, DummyEntity3Builder.class, dummyEntityUpdateMap(), "1"));
+        result.addAll(createFrom(DummyEntity1.class, DummyEntity1Builder.class, dummyEntityUpdateMap(), "1"));
+        result.addAll(createFrom(DummyEntity2.class, DummyEntity2Builder.class, dummyEntity2UpdateMap(), "1"));
+        result.addAll(createFrom(DummyEntity3.class, DummyEntity3Builder.class, dummyEntityUpdateMap(), "1"));
 
-        result.addAll(CrudScenariosParametrizedFactory.createFrom(DummyComplexDomainEntity.class,  DummyComplexDomainEntityBuilder.class, dummyComplexEntityUpdateMap(), "1",
-                new String[] {DummyComplexDomainEntity.A_STRING_FIELD_MANDATORY_ALSO_IN_GET}));
+        result.addAll(createFrom(DummyComplexDomainEntity.class, DummyComplexDomainEntityBuilder.class, dummyComplexEntityUpdateMap(), "1",
+                new String[]{DummyComplexDomainEntity.A_STRING_FIELD_MANDATORY_ALSO_IN_GET}));
 
 		result.addAll(HttpScenarioFactory.findScenarios(
                 FailureScenarioParametrizedFactory.class,
@@ -90,7 +91,7 @@ public class ParametrizedTests extends SystemATestAbstract {
     			AuthenticationStoriesFactory.class
 		));
 		
-		return result;
+		return toObjectArrayThingy(result);
 	
 	}
 	
