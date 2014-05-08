@@ -76,14 +76,14 @@ public class ParametrizedTests extends SystemATestAbstract {
 
                 CodeExecutionScenarioStepFactory.class,
 
-//				CronFactory.class,
+				CronFactory.class,
 //				ValidatorFactory.class,
 				PasswordResetStoriesFactory.class,
 				EmailConfirmationStories.class
 		));
 
 //		result.addAll(OnlyGetScenarioFactory.adaptToOnlyGet(result));
-//
+
 		result.addAll(HttpScenarioFactory.findScenarios(
 //				CommandInfoFactory.class, 
 //				MultipartHttpScenarioFactory.class,
@@ -94,7 +94,7 @@ public class ParametrizedTests extends SystemATestAbstract {
 		return toObjectArrayThingy(result);
 	
 	}
-	
+
 	private static Map<String, Object> dummyComplexEntityUpdateMap() {
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		result.put(DummyComplexDomainEntity.A_STRING_MANDATORY_FIELD, "a modified string");		

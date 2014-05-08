@@ -31,7 +31,7 @@ import org.biokoframework.http.scenario.ExecutionScenarioStep;
 import org.biokoframework.http.scenario.Scenario;
 import org.biokoframework.http.scenario.mail.MailScenarioStep;
 import org.biokoframework.system.KILL_ME.commons.GenericFieldValues;
-import org.biokoframework.systema.commons.SystemACommandNames;
+import org.biokoframework.systema.command.CronFailingCommand;
 import org.biokoframework.systema.entity.dummy1.DummyEntity1;
 import org.biokoframework.systema.misc.Dummy1Mock;
 
@@ -95,8 +95,8 @@ public class CronFactory {
 		scenario.addScenarioStep("Cron should notify the failure", new MailScenarioStep(
 				GenericFieldValues.CRON_EMAIL, 
 				matchesSubjectAndContent(
-						equalTo("Cron task failure"),
-						startsWith("Command " + SystemACommandNames.CRON_FAILING_EXAMPLE + " failed"))));
+						equalTo("Bioko cron service - failure report"),
+						startsWith("Command " + CronFailingCommand.class.getName() + " failed"))));
 		
 		return scenario;
 	}
