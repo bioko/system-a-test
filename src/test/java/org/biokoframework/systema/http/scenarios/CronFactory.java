@@ -58,7 +58,7 @@ public class CronFactory {
 			public void execute() {
 				try {
 					Thread.sleep(20000);
-					// In the mean time CRON will invoke CrudExampleCommand
+					// In the mean time CRON will invoke CronExampleCommand
 				} catch(Exception exception) {
 					exception.printStackTrace();
 				}
