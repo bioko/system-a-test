@@ -49,11 +49,11 @@ import java.util.*;
 import static org.biokoframework.http.scenario.parametrized.CrudScenariosParametrizedFactory.createFrom;
 
 @RunWith( value = Parameterized.class )
-public class ParametrizedTests extends SystemATestAbstract {
+public class ParametrizedTest extends SystemATestAbstract {
 
 	private final ScenarioRunner fScenarioRunner;
 
-	public ParametrizedTests(Scenario scenario) {
+	public ParametrizedTest(Scenario scenario) {
 		fScenarioRunner = new ScenarioRunner(scenario);
 	}
 	
