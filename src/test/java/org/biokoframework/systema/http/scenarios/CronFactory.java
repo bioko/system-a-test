@@ -30,7 +30,8 @@ package org.biokoframework.systema.http.scenarios;
 import org.biokoframework.http.scenario.ExecutionScenarioStep;
 import org.biokoframework.http.scenario.Scenario;
 import org.biokoframework.http.scenario.mail.MailScenarioStep;
-import org.biokoframework.system.KILL_ME.commons.GenericFieldValues;
+import org.biokoframework.system.services.cron.dev.DevCronService;
+import org.biokoframework.systema.command.CronExampleCommand;
 import org.biokoframework.systema.command.CronFailingCommand;
 import org.biokoframework.systema.entity.dummy1.DummyEntity1;
 import org.biokoframework.systema.misc.Dummy1Mock;
@@ -51,19 +52,13 @@ public class CronFactory {
 				Dummy1Mock.setShape(Dummy1Mock.TRIANGOLO);
 			}
 		});
-		
-		scenario.addScenarioStep("Wait for cron to trigger, and set mock to quadrato", new ExecutionScenarioStep() {
-			
-			@Override
-			public void execute() {
-				try {
-					Thread.sleep(20000);
-					// In the mean time CRON will invoke CronExampleCommand
-				} catch(Exception exception) {
-					exception.printStackTrace();
-				}
-			}
-		});
+
+        scenario.addScenarioStep("Trigger DEV cron", new ExecutionScenarioStep() {
+            @Override
+            public void execute() throws Exception {
+                DevCronService.INSTANCE.trigger(CronExampleCommand.class);
+            }
+        });
 		
 		scenario.addScenarioStep("Check that cron actually worked, mock is set to quadrato", new ExecutionScenarioStep() {
 			@Override
@@ -79,21 +74,16 @@ public class CronFactory {
 	public static Scenario createFailureCron() throws Exception {
 		
 		Scenario scenario = new Scenario("Simple cron failure");
-		
-		scenario.addScenarioStep("Wait for cron to trigger, and run the failing command", new ExecutionScenarioStep() {
-			@Override
-			public void execute() {
-				try {
-					Thread.sleep(20000);
-					// In the mean time CRON will invoke CrudFailingCommand
-				} catch(Exception exception) {
-					exception.printStackTrace();
-				}
-			}
-		});
-		
-		scenario.addScenarioStep("Cron should notify the failure", new MailScenarioStep(
-				GenericFieldValues.CRON_EMAIL, 
+
+        scenario.addScenarioStep("Trigger DEV cron", new ExecutionScenarioStep() {
+            @Override
+            public void execute() throws Exception {
+                DevCronService.INSTANCE.trigger(CronFailingCommand.class);
+            }
+        });
+
+        scenario.addScenarioStep("Cron should notify the failure", new MailScenarioStep(
+				"root@example.com",
 				matchesSubjectAndContent(
 						equalTo("Bioko cron service - failure report"),
 						startsWith("Command " + CronFailingCommand.class.getName() + " failed"))));
