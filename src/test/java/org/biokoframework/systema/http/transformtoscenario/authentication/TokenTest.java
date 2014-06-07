@@ -35,7 +35,7 @@ import org.biokoframework.system.entity.login.Login;
 import org.biokoframework.system.entity.login.LoginBuilder;
 import org.biokoframework.system.exceptions.CommandExceptionsFactory;
 import org.biokoframework.system.services.currenttime.impl.TestCurrentTimeService;
-import org.biokoframework.systema.factory.SystemACommands;
+import org.biokoframework.systema.injection.SystemACommands;
 import org.biokoframework.systema.http.SystemATestAbstract;
 import org.biokoframework.utils.domain.DomainEntity;
 import org.biokoframework.utils.domain.EntityBuilder;

@@ -38,7 +38,7 @@ import org.biokoframework.system.entity.login.Login;
 import org.biokoframework.system.entity.login.LoginBuilder;
 import org.biokoframework.system.services.currenttime.impl.TestCurrentTimeService;
 import org.biokoframework.system.services.random.impl.TestRandomGeneratorService;
-import org.biokoframework.systema.factory.SystemACommands;
+import org.biokoframework.systema.injection.SystemACommands;
 import org.biokoframework.utils.domain.EntityBuilder;
 import org.biokoframework.utils.fields.Fields;
 import org.json.simple.JSONValue;

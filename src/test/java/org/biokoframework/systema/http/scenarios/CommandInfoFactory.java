@@ -27,68 +27,70 @@
 
 package org.biokoframework.systema.http.scenarios;
 
-import org.biokoframework.http.scenario.HttpScenarioFactory;
-import org.biokoframework.http.scenario.JSonExpectedResponseBuilder;
 import org.biokoframework.http.scenario.Scenario;
-import org.biokoframework.system.KILL_ME.commons.GenericFieldNames;
-import org.biokoframework.system.entity.description.CommandEntity;
-import org.biokoframework.system.entity.description.CommandEntityBuilder;
-import org.biokoframework.system.entity.description.ParameterEntity;
-import org.biokoframework.system.entity.description.ParameterEntityBuilder;
-import org.hamcrest.core.AllOf;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import static org.biokoframework.utils.matcher.Matchers.substringMatchesPattern;
-import static org.hamcrest.Matchers.*;
+import static org.biokoframework.http.scenario.HttpScenarioFactory.optionsSuccessful;
+import static org.hamcrest.Matchers.equalTo;
 
 public class CommandInfoFactory {
 
-	public static Scenario createGetCommandListCommand() throws Exception {
-		
-		Scenario collector = new Scenario("Get command list");
-		collector.addScenarioStep("Get (OPTIONS) command list", HttpScenarioFactory.optionsSuccessful(
-				"command-list",
-				null,
-				null,
-				null,
-				AllOf.<String>allOf(
-					startsWith("[{\""),
-					substringMatchesPattern("\"name\":\"OPTIONS_command-list\""),
-					substringMatchesPattern("\"name\":\"OPTIONS_command-invocation-info\""),
-					endsWith("\"}]"))));
-		
-		return collector;
-		
-	}
-	
-	public static Scenario createGetCommandInvocationInfoOnCommandList() throws Exception {
-		Scenario collector = new Scenario("Get command invocation info on command list command");
-		String commandName = "OPTIONS_command-list";
-		
-		HashMap<String, String> map = new HashMap<String, String>();
-		map.put(GenericFieldNames.COMMAND, commandName);
-		
-		CommandEntityBuilder commandEntityBuilder = new CommandEntityBuilder();
-		commandEntityBuilder.loadDefaultExample();
-		commandEntityBuilder.set(CommandEntity.NAME, commandName);
-		
-		ArrayList<ParameterEntity> outputList = new ArrayList<ParameterEntity>();
-		ParameterEntityBuilder parameterEntityBuilder = new ParameterEntityBuilder();
-		parameterEntityBuilder.set(ParameterEntity.NAME, GenericFieldNames.NAME);
-		outputList.add(parameterEntityBuilder.build(false));
-		
-		commandEntityBuilder.setOutput(outputList );
-		
-		collector.addScenarioStep("Get (OPTIONS) command invocation info", HttpScenarioFactory.optionsSuccessful(
-				"command-invocation-info", 
-				null, 
-				map, 
-				null, 
-				equalTo(JSonExpectedResponseBuilder.asArray(commandEntityBuilder.build(false).toJSONString()))));
-		
-		return collector;
-	}
-	
+//	public static Scenario createGetCommandListCommand() throws Exception {
+//
+//		Scenario collector = new Scenario("Get command list");
+//		collector.addScenarioStep("Get (OPTIONS) command list", HttpScenarioFactory.optionsSuccessful(
+//				"command-list",
+//				null,
+//				null,
+//				null,
+//				AllOf.<String>allOf(
+//					startsWith("[{\""),
+//					substringMatchesPattern("\"name\":\"OPTIONS_command-list\""),
+//					substringMatchesPattern("\"name\":\"OPTIONS_command-invocation-info\""),
+//					endsWith("\"}]"))));
+//
+//		return collector;
+//
+//	}
+//
+//	public static Scenario createGetCommandInvocationInfoOnCommandList() throws Exception {
+//		Scenario collector = new Scenario("Get command invocation info on command list command");
+//		String commandName = "OPTIONS_command-list";
+//
+//		HashMap<String, String> map = new HashMap<String, String>();
+//		map.put(GenericFieldNames.COMMAND, commandName);
+//
+//		CommandEntityBuilder commandEntityBuilder = new CommandEntityBuilder();
+//		commandEntityBuilder.loadDefaultExample();
+//		commandEntityBuilder.set(CommandEntity.NAME, commandName);
+//
+//		ArrayList<ParameterEntity> outputList = new ArrayList<ParameterEntity>();
+//		ParameterEntityBuilder parameterEntityBuilder = new ParameterEntityBuilder();
+//		parameterEntityBuilder.set(ParameterEntity.NAME, GenericFieldNames.NAME);
+//		outputList.add(parameterEntityBuilder.build(false));
+//
+//		commandEntityBuilder.setOutput(outputList );
+//
+//		collector.addScenarioStep("Get (OPTIONS) command invocation info", HttpScenarioFactory.optionsSuccessful(
+//				"command-invocation-info",
+//				null,
+//				map,
+//				null,
+//				equalTo(JSonExpectedResponseBuilder.asArray(commandEntityBuilder.build(false).toJSONString()))));
+//
+//		return collector;
+//	}
+//
+
+    public static Scenario createOptionsShouldAlwaysBeSuccessful() throws Exception {
+        Scenario scenario = new Scenario("Options should always be successful");
+
+        scenario.addScenarioStep("Simple OPTIONS", optionsSuccessful(
+                "a-command",
+                null,
+                null,
+                null,
+                equalTo("[]")));
+
+        return scenario;
+    }
 }

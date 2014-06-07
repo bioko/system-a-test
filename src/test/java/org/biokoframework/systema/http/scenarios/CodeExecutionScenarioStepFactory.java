@@ -32,7 +32,7 @@ import org.biokoframework.http.scenario.HttpScenarioFactory;
 import org.biokoframework.http.scenario.Scenario;
 import org.biokoframework.systema.commons.SystemACommandNames;
 import org.biokoframework.systema.entity.dummy1.DummyEntity1;
-import org.biokoframework.systema.factory.SystemACommands;
+import org.biokoframework.systema.injection.SystemACommands;
 import org.biokoframework.systema.misc.Dummy1Mock;
 import org.biokoframework.utils.domain.DomainEntity;
 import org.biokoframework.utils.fields.Fields;
