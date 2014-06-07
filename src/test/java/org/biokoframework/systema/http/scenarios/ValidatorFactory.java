@@ -34,7 +34,7 @@ import org.biokoframework.http.scenario.HttpScenarioFactory;
 import org.biokoframework.http.scenario.Scenario;
 import org.biokoframework.systema.entity.dummyComplex.DummyComplexDomainEntity;
 import org.biokoframework.systema.entity.dummyComplex.DummyComplexDomainEntityBuilder;
-import org.biokoframework.systema.factory.SystemACommands;
+import org.biokoframework.systema.injection.SystemACommands;
 import org.biokoframework.utils.domain.ErrorEntity;
 import org.biokoframework.utils.exception.ValidationException;
 import org.biokoframework.utils.validation.ValidationErrorBuilder;

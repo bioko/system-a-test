@@ -85,7 +85,7 @@ public class ParametrizedTest extends SystemATestAbstract {
 //		result.addAll(OnlyGetScenarioFactory.adaptToOnlyGet(result));
 
 		result.addAll(HttpScenarioFactory.findScenarios(
-//				CommandInfoFactory.class, 
+				CommandInfoFactory.class,
 //				MultipartHttpScenarioFactory.class,
 
     			AuthenticationStoriesFactory.class
