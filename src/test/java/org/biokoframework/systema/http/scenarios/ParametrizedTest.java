@@ -32,10 +32,6 @@ import org.biokoframework.http.scenario.Scenario;
 import org.biokoframework.http.scenario.ScenarioRunner;
 import org.biokoframework.systema.entity.dummy1.DummyEntity1;
 import org.biokoframework.systema.entity.dummy1.DummyEntity1Builder;
-import org.biokoframework.systema.entity.dummy2.DummyEntity2;
-import org.biokoframework.systema.entity.dummy2.DummyEntity2Builder;
-import org.biokoframework.systema.entity.dummy3.DummyEntity3;
-import org.biokoframework.systema.entity.dummy3.DummyEntity3Builder;
 import org.biokoframework.systema.entity.dummyComplex.DummyComplexDomainEntity;
 import org.biokoframework.systema.entity.dummyComplex.DummyComplexDomainEntityBuilder;
 import org.biokoframework.systema.http.SystemATestAbstract;
@@ -63,8 +59,8 @@ public class ParametrizedTest extends SystemATestAbstract {
 		List<Scenario> result = new ArrayList<>();
 
         result.addAll(createFrom(DummyEntity1.class, DummyEntity1Builder.class, dummyEntityUpdateMap(), "1"));
-        result.addAll(createFrom(DummyEntity2.class, DummyEntity2Builder.class, dummyEntity2UpdateMap(), "1"));
-        result.addAll(createFrom(DummyEntity3.class, DummyEntity3Builder.class, dummyEntityUpdateMap(), "1"));
+//        result.addAll(createFrom(DummyEntity2.class, DummyEntity2Builder.class, dummyEntity2UpdateMap(), "1"));
+//        result.addAll(createFrom(DummyEntity3.class, DummyEntity3Builder.class, dummyEntityUpdateMap(), "1"));
 
         result.addAll(createFrom(DummyComplexDomainEntity.class, DummyComplexDomainEntityBuilder.class, dummyComplexEntityUpdateMap(), "1",
                 new String[]{DummyComplexDomainEntity.A_STRING_FIELD_MANDATORY_ALSO_IN_GET}));
