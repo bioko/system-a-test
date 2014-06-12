@@ -243,6 +243,12 @@ public class TokenTest extends SystemATestAbstract {
 
 	@Test
 	public void failedExecutionBecauseOfTimeOut() {
+        EntityBuilder<Login> loginBuilder = new LoginBuilder().loadDefaultExample();
+        given().
+                contentType(ContentType.JSON).
+                body(loginBuilder.build(false).toJSONString()).
+                post(getLocalHostUrl() + SystemACommands.LOGIN);
+
 		String expiredToken = "00000000-0000-0000-0000-000000000002";
 		fAuthUtils.postToken(expiredToken, ISODateTimeFormat.dateTimeNoMillis().parseDateTime("2013-05-20T08:20:00Z"));
 		

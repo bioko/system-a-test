@@ -70,11 +70,11 @@ public class EntityResolverTest {
 	public void populateRepositories() throws ValidationException, RepositoryException {
 		Injector injector = Guice.createInjector(new EntityModule());
 		
-		fRepository1 = new InMemoryRepository<DummyEntity1>(DummyEntity1.class, injector.getInstance(IEntityBuilderService.class));
-		fRepository2 = new InMemoryRepository<DummyEntity2>(DummyEntity2.class, injector.getInstance(IEntityBuilderService.class));
-		fRepository3 = new InMemoryRepository<DummyEntity3>(DummyEntity3.class, injector.getInstance(IEntityBuilderService.class));
-		fRepository4 = new InMemoryRepository<DummyEntity4>(DummyEntity4.class, injector.getInstance(IEntityBuilderService.class));
-		fRepository5 = new InMemoryRepository<DummyEntity5>(DummyEntity5.class, injector.getInstance(IEntityBuilderService.class));
+		fRepository1 = new InMemoryRepository<DummyEntity1>(DummyEntity1.class, injector.getInstance(IEntityBuilderService.class), null);
+		fRepository2 = new InMemoryRepository<DummyEntity2>(DummyEntity2.class, injector.getInstance(IEntityBuilderService.class), null);
+		fRepository3 = new InMemoryRepository<DummyEntity3>(DummyEntity3.class, injector.getInstance(IEntityBuilderService.class), null);
+		fRepository4 = new InMemoryRepository<DummyEntity4>(DummyEntity4.class, injector.getInstance(IEntityBuilderService.class), null);
+		fRepository5 = new InMemoryRepository<DummyEntity5>(DummyEntity5.class, injector.getInstance(IEntityBuilderService.class), null);
 		
 		
 		
