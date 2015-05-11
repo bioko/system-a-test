@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.biokoframework</groupId>
 	<artifactId>system-a-test</artifactId>
-	<version>0.4</version>
+	<version>0.5-SNAPSHOT</version>
 	<name>Bioko Framework - SystemATest</name>
 	<url>http://biokoframework.org</url>
 	<!-- This module contains only test code, so it is not installed in the repository -->
@@ -11,23 +11,23 @@
         <dependency>
             <groupId>org.biokoframework</groupId>
             <artifactId>utils</artifactId>
-            <version>0.4</version>
+            <version>0.5-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.biokoframework</groupId>
             <artifactId>system</artifactId>
-            <version>0.4</version>
+            <version>0.5-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.biokoframework</groupId>
             <artifactId>system-a</artifactId>
-            <version>0.4</version>
+            <version>0.5-SNAPSHOT</version>
             <classifier>classes</classifier>
         </dependency>
         <dependency>
             <groupId>org.biokoframework</groupId>
             <artifactId>http-test</artifactId>
-            <version>0.4</version>
+            <version>0.5-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>
