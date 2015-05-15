@@ -46,6 +46,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.biokoframework.http.matcher.Matchers.matchesSubjectAndContent;
+import static org.biokoframework.http.scenario.HttpScenarioFactory.getSuccessful;
+import static org.biokoframework.http.scenario.HttpScenarioFactory.postSuccessful;
+import static org.biokoframework.http.scenario.HttpScenarioFactory.putSuccessful;
 import static org.biokoframework.utils.matcher.Matchers.matchesJSONString;
 
 public class EmailConfirmationStories {
@@ -66,7 +69,7 @@ public class EmailConfirmationStories {
 		EntityBuilder<Login> loginBuilder = new LoginBuilder().loadDefaultExample();
 		String loginUserEmail = loginBuilder.get(Login.USER_EMAIL);
 		
-		scenario.addScenarioStep("Register user login", HttpScenarioFactory.postSuccessful(
+		scenario.addScenarioStep("Register user login", postSuccessful(
 				SystemACommands.LOGIN, 
 				null, 
 				null, 
@@ -75,7 +78,7 @@ public class EmailConfirmationStories {
 		
 		Map<String, String> queryMap = new HashMap<String, String>();
 		queryMap.put(Login.USER_EMAIL, loginUserEmail);
-		scenario.addScenarioStep("Request email confirmation", HttpScenarioFactory.getSuccessful(
+		scenario.addScenarioStep("Request email confirmation", getSuccessful(
 				SystemACommands.CONFIRMATION_EMAIL_REQUEST, 
 				null, 
 				queryMap, 
@@ -94,7 +97,7 @@ public class EmailConfirmationStories {
 		Fields fields = new Fields();
 		fields.put(Login.USER_EMAIL, loginUserEmail);
 		fields.put(EmailConfirmation.TOKEN, token);
-		scenario.addScenarioStep("From the link contained in the mail confirm the address", HttpScenarioFactory.postSuccessful(
+		scenario.addScenarioStep("From the link contained in the mail confirm the address", postSuccessful(
 				SystemACommands.CONFIRMATION_EMAIL_RESPONSE, 
 				null, 
 				queryMap, 
@@ -107,7 +110,7 @@ public class EmailConfirmationStories {
 		confirmation.set(EmailConfirmation.CONFIRMED, true);
 		confirmation.set(EmailConfirmation.TOKEN, token);
 		confirmation.set(EmailConfirmation.CONFIRMATION_TIMESTAMP, "2013-12-03T12:30:00+0100");
-		scenario.addScenarioStep("The email is confirmed in the entity", HttpScenarioFactory.getSuccessful(
+		scenario.addScenarioStep("The email is confirmed in the entity", getSuccessful(
 				SystemACommands.EMAIL_CONFIRMATION_TEST + "/1", 
 				null, 
 				null, 
