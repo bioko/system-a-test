@@ -70,10 +70,10 @@ public class EmailConfirmationStories {
 		String loginUserEmail = loginBuilder.get(Login.USER_EMAIL);
 		
 		scenario.addScenarioStep("Register user login", postSuccessful(
-				SystemACommands.LOGIN, 
-				null, 
-				null, 
-				loginBuilder.build(false).toJSONString(), 
+				SystemACommands.LOGIN,
+				null,
+				null,
+				loginBuilder.build(false).toJSONString(),
 				matchesJSONString(JSonExpectedResponseBuilder.asArray(loginBuilder.build(true).toJSONString()))));
 		
 		Map<String, String> queryMap = new HashMap<String, String>();
@@ -98,10 +98,10 @@ public class EmailConfirmationStories {
 		fields.put(Login.USER_EMAIL, loginUserEmail);
 		fields.put(EmailConfirmation.TOKEN, token);
 		scenario.addScenarioStep("From the link contained in the mail confirm the address", postSuccessful(
-				SystemACommands.CONFIRMATION_EMAIL_RESPONSE, 
-				null, 
-				queryMap, 
-				fields.toJSONString(), 
+				SystemACommands.CONFIRMATION_EMAIL_RESPONSE,
+				null,
+				queryMap,
+				fields.toJSONString(),
 				matchesJSONString("[ ]")));
 		
 		EmailConfirmation confirmation = new EmailConfirmation();
